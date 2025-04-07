@@ -1,0 +1,63 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio Code
+.vscode/
+
+# Package management
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Temporary files
+*.tmp
+*.temp
+~$*
+
+# Others
+*.log
+*.tlog
+*.idb
+*.pdb
+*.opendb
+*.VC.db
+*.VC.opendb
+*.cache
+*.ilk
+*.obj
+*.pch
+*.rsp
+*.sbr
+*.unsuccessfulbuild
+*.vspscc
+*.vssscc
+*.class
+*.swp
+*.DS_Store
