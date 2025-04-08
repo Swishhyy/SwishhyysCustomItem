@@ -1,10 +1,12 @@
-﻿namespace SwishhyysCustomItems
+﻿namespace SCI
 {
     using Exiled.API.Features;
+    using SCI.Custom.MedicalItems;
     using System;
+
     public class Plugin : Plugin<Config>
     {
-        public override string Name => "SwishhyysCustomItems";
+        public override string Name => "SCI";
         public override string Author => "Swishhyy";
         public override Version Version => new Version(1, 0, 0);
 
@@ -17,6 +19,10 @@
                 return;
             }
             Log.Info($"{Name} has been enabled!");
+
+            base.OnEnabled();
+            // Register the AdrenalinePills custom item
+            new AdrenalinePills().Register();
         }
         public override void OnDisabled()
         {
