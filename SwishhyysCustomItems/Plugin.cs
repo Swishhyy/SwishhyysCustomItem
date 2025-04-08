@@ -9,7 +9,7 @@
     {
         public override string Name => "SCI";
         public override string Author => "Swishhyy";
-        public override Version Version => new Version(1, 0, 0);
+        public override Version Version => new Version(1, 1, 0);
 
         private readonly Version requiredExiledVersion = new Version(9, 5, 1);
         public override void OnEnabled()

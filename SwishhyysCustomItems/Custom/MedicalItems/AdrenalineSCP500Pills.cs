@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace SCI.Custom.MedicalItems
 {
-    public class AdrenalinePills : CustomItem
+    public class AdrenalineSCP500Pills : CustomItem
     {
         public override uint Id { get; set; } = 101;
 
