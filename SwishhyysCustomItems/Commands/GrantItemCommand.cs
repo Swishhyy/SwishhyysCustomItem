@@ -2,7 +2,6 @@
 using Exiled.API.Features;
 using Exiled.CustomItems.API.Features;
 using Exiled.Permissions.Extensions;
-using SCI.Custom.MedicalItems;
 using System;
 
 namespace SCI.Commands
@@ -10,11 +9,11 @@ namespace SCI.Commands
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class GrantItemCommand : ICommand
     {
-        public string Command { get; } = "giveadrenaline";
+        public string Command { get; } = "give";
 
-        public string[] Aliases { get; } = { "gad" };
+        public string[] Aliases { get; } = { "gitem" };
 
-        public string Description { get; } = "Grants the Adrenaline Pills item to yourself.";
+        public string Description { get; } = "Grants a specified custom item to yourself.";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
@@ -33,16 +32,28 @@ namespace SCI.Commands
                 return false;
             }
 
-            // Give the Adrenaline Pills item
-            if (CustomItem.TryGet(101, out var item))
+            if (arguments.Count < 1)
+            {
+                response = "Usage: give <itemid>";
+                return false;
+            }
+
+            if (!uint.TryParse(arguments.At(0), out uint itemId))
+            {
+                response = "Invalid item ID.";
+                return false;
+            }
+
+            // Give the specified custom item
+            if (CustomItem.TryGet(itemId, out var item))
             {
                 item.Give(player);
-                response = "You have been given the Adrenaline Pills.";
+                response = $"You have been given the item with ID {itemId}.";
                 return true;
             }
             else
             {
-                response = "Failed to retrieve the Adrenaline Pills item.";
+                response = $"Failed to retrieve the item with ID {itemId}.";
                 return false;
             }
         }
