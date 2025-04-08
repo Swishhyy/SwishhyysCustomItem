@@ -27,7 +27,7 @@ namespace SCI.Commands
             }
 
             // Check if the sender has the required permission
-            if (!sender.CheckPermission("sci.giveadrenaline"))
+            if (!sender.CheckPermission("sci.admin"))
             {
                 response = "You do not have permission to use this command.";
                 return false;

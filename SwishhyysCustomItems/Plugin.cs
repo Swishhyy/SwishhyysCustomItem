@@ -23,7 +23,7 @@
 
             base.OnEnabled();
             // Register the AdrenalinePills custom item
-            new AdrenalinePills().Register();
+            new AdrenalineSCP500Pills().Register();
         }
         public override void OnDisabled()
         {
