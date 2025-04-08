@@ -3,7 +3,7 @@
     using Exiled.API.Interfaces;
     using Exiled.API.Features;
     using System.ComponentModel;
-    using MER;
+    using MEC;
     public class Config : IConfig
     {
         [Description("Whether the plugin is enabled.")]

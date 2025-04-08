@@ -1,6 +1,7 @@
 ﻿namespace SCI
 {
     using Exiled.API.Features;
+    using Exiled.CustomItems.API;
     using SCI.Custom.MedicalItems;
     using System;
 
