@@ -18,6 +18,10 @@ namespace SCI
         [Description("Whether debug messages should be shown in the console.")]
         public bool Debug { get; set; } = false;
 
+        // The Discord webhook URL for sending command usages to a Discord channel.
+        [Description("Displays Command Usages in Discord.")]
+        public string DiscordWebhook { get; set; } = "";
+
         // Configuration settings for the Expired SCP-500 Pills.
         // This property is of the custom type ExpiredSCP500PillsConfig and is initialized with default values.
         [Description("Configuration for Expired SCP-500 Pills")]

@@ -24,7 +24,7 @@ namespace SCI.Commands
         // Execute method is called when the command is executed.
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            Plugin.Instance?.DebugLog($"GrantItemCommand.Execute called by sender: {(sender is CommandSender cmdSender ? cmdSender.LogName : "unknown")}");
+            Plugin.Instance?.DebugLog($"GrantItemCommand.Execute called by sender: {(sender is CommandSender cs ? cs.LogName : "unknown")}");
             Plugin.Instance?.DebugLog($"Arguments count: {arguments.Count}");
 
             try
@@ -33,11 +33,18 @@ namespace SCI.Commands
                 var player = Player.Get(sender);
                 Plugin.Instance?.DebugLog($"Player retrieved: {player?.Nickname ?? "null"}");
 
+                string userName = player?.Nickname ?? (sender is CommandSender cs1 ? cs1.LogName : "Console");
+                string argString = arguments.Count > 0 ? string.Join(" ", arguments) : "";
+
                 // Check whether the sender is a valid player. If not, return an error response.
                 if (player == null)
                 {
                     Plugin.Instance?.DebugLog("Player is null, command can only be used by a player");
                     response = "This command can only be used by a player.";
+
+                    // Send webhook notification for failed command
+                    Plugin.Instance?.WebhookService?.SendCommandUsageAsync(Command, userName, argString, false).GetAwaiter().GetResult();
+
                     return false;
                 }
 
@@ -49,6 +56,10 @@ namespace SCI.Commands
                 {
                     Plugin.Instance?.DebugLog("Permission denied, returning error message");
                     response = "You do not have permission to use this command.";
+
+                    // Send webhook notification for failed command
+                    Plugin.Instance?.WebhookService?.SendCommandUsageAsync(Command, userName, argString, false).GetAwaiter().GetResult();
+
                     return false;
                 }
 
@@ -57,6 +68,10 @@ namespace SCI.Commands
                 {
                     Plugin.Instance?.DebugLog("No arguments provided, showing usage");
                     response = "Usage: give <itemid>";
+
+                    // Send webhook notification for failed command
+                    Plugin.Instance?.WebhookService?.SendCommandUsageAsync(Command, userName, argString, false).GetAwaiter().GetResult();
+
                     return false;
                 }
 
@@ -68,6 +83,10 @@ namespace SCI.Commands
                 {
                     Plugin.Instance?.DebugLog($"Failed to parse item ID: {itemIdArg} is not a valid unsigned integer");
                     response = "Invalid item ID.";
+
+                    // Send webhook notification for failed command
+                    Plugin.Instance?.WebhookService?.SendCommandUsageAsync(Command, userName, argString, false).GetAwaiter().GetResult();
+
                     return false;
                 }
 
@@ -85,6 +104,10 @@ namespace SCI.Commands
                     item.Give(player);
                     response = $"You have been given the item with ID {itemId}.";
                     Plugin.Instance?.DebugLog($"Item given successfully, response: {response}");
+
+                    // Send webhook notification for successful command
+                    Plugin.Instance?.WebhookService?.SendCommandUsageAsync(Command, userName, argString, true).GetAwaiter().GetResult();
+
                     return true;
                 }
                 else
@@ -92,6 +115,10 @@ namespace SCI.Commands
                     // If the item could not be found, return an error response.
                     response = $"Failed to retrieve the item with ID {itemId}.";
                     Plugin.Instance?.DebugLog($"Item not found, response: {response}");
+
+                    // Send webhook notification for failed command
+                    Plugin.Instance?.WebhookService?.SendCommandUsageAsync(Command, userName, argString, false).GetAwaiter().GetResult();
+
                     return false;
                 }
             }
@@ -101,6 +128,16 @@ namespace SCI.Commands
                 Log.Error($"GrantItemCommand: Error in Execute: {ex.Message}\n{ex.StackTrace}");
                 Plugin.Instance?.DebugLog($"Exception in GrantItemCommand.Execute: {ex.Message}\n{ex.StackTrace}");
                 response = $"An error occurred while executing the command: {ex.Message}";
+
+                // Send webhook notification for failed command
+                try
+                {
+                    string userName = (sender is CommandSender cs2) ? cs2.LogName : "unknown";
+                    string argString = arguments.Count > 0 ? string.Join(" ", arguments) : "";
+                    Plugin.Instance?.WebhookService?.SendCommandUsageAsync(Command, userName, argString, false).GetAwaiter().GetResult();
+                }
+                catch { /* Ignore errors in webhook during exception handling */ }
+
                 return false;
             }
         }

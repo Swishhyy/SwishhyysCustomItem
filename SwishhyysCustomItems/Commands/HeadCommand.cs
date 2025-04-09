@@ -49,12 +49,25 @@ namespace SCI.Commands
         // It provides usage information to the user.
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            Plugin.Instance?.DebugLog($"HeadCommand.ExecuteParent called by sender: {(sender is CommandSender cmdSender ? cmdSender.LogName : "unknown")}");
+            Plugin.Instance?.DebugLog($"HeadCommand.ExecuteParent called by sender: {(sender is CommandSender cs ? cs.LogName : "unknown")}");
             Plugin.Instance?.DebugLog($"Arguments count: {arguments.Count}");
 
             // Set the response message to instruct the user how to use the command properly.
             response = "Usage: sci <subcommand> [arguments...]\nAvailable subcommands: give";
             Plugin.Instance?.DebugLog($"ExecuteParent response: {response}");
+
+            // Send webhook notification for parent command usage
+            try
+            {
+                string userName = (sender is CommandSender cs1) ? cs1.LogName : "unknown";
+                string argString = arguments.Count > 0 ? string.Join(" ", arguments) : "No arguments";
+                Plugin.Instance?.WebhookService?.SendCommandUsageAsync(Command, userName, argString, false).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                Plugin.Instance?.DebugLog($"Error sending webhook: {ex.Message}");
+                /* Ignore errors in webhook during command execution */
+            }
 
             // Return false to indicate that the command execution did not complete a specific action.
             Plugin.Instance?.DebugLog("HeadCommand.ExecuteParent returning false");

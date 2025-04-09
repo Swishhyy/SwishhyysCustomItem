@@ -4,8 +4,9 @@
     using Exiled.API.Features;              // Core Exiled API features for plugins.
     using Exiled.CustomItems.API;           // API for registering and managing custom items.
     using SCI.Custom.MedicalItems;          // Custom namespace containing the custom medical items.
-    using System;                         // Provides fundamental classes and base classes.
-    using SCI.Custom.Config;              // For configuration access
+    using System;                           // Provides fundamental classes and base classes.
+    using SCI.Custom.Config;                // For configuration access
+    using SCI.Services;                     // For WebhookService
 
     // Define the main plugin class which extends Exiled's Plugin base class using a generic Config type.
     public class Plugin : Plugin<Config>
@@ -19,6 +20,9 @@
 
         // Public static instance for global access (singleton pattern)
         public static Plugin Instance { get; private set; }
+
+        // Public webhook service property
+        public WebhookService WebhookService { get; private set; }
 
         // Private fields to store instances of the custom item classes.
         private ExpiredSCP500Pills _expiredSCP500Pills;
@@ -58,6 +62,11 @@
             // Call the base implementation to ensure any base setup is performed.
             base.OnEnabled();
 
+            // Initialize WebhookService
+            DebugLog("Initializing WebhookService");
+            WebhookService = new WebhookService(Config.DiscordWebhook, Config.Debug);
+            DebugLog("WebhookService initialized");
+
             // Create instances of the custom items using their corresponding configuration sections.
             DebugLog("Creating custom item instances with configuration");
             _expiredSCP500Pills = new ExpiredSCP500Pills(Config.ExpiredSCP500);
@@ -91,6 +100,7 @@
             _expiredSCP500Pills = null;
             _adrenalineSCP500Pills = null;
             _suicideSCP500Pills = null;
+            WebhookService = null;
 
             // Log that the plugin has been disabled.
             Log.Info($"{Name} has been disabled!");
