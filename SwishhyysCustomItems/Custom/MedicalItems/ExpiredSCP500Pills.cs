@@ -1,10 +1,13 @@
 ﻿using CustomPlayerEffects;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
+using SCI.Custom.Config;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SCI.Custom.MedicalItems
@@ -23,56 +26,42 @@ namespace SCI.Custom.MedicalItems
 
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties();
 
-        // Configuration properties
-        public float EffectDuration { get; set; } = 10f; // Duration in seconds
+        // Reference to the configuration - fixed type name
+        private readonly ExpiredSCP500PillsConfig _config;
 
-        // Positive effects with their chances
-        private readonly Dictionary<Type, float> positiveEffects = new Dictionary<Type, float>
-           {
-               { typeof(CustomPlayerEffects.MovementBoost), 25f },   // 25% chance
-               { typeof(CustomPlayerEffects.Scp207), 25f },          // 25% chance
-           };
+        // Constructor that takes the config
+        public ExpiredSCP500Pills(ExpiredSCP500PillsConfig config)
+        {
+            _config = config;
+        }
 
-        // Negative effects with their chances
-        private readonly Dictionary<Type, float> negativeEffects = new Dictionary<Type, float>
-           {
-               { typeof(CustomPlayerEffects.Concussed), 15f },       // 15% chance
-               { typeof(CustomPlayerEffects.Bleeding), 15f },        // 15% chance
-           };
-
-        // SCP effects with their chances
-        private readonly Dictionary<Type, float> scpEffects = new Dictionary<Type, float>
-           {
-               { typeof(CustomPlayerEffects.Poisoned), 10f },        // 10% chance
-               { typeof(CustomPlayerEffects.Asphyxiated), 10f },     // 10% chance
-           };
-
-        // Overall category probabilities
-        private readonly Dictionary<string, float> effectCategoryChances = new Dictionary<string, float>
-           {
-               { "Positive", 50f },  // 50% chance
-               { "Negative", 30f },  // 30% chance
-               { "SCP", 20f }        // 20% chance
-           };
+        // Default constructor for compatibility
+        public ExpiredSCP500Pills()
+        {
+            // Create a default config if none was provided
+            _config = new ExpiredSCP500PillsConfig();
+        }
 
         protected override void SubscribeEvents()
         {
             Exiled.Events.Handlers.Player.UsingItem += OnUsingItem;
-
             base.SubscribeEvents();
         }
 
         protected override void UnsubscribeEvents()
         {
             Exiled.Events.Handlers.Player.UsingItem -= OnUsingItem;
-
             base.UnsubscribeEvents();
         }
 
         public void OnUsingItem(UsingItemEventArgs ev)
         {
-            if (ev.Item.Type == ItemType.SCP500)
+            try
             {
+                // Check if this is actually our custom item
+                if (!Check(ev.Item))
+                    return;
+
                 // Check if player is null before proceeding
                 if (ev.Player == null)
                 {
@@ -80,54 +69,81 @@ namespace SCI.Custom.MedicalItems
                     return;
                 }
 
-                // Make sure we track if any effect was applied to determine random effects
+                // Make sure the player has valid effect components
+                if (ev.Player.ReferenceHub?.playerEffectsController == null)
+                {
+                    Log.Error("ExpiredSCP500Pills: Player effect controller is null");
+                    return;
+                }
+
+                // Use our randomization system with config values
+                string category = GetRandomCategory();
+                EffectType effectType = GetRandomEffectFromCategory(category);
+
                 bool effectApplied = false;
+                string effectMessage = "";
 
-                // Random chance for different effects
-                if (UnityEngine.Random.Range(0, 100) <= 25) // Fixed: Added UnityEngine
+                if (effectType != EffectType.None)
                 {
-                    // Only apply effects if the player has a valid status effect manager
-                    if (ev.Player.ReferenceHub?.playerEffectsController != null)
+                    try
                     {
-                        StatusEffectBase effectType = ev.Player.GetEffect<Poisoned>();
-                        if (effectType != null)
+                        // Get settings for this effect from the config
+                        EffectSettings settings = GetEffectSettings(category, effectType);
+
+                        if (settings != null)
                         {
-                            ev.Player.EnableEffect(effectType, 10, 30f);
+                            // Apply the effect with appropriate intensity and duration from config
+                            byte intensity = (byte)UnityEngine.Random.Range(settings.MinIntensity, settings.MaxIntensity + 1);
+
+                            // Use custom duration if specified, otherwise use default
+                            float duration = settings.CustomDuration > 0 ? settings.CustomDuration : _config.DefaultEffectDuration;
+
+                            // Apply the effect
+                            ev.Player.EnableEffect(effectType, intensity, duration);
                             effectApplied = true;
+
+                            // Customize message based on category
+                            if (category == "SCP" || category == "Negative")
+                                effectMessage = $"You consumed an expired SCP-500 pill. You feel strange {effectType} effects.";
+                            else
+                                effectMessage = $"You consumed an expired SCP-500 pill. You feel {effectType} effects.";
+
+                            // Log effect application for debugging
+                            Log.Debug($"Applied effect {effectType} (category: {category}) with intensity {intensity} to {ev.Player.Nickname}");
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error($"ExpiredSCP500Pills: Error applying effect {effectType}: {ex.Message}");
                     }
                 }
 
-                if (UnityEngine.Random.Range(0, 100) <= 25 && !effectApplied) // Fixed: Added UnityEngine
-                {
-                    if (ev.Player.ReferenceHub?.playerEffectsController != null)
-                    {
-                        StatusEffectBase effectType = ev.Player.GetEffect<Bleeding>();
-                        if (effectType != null)
-                        {
-                            ev.Player.EnableEffect(effectType, 10, 30f);
-                            effectApplied = true;
-                        }
-                    }
-                }
-
-                // Add similar checks for other effects...
-
-                // If no negative effects were applied, partially heal as a fallback
+                // If no effects were applied, use healing fallback from config
                 if (!effectApplied)
                 {
-                    ev.Player.Health += UnityEngine.Random.Range(15f, 35f); // Fixed: Added UnityEngine
-                    ev.Player.ShowHint("You consumed an expired SCP-500 pill. It partially healed you.");
+                    float healAmount = UnityEngine.Random.Range(_config.HealFallback.MinHeal, _config.HealFallback.MaxHeal);
+                    ev.Player.Health += healAmount;
+                    effectMessage = $"You consumed an expired SCP-500 pill. It partially healed you for {healAmount:F0} HP.";
                 }
+
+                // Show a hint to the player
+                ev.Player.ShowHint(effectMessage, 5f);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"ExpiredSCP500Pills: Error in OnUsingItem: {ex.Message}\n{ex.StackTrace}");
             }
         }
-
         private string GetRandomCategory()
         {
+            // Null check the config
+            if (_config?.CategoryChances == null || _config.CategoryChances.Count == 0)
+                return "Positive"; // Default fallback
+
             float totalChance = 0;
             float randomValue = UnityEngine.Random.Range(0f, 100f);
 
-            foreach (var category in effectCategoryChances)
+            foreach (var category in _config.CategoryChances)
             {
                 totalChance += category.Value;
                 if (randomValue <= totalChance)
@@ -138,35 +154,53 @@ namespace SCI.Custom.MedicalItems
             return "Positive";
         }
 
-        private Type GetRandomEffectFromCategory(string category)
+        private EffectType GetRandomEffectFromCategory(string category)
         {
-            Dictionary<Type, float> effects = null;
-
-            switch (category)
-            {
-                case "Positive":
-                    effects = positiveEffects;
-                    break;
-                case "Negative":
-                    effects = negativeEffects;
-                    break;
-                case "SCP":
-                    effects = scpEffects;
-                    break;
-            }
+            Dictionary<EffectType, EffectSettings> effects = GetEffectDictionaryForCategory(category);
 
             if (effects == null || effects.Count == 0)
-                return null;
+                return EffectType.None;
 
             float totalChance = 0;
             float randomValue = UnityEngine.Random.Range(0f, 100f);
 
+            // Calculate total chance within this category
+            float categoryTotalChance = effects.Sum(e => e.Value.Chance);
+
+            // Normalize to 100% if needed
+            float normalizationFactor = categoryTotalChance > 0 ? 100f / categoryTotalChance : 1f;
+
             foreach (var effect in effects)
             {
-                totalChance += effect.Value;
+                totalChance += effect.Value.Chance * normalizationFactor;
                 if (randomValue <= totalChance)
                     return effect.Key;
             }
+
+            return EffectType.None;
+        }
+
+        private Dictionary<EffectType, EffectSettings> GetEffectDictionaryForCategory(string category)
+        {
+            switch (category)
+            {
+                case "Positive":
+                    return _config.PositiveEffects;
+                case "Negative":
+                    return _config.NegativeEffects;
+                case "SCP":
+                    return _config.SCPEffects;
+                default:
+                    return null;
+            }
+        }
+
+        private EffectSettings GetEffectSettings(string category, EffectType effectType)
+        {
+            Dictionary<EffectType, EffectSettings> effects = GetEffectDictionaryForCategory(category);
+
+            if (effects != null && effects.TryGetValue(effectType, out EffectSettings settings))
+                return settings;
 
             return null;
         }
