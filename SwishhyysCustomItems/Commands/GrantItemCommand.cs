@@ -24,49 +24,83 @@ namespace SCI.Commands
         // Execute method is called when the command is executed.
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            // Retrieve the player object from the command sender.
-            var player = Player.Get(sender);
+            Plugin.Instance?.DebugLog($"GrantItemCommand.Execute called by sender: {(sender is CommandSender cmdSender ? cmdSender.LogName : "unknown")}");
+            Plugin.Instance?.DebugLog($"Arguments count: {arguments.Count}");
 
-            // Check whether the sender is a valid player. If not, return an error response.
-            if (player == null)
+            try
             {
-                response = "This command can only be used by a player.";
-                return false;
-            }
+                // Retrieve the player object from the command sender.
+                var player = Player.Get(sender);
+                Plugin.Instance?.DebugLog($"Player retrieved: {player?.Nickname ?? "null"}");
 
-            // Verify that the sender has the required permission ("sci.admin").
-            if (!sender.CheckPermission("sci.admin"))
-            {
-                response = "You do not have permission to use this command.";
-                return false;
-            }
+                // Check whether the sender is a valid player. If not, return an error response.
+                if (player == null)
+                {
+                    Plugin.Instance?.DebugLog("Player is null, command can only be used by a player");
+                    response = "This command can only be used by a player.";
+                    return false;
+                }
 
-            // Ensure at least one argument (the item ID) is provided.
-            if (arguments.Count < 1)
-            {
-                response = "Usage: give <itemid>";
-                return false;
-            }
+                // Verify that the sender has the required permission ("sci.admin").
+                bool hasPermission = sender.CheckPermission("sci.admin");
+                Plugin.Instance?.DebugLog($"Permission check (sci.admin): {hasPermission}");
 
-            // Try to parse the first argument as an unsigned integer to represent the item ID.
-            if (!uint.TryParse(arguments.At(0), out uint itemId))
-            {
-                response = "Invalid item ID.";
-                return false;
-            }
+                if (!hasPermission)
+                {
+                    Plugin.Instance?.DebugLog("Permission denied, returning error message");
+                    response = "You do not have permission to use this command.";
+                    return false;
+                }
 
-            // Try to retrieve the custom item using the parsed itemId.
-            if (CustomItem.TryGet(itemId, out var item))
-            {
-                // If the item is found, grant it to the player.
-                item.Give(player);
-                response = $"You have been given the item with ID {itemId}.";
-                return true;
+                // Ensure at least one argument (the item ID) is provided.
+                if (arguments.Count < 1)
+                {
+                    Plugin.Instance?.DebugLog("No arguments provided, showing usage");
+                    response = "Usage: give <itemid>";
+                    return false;
+                }
+
+                // Try to parse the first argument as an unsigned integer to represent the item ID.
+                string itemIdArg = arguments.At(0);
+                Plugin.Instance?.DebugLog($"Attempting to parse item ID: {itemIdArg}");
+
+                if (!uint.TryParse(itemIdArg, out uint itemId))
+                {
+                    Plugin.Instance?.DebugLog($"Failed to parse item ID: {itemIdArg} is not a valid unsigned integer");
+                    response = "Invalid item ID.";
+                    return false;
+                }
+
+                Plugin.Instance?.DebugLog($"Item ID parsed successfully: {itemId}");
+
+                // Try to retrieve the custom item using the parsed itemId.
+                Plugin.Instance?.DebugLog($"Attempting to get custom item with ID: {itemId}");
+                bool itemFound = CustomItem.TryGet(itemId, out var item);
+                Plugin.Instance?.DebugLog($"Item found: {itemFound}, Item type: {item?.GetType().Name ?? "null"}");
+
+                if (itemFound)
+                {
+                    // If the item is found, grant it to the player.
+                    Plugin.Instance?.DebugLog($"Giving {item.GetType().Name} to player {player.Nickname}");
+                    item.Give(player);
+                    response = $"You have been given the item with ID {itemId}.";
+                    Plugin.Instance?.DebugLog($"Item given successfully, response: {response}");
+                    return true;
+                }
+                else
+                {
+                    // If the item could not be found, return an error response.
+                    response = $"Failed to retrieve the item with ID {itemId}.";
+                    Plugin.Instance?.DebugLog($"Item not found, response: {response}");
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // If the item could not be found, return an error response.
-                response = $"Failed to retrieve the item with ID {itemId}.";
+                // Log any unhandled exceptions
+                Log.Error($"GrantItemCommand: Error in Execute: {ex.Message}\n{ex.StackTrace}");
+                Plugin.Instance?.DebugLog($"Exception in GrantItemCommand.Execute: {ex.Message}\n{ex.StackTrace}");
+                response = $"An error occurred while executing the command: {ex.Message}";
                 return false;
             }
         }

@@ -38,137 +38,167 @@ namespace SCI.Custom.MedicalItems
         // Constructor that initializes the custom item with a provided configuration.
         public SuicideSCP500Pills(SuicideSCP500PillsConfig config)
         {
+            Plugin.Instance?.DebugLog($"SuicideSCP500Pills constructor with config called");
             _config = config;
+            Plugin.Instance?.DebugLog($"SuicideSCP500Pills initialized with config: SurvivalChance={_config.SurvivalChance}, ExplosionRadius={_config.ExplosionRadius}");
         }
 
         // Default constructor for compatibility, creates a default configuration if none is provided.
         public SuicideSCP500Pills()
         {
+            Plugin.Instance?.DebugLog("SuicideSCP500Pills default constructor called");
             _config = new SuicideSCP500PillsConfig();
+            Plugin.Instance?.DebugLog("SuicideSCP500Pills initialized with default config");
         }
-
-        // SubscribeEvents is called when the item is registered.
-        // It subscribes to relevant player events to handle item usage.
         protected override void SubscribeEvents()
         {
-            // Subscribe to the UsingItem event so that OnUsingItem is called when a player uses an item.
+            Plugin.Instance?.DebugLog("SuicideSCP500Pills.SubscribeEvents called");
             Exiled.Events.Handlers.Player.UsingItem += OnUsingItem;
-            // Call the base subscription to ensure any additional inherited functionality is executed.
             base.SubscribeEvents();
+            Plugin.Instance?.DebugLog("SuicideSCP500Pills event subscriptions completed");
         }
-
-        // UnsubscribeEvents is called when the item is unregistered.
-        // It removes the event subscription.
         protected override void UnsubscribeEvents()
         {
-            // Unsubscribe from the UsingItem event to avoid potential memory leaks or unintended behavior.
+            Plugin.Instance?.DebugLog("SuicideSCP500Pills.UnsubscribeEvents called");
             Exiled.Events.Handlers.Player.UsingItem -= OnUsingItem;
-            // Call the base unsubscription to ensure cleanup routines of the base class are executed.
             base.UnsubscribeEvents();
+            Plugin.Instance?.DebugLog("SuicideSCP500Pills event unsubscriptions completed");
         }
 
         // Event handler for when a player uses an item.
         public void OnUsingItem(UsingItemEventArgs ev)
         {
+            Plugin.Instance?.DebugLog($"SuicideSCP500Pills.OnUsingItem called for player: {ev.Player?.Nickname ?? "unknown"}");
+
             try
             {
-                // Verify that the current item the player is using is this custom item.
+                // Check if the used item is this custom item
                 if (!Check(ev.Player.CurrentItem))
-                    return;
-
-                // Ensure the player object is not null before proceeding.
-                if (ev.Player == null)
                 {
-                    Log.Error("SuicidePills: Player is null in OnUsingItem");
+                    Plugin.Instance?.DebugLog("OnUsingItem: Item check failed, not our custom item");
                     return;
                 }
 
-                // Remove this custom item from the player's inventory as it is consumed upon use.
+                Plugin.Instance?.DebugLog("OnUsingItem: Item check passed, processing suicide pills usage");
+
+                // Check if player is null before proceeding
+                if (ev.Player == null)
+                {
+                    Log.Error("SuicidePills: Player is null in OnUsingItem");
+                    Plugin.Instance?.DebugLog("OnUsingItem: Player is null, aborting");
+                    return;
+                }
+
+                // Remove the item from the player's inventory
+                Plugin.Instance?.DebugLog($"OnUsingItem: Removing item from player {ev.Player.Nickname}'s inventory");
                 ev.Player.RemoveItem(ev.Player.CurrentItem);
 
-                // Determine if the player survives the explosion.
-                // The survival is based on comparing a randomly generated number to the survival chance defined in the config.
+                // Determine if player survives (5% chance)
                 bool survives = UnityEngine.Random.Range(0f, 100f) <= _config.SurvivalChance;
+                Plugin.Instance?.DebugLog($"OnUsingItem: Survival determined: {survives} (rolled against {_config.SurvivalChance}% chance)");
 
-                // Provide feedback to the player via a hint based on the survival outcome.
+                // Show message to player
                 if (survives)
                 {
+                    Plugin.Instance?.DebugLog($"OnUsingItem: Showing survival message to player: {_config.SurvivalMessage}");
                     ev.Player.ShowHint(_config.SurvivalMessage, _config.HintDuration);
                 }
                 else
                 {
+                    Plugin.Instance?.DebugLog($"OnUsingItem: Showing death message to player: {_config.DeathMessage}");
                     ev.Player.ShowHint(_config.DeathMessage, _config.HintDuration);
                 }
 
-                // Trigger the explosion effect, handling both the user's experience and effects on nearby players.
+                // Execute explosion effect
+                Plugin.Instance?.DebugLog("OnUsingItem: Calling ExplodePlayer method");
                 ExplodePlayer(ev.Player, survives);
 
-                // Log a debug message including the player's nickname and the survival status.
                 Log.Debug($"Player {ev.Player.Nickname} used suicide pills. Survival: {survives}");
+                Plugin.Instance?.DebugLog("OnUsingItem: Method completed successfully");
             }
             catch (Exception ex)
             {
-                // Log errors if an exception occurs during the event handling.
                 Log.Error($"SuicidePills: Error in OnUsingItem: {ex.Message}\n{ex.StackTrace}");
+                Plugin.Instance?.DebugLog($"OnUsingItem: Exception caught: {ex.Message}\n{ex.StackTrace}");
             }
         }
 
         // Handles the explosion effect for the player and nearby players.
         private void ExplodePlayer(Player player, bool survives)
         {
+            Plugin.Instance?.DebugLog($"ExplodePlayer called for {player.Nickname}, survives={survives}");
+
             try
             {
-                // If the player does not survive, schedule a delayed kill to allow the hint to be displayed.
+                // If the player does not survive, schedule a delayed kill
                 if (!survives)
                 {
+                    Plugin.Instance?.DebugLog("ExplodePlayer: Player will not survive, scheduling delayed kill");
                     Timing.CallDelayed(0.2f, () =>
                     {
-                        // Kill the player using explosion damage type.
+                        Plugin.Instance?.DebugLog($"ExplodePlayer: Killing player {player.Nickname} with explosion damage");
                         player.Kill(DamageType.Explosion);
                     });
                 }
                 else
                 {
-                    // If the player survives, hurt them with a fixed amount of damage.
+                    Plugin.Instance?.DebugLog($"ExplodePlayer: Player survives, applying 70 damage instead of killing");
                     player.Hurt(70f, DamageType.Explosion);
 
-                    // After a short delay, adjust the player's health if it falls below a minimum survival threshold.
+                    Plugin.Instance?.DebugLog("ExplodePlayer: Scheduling health check after explosion");
                     Timing.CallDelayed(0.5f, () =>
                     {
-                        if (player.IsAlive && player.Health < _config.SurvivalHealthAmount)
+                        if (player.IsAlive)
                         {
-                            player.Health = _config.SurvivalHealthAmount;
+                            Plugin.Instance?.DebugLog($"ExplodePlayer: Player is alive, current health: {player.Health}");
+                            if (player.Health < _config.SurvivalHealthAmount)
+                            {
+                                Plugin.Instance?.DebugLog($"ExplodePlayer: Setting health to {_config.SurvivalHealthAmount}");
+                                player.Health = _config.SurvivalHealthAmount;
+                            }
+                        }
+                        else
+                        {
+                            Plugin.Instance?.DebugLog("ExplodePlayer: Player died despite survival flag");
                         }
                     });
                 }
 
-                // Iterate over all players in the game to apply explosion damage to those near the affected player.
+                // Process damage to nearby players
+                Plugin.Instance?.DebugLog("ExplodePlayer: Processing damage to nearby players");
+                int affectedPlayerCount = 0;
+
                 foreach (Player target in Player.List)
                 {
-                    // Skip the player who used the item or any players that are not alive.
                     if (target == player || !target.IsAlive)
+                    {
+                        Plugin.Instance?.DebugLog($"ExplodePlayer: Skipping player {target.Nickname} (self or not alive)");
                         continue;
+                    }
 
-                    // Calculate the distance between the explosion origin and the target.
+                    // Calculate distance
                     float distance = Vector3.Distance(player.Position, target.Position);
+                    Plugin.Instance?.DebugLog($"ExplodePlayer: Player {target.Nickname} is {distance}m away");
 
-                    // If the target is within the explosion radius, calculate and apply damage.
+                    // Apply damage based on distance
                     if (distance < _config.ExplosionRadius)
                     {
-                        // Damage is calculated using linear interpolation based on proximity (closer targets take more damage).
                         float damage = Mathf.Lerp(_config.MaxNearbyPlayerDamage, 10f, distance / _config.ExplosionRadius);
-                        // Apply damage to the nearby player with explosion as the damage type.
+                        Plugin.Instance?.DebugLog($"ExplodePlayer: Applying {damage} explosion damage to {target.Nickname}");
                         target.Hurt(damage, DamageType.Explosion);
 
-                        // Show a hint to the nearby player informing them they were hit by an explosion.
                         target.ShowHint($"You were hit by an explosion!", 3f);
+                        affectedPlayerCount++;
                     }
                 }
+
+                Plugin.Instance?.DebugLog($"ExplodePlayer: Affected {affectedPlayerCount} nearby players");
+                Plugin.Instance?.DebugLog("ExplodePlayer: Method completed successfully");
             }
             catch (Exception ex)
             {
-                // Log any exception that occurs during the explosion effect execution.
                 Log.Error($"Error in ExplodePlayer: {ex.Message}");
+                Plugin.Instance?.DebugLog($"ExplodePlayer: Exception caught: {ex.Message}\n{ex.StackTrace}");
             }
         }
     }
