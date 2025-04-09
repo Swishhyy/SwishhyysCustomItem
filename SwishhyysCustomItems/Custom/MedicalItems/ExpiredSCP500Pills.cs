@@ -58,8 +58,8 @@ namespace SCI.Custom.MedicalItems
         {
             try
             {
-                // Check if this is actually our custom item
-                if (!Check(ev.Item))
+                // Check if the used item is this custom item (using CurrentItem instead of Item)
+                if (!Check(ev.Player.CurrentItem))
                     return;
 
                 // Check if player is null before proceeding
@@ -128,12 +128,16 @@ namespace SCI.Custom.MedicalItems
 
                 // Show a hint to the player
                 ev.Player.ShowHint(effectMessage, 5f);
+
+                // Remove the item from the player's inventory (added this line to match AdrenalineSCP500Pills)
+                ev.Player.RemoveItem(ev.Player.CurrentItem);
             }
             catch (Exception ex)
             {
                 Log.Error($"ExpiredSCP500Pills: Error in OnUsingItem: {ex.Message}\n{ex.StackTrace}");
             }
         }
+
         private string GetRandomCategory()
         {
             // Null check the config
