@@ -16,6 +16,9 @@ sci.admin  // Admin perms within the plugin
 Grant Command: sci give {playerid} {itemid}
 ```
 
+### Dependencies
+This plugin will require Newtonsoft, safe to say latest version will work. As of now 13.0.3
+
 ### Item List (with ids)
 
 ```
