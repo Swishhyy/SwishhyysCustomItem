@@ -1,5 +1,4 @@
-﻿using CustomPlayerEffects;
-using Exiled.API.Enums;
+﻿using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;

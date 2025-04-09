@@ -2,6 +2,7 @@
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using MEC;
+using SCI.Custom.Config;
 using System;
 using System.Collections.Generic;
 
@@ -21,15 +22,24 @@ namespace SCI.Custom.MedicalItems
 
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties();
 
-        // Configuration properties
-        public float SpeedMultiplier { get; set; } = 1.8f;
-
-        public float EffectDuration { get; set; } = 25f; // Duration in seconds
-
-        public float Cooldown { get; set; } = 5f; // Cooldown duration in seconds
+        // Reference to the configuration
+        private readonly AdrenalineSCP500PillsConfig _config;
 
         // Dictionary to track cooldowns per player
         private readonly Dictionary<string, DateTime> cooldowns = new Dictionary<string, DateTime>();
+
+        // Constructor that takes the config
+        public AdrenalineSCP500Pills(AdrenalineSCP500PillsConfig config)
+        {
+            _config = config;
+        }
+
+        // Default constructor for compatibility
+        public AdrenalineSCP500Pills()
+        {
+            // Create a default config if none was provided
+            _config = new AdrenalineSCP500PillsConfig();
+        }
 
         protected override void SubscribeEvents()
         {
@@ -59,30 +69,30 @@ namespace SCI.Custom.MedicalItems
             // Check for cooldown
             if (cooldowns.TryGetValue(userId, out DateTime lastUsed))
             {
-                if ((DateTime.UtcNow - lastUsed).TotalSeconds < Cooldown)
+                if ((DateTime.UtcNow - lastUsed).TotalSeconds < _config.Cooldown)
                 {
-                    ev.Player.ShowHint("You must wait before using another pill!", 5);
+                    ev.Player.ShowHint(_config.CooldownMessage, _config.HintDuration);
                     return;
                 }
             }
 
             // Apply movement speed boost using the Scp207 effect
-            ev.Player.EnableEffect<CustomPlayerEffects.Scp207>(EffectDuration);
+            ev.Player.EnableEffect<CustomPlayerEffects.Scp207>(_config.EffectDuration);
 
             // Adjust the intensity of the effect to set the speed multiplier
             var scp207 = ev.Player.GetEffect<CustomPlayerEffects.Scp207>();
             if (scp207 != null)
             {
                 // Ensure intensity is within byte range
-                byte intensity = (byte)Math.Max(0, Math.Min(SpeedMultiplier * 10, 255)); // Adjust scaling factor as needed
+                byte intensity = (byte)Math.Max(0, Math.Min(_config.SpeedMultiplier * 10, 255));
                 scp207.Intensity = intensity;
             }
 
-            // Restore stamina to full
-            ev.Player.Stamina = 100f;
+            // Restore stamina to full (or to the configured amount)
+            ev.Player.Stamina = _config.StaminaRestoreAmount;
 
-            // Provide feedback to the player
-            ev.Player.Broadcast(5, "<color=yellow>You feel a rush of adrenaline!</color>");
+            // Provide feedback to the player - using ShowHint instead of Broadcast
+            ev.Player.ShowHint(_config.ActivationMessage, _config.HintDuration);
 
             // Remove the item from the player's inventory
             ev.Player.RemoveItem(ev.Player.CurrentItem);
@@ -91,13 +101,14 @@ namespace SCI.Custom.MedicalItems
             cooldowns[userId] = DateTime.UtcNow;
 
             // Apply side effects after the effect duration ends
-            Timing.CallDelayed(EffectDuration, () =>
+            Timing.CallDelayed(_config.EffectDuration, () =>
             {
                 if (ev.Player != null && ev.Player.IsAlive)
                 {
                     // Apply exhaustion effect
-                    ev.Player.EnableEffect<CustomPlayerEffects.Exhausted>(5f);
-                    ev.Player.Broadcast(5, "<color=red>You feel exhausted after the adrenaline rush...</color>");
+                    ev.Player.EnableEffect<CustomPlayerEffects.Exhausted>(_config.ExhaustionDuration);
+                    // Use ShowHint instead of Broadcast
+                    ev.Player.ShowHint(_config.ExhaustionMessage, _config.HintDuration);
                 }
             });
         }

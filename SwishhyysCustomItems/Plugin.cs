@@ -1,10 +1,8 @@
 ﻿namespace SCI
 {
     using Exiled.API.Features;
-    using Exiled.CustomItems;
     using Exiled.CustomItems.API;
     using SCI.Custom.MedicalItems;
-    using SCI.Custom.Config;
     using System;
 
     public class Plugin : Plugin<Config>
@@ -13,11 +11,10 @@
         public override string Author => "Swishhyy";
         public override Version Version => new Version(2, 0, 0);
 
-        // Property to store the config
-        public ExpiredSCP500PillsConfig ExpiredSCP500Configuration { get; private set; }
-
+        // Properties to store the custom items
         private ExpiredSCP500Pills _expiredSCP500Pills;
         private AdrenalineSCP500Pills _adrenalineSCP500Pills;
+        private SuicideSCP500Pills _suicideSCP500Pills;
 
         private readonly Version requiredExiledVersion = new Version(9, 5, 1);
 
@@ -32,27 +29,29 @@
 
             base.OnEnabled();
 
-            // Initialize the specific config
-            ExpiredSCP500Configuration = new ExpiredSCP500PillsConfig();
+            // Create the instances with their respective configs from the main config
+            _expiredSCP500Pills = new ExpiredSCP500Pills(Config.ExpiredSCP500);
+            _adrenalineSCP500Pills = new AdrenalineSCP500Pills(Config.AdrenalineSCP500);
+            _suicideSCP500Pills = new SuicideSCP500Pills(Config.SuicideSCP500);
 
-            // Create the instances with the config
-            _adrenalineSCP500Pills = new AdrenalineSCP500Pills();
-            _expiredSCP500Pills = new ExpiredSCP500Pills(ExpiredSCP500Configuration);
-
-            // Register custom items
-            _adrenalineSCP500Pills.Register();
+            // Register all custom items
             _expiredSCP500Pills.Register();
+            _adrenalineSCP500Pills.Register();
+            _suicideSCP500Pills.Register();
+
+            Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills");
         }
 
         public override void OnDisabled()
         {
-            // Simplified null checks using null-conditional operator (?.)
-            _adrenalineSCP500Pills?.Unregister();
+            // Unregister and clean up all custom items
             _expiredSCP500Pills?.Unregister();
+            _adrenalineSCP500Pills?.Unregister();
+            _suicideSCP500Pills?.Unregister();
 
-            _adrenalineSCP500Pills = null;
             _expiredSCP500Pills = null;
-            ExpiredSCP500Configuration = null;
+            _adrenalineSCP500Pills = null;
+            _suicideSCP500Pills = null;
 
             Log.Info($"{Name} has been disabled!");
         }
