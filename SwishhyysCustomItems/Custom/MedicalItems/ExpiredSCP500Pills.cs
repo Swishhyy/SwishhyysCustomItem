@@ -1,8 +1,11 @@
-﻿using Exiled.API.Features.Spawn;
+﻿using CustomPlayerEffects;
+using Exiled.API.Features;
+using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SCI.Custom.MedicalItems
 {
@@ -66,34 +69,56 @@ namespace SCI.Custom.MedicalItems
             base.UnsubscribeEvents();
         }
 
-        private void OnUsingItem(UsingItemEventArgs ev)
+        public void OnUsingItem(UsingItemEventArgs ev)
         {
-            // Check if the used item is this custom item
-            if (!Check(ev.Player.CurrentItem))
-                return;
-
-            // Remove the item from the player's inventory
-            ev.Player.RemoveItem(ev.Player.CurrentItem);
-
-            // Decide the effect category
-            string category = GetRandomCategory();
-
-            // Select a random effect from the chosen category
-            Type selectedEffectType = GetRandomEffectFromCategory(category);
-
-            // Apply the effect if one was selected
-            if (selectedEffectType != null)
+            if (ev.Item.Type == ItemType.SCP500)
             {
-                var selectedEffect = (CustomPlayerEffects.StatusEffectBase)Activator.CreateInstance(selectedEffectType);
-                ev.Player.EnableEffect(selectedEffect, EffectDuration);
+                // Check if player is null before proceeding
+                if (ev.Player == null)
+                {
+                    Log.Error("ExpiredSCP500Pills: Player is null in OnUsingItem");
+                    return;
+                }
 
-                // Provide feedback to the player
-                ev.Player.ShowHint($"<color=yellow>You feel strange after consuming the expired pill...</color>", 5f);
-            }
-            else
-            {
-                // If no effect was applied
-                ev.Player.ShowHint("<color=gray>Nothing seems to have happened...</color>", 5f);
+                // Make sure we track if any effect was applied to determine random effects
+                bool effectApplied = false;
+
+                // Random chance for different effects
+                if (UnityEngine.Random.Range(0, 100) <= 25) // Fixed: Added UnityEngine
+                {
+                    // Only apply effects if the player has a valid status effect manager
+                    if (ev.Player.ReferenceHub?.playerEffectsController != null)
+                    {
+                        StatusEffectBase effectType = ev.Player.GetEffect<Poisoned>();
+                        if (effectType != null)
+                        {
+                            ev.Player.EnableEffect(effectType, 10, 30f);
+                            effectApplied = true;
+                        }
+                    }
+                }
+
+                if (UnityEngine.Random.Range(0, 100) <= 25 && !effectApplied) // Fixed: Added UnityEngine
+                {
+                    if (ev.Player.ReferenceHub?.playerEffectsController != null)
+                    {
+                        StatusEffectBase effectType = ev.Player.GetEffect<Bleeding>();
+                        if (effectType != null)
+                        {
+                            ev.Player.EnableEffect(effectType, 10, 30f);
+                            effectApplied = true;
+                        }
+                    }
+                }
+
+                // Add similar checks for other effects...
+
+                // If no negative effects were applied, partially heal as a fallback
+                if (!effectApplied)
+                {
+                    ev.Player.Health += UnityEngine.Random.Range(15f, 35f); // Fixed: Added UnityEngine
+                    ev.Player.ShowHint("You consumed an expired SCP-500 pill. It partially healed you.");
+                }
             }
         }
 

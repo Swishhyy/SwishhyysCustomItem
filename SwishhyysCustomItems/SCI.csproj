@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\GrantItemCommand.cs" />
+    <Compile Include="Commands\HeadCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Custom\MedicalItems\AdrenalineSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\ExpiredSCP500Pills.cs" />

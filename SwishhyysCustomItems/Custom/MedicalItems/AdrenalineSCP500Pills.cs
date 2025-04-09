@@ -22,11 +22,11 @@ namespace SCI.Custom.MedicalItems
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties();
 
         // Configuration properties
-        public float SpeedMultiplier { get; set; } = 1.5f;
+        public float SpeedMultiplier { get; set; } = 1.8f;
 
-        public float EffectDuration { get; set; } = 10f; // Duration in seconds
+        public float EffectDuration { get; set; } = 25f; // Duration in seconds
 
-        public float Cooldown { get; set; } = 30f; // Cooldown duration in seconds
+        public float Cooldown { get; set; } = 5f; // Cooldown duration in seconds
 
         // Dictionary to track cooldowns per player
         private readonly Dictionary<string, DateTime> cooldowns = new Dictionary<string, DateTime>();
