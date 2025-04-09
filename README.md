@@ -24,5 +24,12 @@ I host my server that will feature this plugin amongst other future projects I m
 Check out my [License](https://github.com/Swishhyy/SCI/blob/main/LICENSE.txt), but primarily, I won't focus on suggestions, as this plugin is developed mainly for my server, NNR. Sometimes, I may take suggestions.
 You are welcome to fork, but please properly credit me, and I will accept merges as well.
 
+### How to read my updates and what you should do
+1.0.0 [Sematic Versioning](https://semver.org/)
+
+The first digit is the major version; if this changes, it means the previous config or code is hugely changed. In short, delete everything and reinstall
+The second digit is a minor version. In most cases, your existing configuration will be fine; just update the DLL
+The Third digit is a patch version, which means very minor code patches so not any significant changes. This could be fixing a bug or updating the version so it displays properly in the server console.
+
 ### WARNING: 
 This is my first Exiled plugin, so there may be issues I'm not entirely sure how to fix/handle as I'm also picking up more advanced C# as well. The best way to reach me regarding issues with this plugin or others will be on discord or the issue tracker.
