@@ -1,30 +1,28 @@
-Swishhyys Custom Items (SCI)
----
-Features
-•	Custom Items: Adds unique items with special effects to the game.
-•	Commands: Provides commands to give custom items to players.
-•	Permissions: Uses permission-based access control for commands.
-Permissions:
+# Swishhyys Custom Items (SCI)
+
+## What is this?
+This is a plugin to add cool custom items to SCP: SL using the Exiled Framework. This is mainly produced out of a need to grant more items to the server I host, NNR. To allow my community to have a bit more fun with the game, however, it's also being used as a learning tool for me to make Exiled plugins. I'm hoping the work I'll put into this project will pay off, but we will never know!
+
+### Permissions
 ```
-sci.admin //allows the user to spawn the item in (dont give to normal users as this can allow them to spawn it in)
+sci.admin  // Admin perms within the plugin
 ```
----
-Installation
-1.	Download the Plugin
-•	Ensure you have the compiled SCI.dll plugin file.
-2.	Place the Plugin
-•	Move SCI.dll into the Plugins folder of your EXILED server directory.
-3.	Restart the Server
-•	Restart your server to load the plugin. The plugin will generate a configuration file on first run.
-4.	Configure the Plugin (Optional)
-•	Navigate to the Configs folder.
-•	Open SCI-config.yml to adjust settings like effect durations and cooldowns.
----
-Commands and Permissions
-Commands:
-Give Custom Item
+### Commands
 ```
-•	Command: sci give <playerid> <itemid>
-•	Description: Grants a specified custom item to a player.
-•	Usage:
+Grant Command: sci give {playerid} {itemid}
 ```
+### Item List (with ids)
+```
+Adrenaline SCP 500 (id = 101) // works similar to stims, but effect is more potent; however will damage the user
+Expired SCP 500 (id = 102) //grants random effect upon use
+```
+
+## I want to see what this plugin does before I add it
+I host my server that will feature this plugin amongst other future projects I may work on to further enhance the game.
+
+### Contributions
+Check out my [License](https://github.com/Swishhyy/SCI/blob/main/LICENSE.txt), but primarily, I won't focus on suggestions, as this plugin is developed mainly for my server, NNR. Sometimes, I may take suggestions.
+You are welcome to fork, but please properly credit me, and I will accept merges as well.
+
+### WARNING: 
+This is my first Exiled plugin, so there may be issues I'm not entirely sure how to fix/handle as I'm also picking up more advanced C# as well. The best way to reach me regarding issues with this plugin or others will be on discord or the issue tracker.
