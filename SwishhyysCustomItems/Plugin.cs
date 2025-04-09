@@ -1,58 +1,73 @@
 ﻿namespace SCI
 {
-    using Exiled.API.Features;
-    using Exiled.CustomItems.API;
-    using SCI.Custom.MedicalItems;
-    using System;
+    // Include the necessary namespaces.
+    using Exiled.API.Features;              // Core Exiled API features for plugins.
+    using Exiled.CustomItems.API;           // API for registering and managing custom items.
+    using SCI.Custom.MedicalItems;          // Custom namespace containing the custom medical items.
+    using System;                         // Provides fundamental classes and base classes.
 
+    // Define the main plugin class which extends Exiled's Plugin base class using a generic Config type.
     public class Plugin : Plugin<Config>
     {
+        // Override the plugin's name property.
         public override string Name => "SCI";
+        // Override the plugin's author property.
         public override string Author => "Swishhyy";
+        // Override the plugin's version property.
         public override Version Version => new Version(2, 0, 0);
 
-        // Properties to store the custom items
+        // Private fields to store instances of the custom item classes.
         private ExpiredSCP500Pills _expiredSCP500Pills;
         private AdrenalineSCP500Pills _adrenalineSCP500Pills;
         private SuicideSCP500Pills _suicideSCP500Pills;
 
+        // Define the minimum required version of the Exiled framework to run this plugin.
         private readonly Version requiredExiledVersion = new Version(9, 5, 1);
 
+        // This method is called when the plugin is enabled.
         public override void OnEnabled()
         {
+            // Check if the current Exiled framework version meets the minimum required version.
             if (Exiled.Loader.Loader.Version < requiredExiledVersion)
             {
+                // Log an error and return early to avoid running on an unsupported version.
                 Log.Error($"{Name} requires Exiled version {requiredExiledVersion} or higher. Current version: {Exiled.Loader.Loader.Version}");
                 return;
             }
+            // Log that the plugin has been successfully enabled.
             Log.Info($"{Name} has been enabled!");
 
+            // Call the base implementation to ensure any base setup is performed.
             base.OnEnabled();
 
-            // Create the instances with their respective configs from the main config
+            // Create instances of the custom items using their corresponding configuration sections.
             _expiredSCP500Pills = new ExpiredSCP500Pills(Config.ExpiredSCP500);
             _adrenalineSCP500Pills = new AdrenalineSCP500Pills(Config.AdrenalineSCP500);
             _suicideSCP500Pills = new SuicideSCP500Pills(Config.SuicideSCP500);
 
-            // Register all custom items
+            // Register the custom items with the Exiled framework so that they are recognized in-game.
             _expiredSCP500Pills.Register();
             _adrenalineSCP500Pills.Register();
             _suicideSCP500Pills.Register();
 
+            // Log a debug message listing the registered custom items.
             Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills");
         }
 
+        // This method is called when the plugin is disabled.
         public override void OnDisabled()
         {
-            // Unregister and clean up all custom items
+            // Unregister each custom item if they have been initialized (using the null-conditional operator).
             _expiredSCP500Pills?.Unregister();
             _adrenalineSCP500Pills?.Unregister();
             _suicideSCP500Pills?.Unregister();
 
+            // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
             _adrenalineSCP500Pills = null;
             _suicideSCP500Pills = null;
 
+            // Log that the plugin has been disabled.
             Log.Info($"{Name} has been disabled!");
         }
     }
