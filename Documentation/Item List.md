@@ -7,3 +7,4 @@ SCP 500 Additions:
 Throwables:
 - Cluster Grenade (id = 104) // I feel like this one is self explanatory 
 - Impact Grenade (id = 105) // Blows up upon landing on a surface
+- Smoke Grenade (id = 106) // Deploys a smoke screen for a short time

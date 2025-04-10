@@ -31,7 +31,8 @@
         private AdrenalineSCP500Pills _adrenalineSCP500Pills;
         private SuicideSCP500Pills _suicideSCP500Pills;
         private ClusterGrenade _clusterGrenade;
-        private ImpactGrenade _impactGrenade; // Add field for ImpactGrenade
+        private ImpactGrenade _impactGrenade;
+        private SmokeGrenade _smokeGrenade;
 
         // Define the minimum required version of the Exiled framework to run this plugin.
         private readonly Version requiredExiledVersion = new Version(9, 5, 1);
@@ -77,7 +78,8 @@
             _adrenalineSCP500Pills = new AdrenalineSCP500Pills(Config.AdrenalineSCP500);
             _suicideSCP500Pills = new SuicideSCP500Pills(Config.SuicideSCP500);
             _clusterGrenade = new ClusterGrenade(Config.ClusterGrenade);
-            _impactGrenade = new ImpactGrenade(Config.ImpactGrenade); // Initialize ImpactGrenade with its config
+            _impactGrenade = new ImpactGrenade(Config.ImpactGrenade);
+            _smokeGrenade = new SmokeGrenade(Config.SmokeGrenade);
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
@@ -85,7 +87,8 @@
             _adrenalineSCP500Pills.Register();
             _suicideSCP500Pills.Register();
             _clusterGrenade.Register();
-            _impactGrenade.Register(); // Register the ImpactGrenade
+            _impactGrenade.Register();
+            _smokeGrenade.Register();
 
             // Log a debug message listing the registered custom items.
             Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade");
@@ -104,14 +107,17 @@
             _adrenalineSCP500Pills?.Unregister();
             _suicideSCP500Pills?.Unregister();
             _clusterGrenade?.Unregister();
-            _impactGrenade?.Unregister(); // Unregister the ImpactGrenade
+            _impactGrenade?.Unregister();
+            _smokeGrenade?.Unregister();
 
             // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
             _adrenalineSCP500Pills = null;
             _suicideSCP500Pills = null;
             _clusterGrenade = null;
-            _impactGrenade = null; // Nullify the ImpactGrenade reference
+            _impactGrenade = null;
+            _smokeGrenade = null;
+
             WebhookService = null;
 
             // Log that the plugin has been disabled.

@@ -41,6 +41,9 @@ namespace SCI
         
         [Description("Configuration for Impact Grenade")]
         public ImpactGrenadeConfig ImpactGrenade { get; set; } = new ImpactGrenadeConfig();
+        
+        [Description("Configuration for Smoke Grenades")]
+        public SmokeGrenadeConfig SmokeGrenade { get; set; } = new SmokeGrenadeConfig();
 
         // Additional modular configurations can be added here in the future.
         // For example, you can uncomment and define another feature configuration as needed.
