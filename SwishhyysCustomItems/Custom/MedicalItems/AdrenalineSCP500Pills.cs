@@ -6,7 +6,9 @@ using MEC;                                         // Allows for calling delayed
 using SCI.Custom.Config;                           // Provides access to custom configuration classes.
 using System;                                      // Provides basic system functionality.
 using System.Collections.Generic;                  // Provides generic collection types like Dictionary.
-using Exiled.API.Features;                         // For accessing Log and other API features
+using Exiled.API.Features;
+using Exiled.API.Enums;
+using JetBrains.Annotations;                         // For accessing Log and other API features
 
 namespace SCI.Custom.MedicalItems
 {
@@ -29,7 +31,42 @@ namespace SCI.Custom.MedicalItems
         public override float Weight { get; set; } = 0.5f;
 
         // Spawn properties that define how and where the item spawns in the game.
-        public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties();
+        [CanBeNull]
+        public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
+        {
+            Limit = 2,
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>
+            {
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideLczCafe,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideLczWc,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.Inside914,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideGr18Glass,
+                },
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.Inside096,
+                },
+            },
+        };
 
         // Readonly field to store the custom configuration for this item.
         private readonly AdrenalineSCP500PillsConfig _config;

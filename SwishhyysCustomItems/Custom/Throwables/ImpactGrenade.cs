@@ -35,25 +35,38 @@ namespace SCI.Custom.Throwables
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
-            Limit = 3,
+            Limit = 2,
             DynamicSpawnPoints = new List<DynamicSpawnPoint>
             {
                 new DynamicSpawnPoint
                 {
-                    Chance = 20,
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideLczArmory,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
                     Location = SpawnLocationType.InsideHczArmory,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.Inside049Armory,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideSurfaceNuke,
                 },
                 new DynamicSpawnPoint
                 {
                     Chance = 15,
-                    Location = SpawnLocationType.InsideHidChamber,
+                    Location = SpawnLocationType.Inside079Armory,
                 },
-                new DynamicSpawnPoint
-                {
-                    Chance = 10,
-                    Location = SpawnLocationType.Inside049Armory,
-                }
-            }
+            },
         };
 
         // Key settings for impact grenade

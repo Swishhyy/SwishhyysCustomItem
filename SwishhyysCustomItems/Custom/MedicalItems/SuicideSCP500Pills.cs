@@ -9,6 +9,8 @@ using SCI.Custom.Config;                             // Access to custom configu
 using System;                                        // Provides basic system functionalities.
 using UnityEngine;                                   // Provides access to Unity engine features, such as Vector3 and Mathf.
 using Exiled.API.Features.Items;
+using JetBrains.Annotations;
+using System.Collections.Generic;
 
 namespace SCI.Custom.MedicalItems
 {
@@ -29,9 +31,42 @@ namespace SCI.Custom.MedicalItems
 
         // Weight property which may affect in-game item mechanics.
         public override float Weight { get; set; } = 0.5f;
+        [CanBeNull]
+        public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
+        {
+            Limit = 2,
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>
+            {
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideLczCafe,
+                },
 
-        // Spawn properties determine how and when this item spawns in the game.
-        public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties();
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideLczWc,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.Inside914,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideGr18Glass,
+                },
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.Inside096,
+                },
+            },
+        };
 
         // Private field storing the configuration for this custom item.
         private readonly SuicideSCP500PillsConfig _config;

@@ -4,6 +4,7 @@ using Exiled.API.Features;                           // Core API features for in
 using Exiled.API.Features.Spawn;                     // Allows item spawn configurations.
 using Exiled.CustomItems.API.Features;               // Base classes and features for custom items.
 using Exiled.Events.EventArgs.Player;                // Event arguments for player-related events (like UsingItem).
+using JetBrains.Annotations;
 using SCI.Custom.Config;                             // Custom configuration classes for this plugin.
 using System;                                        // Provides basic system functionalities.
 using System.Collections.Generic;                    // Provides generic collection types, such as Dictionary.
@@ -31,7 +32,42 @@ namespace SCI.Custom.MedicalItems
         public override float Weight { get; set; } = 0.5f;
 
         // Controls the spawn properties for this item (such as spawn chance, location, etc.).
-        public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties();
+        [CanBeNull]
+        public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
+        {
+            Limit = 2,
+            DynamicSpawnPoints = new List<DynamicSpawnPoint>
+            {
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideLczCafe,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideLczWc,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.Inside914,
+                },
+
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.InsideGr18Glass,
+                },
+                new DynamicSpawnPoint
+                {
+                    Chance = 15,
+                    Location = SpawnLocationType.Inside096,
+                },
+            },
+        };
 
         // Readonly field to hold the configuration for how this item behaves.
         private readonly ExpiredSCP500PillsConfig _config;
