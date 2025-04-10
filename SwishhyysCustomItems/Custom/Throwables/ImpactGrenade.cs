@@ -46,7 +46,7 @@ namespace SCI.Custom.Throwables
                 new DynamicSpawnPoint
                 {
                     Chance = 15,
-                    Location = SpawnLocationType.InsideHczArmory,
+                    Location = SpawnLocationType.InsideHidChamber,
                 },
                 new DynamicSpawnPoint
                 {
