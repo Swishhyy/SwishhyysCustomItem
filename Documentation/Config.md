@@ -6,6 +6,8 @@ s_c_i:
   is_enabled: true
   # Whether debug messages should be shown in the console.
   debug: false
+  # Displays Command Usages in Discord.
+  discord_webhook: ''
   # Configuration for Expired SCP-500 Pills
   expired_s_c_p500:
   # Default duration for applied effects (in seconds)
@@ -306,4 +308,42 @@ s_c_i:
     survival_message: 'You consumed the suicide pills, but somehow survived the explosion!'
     # Message shown to player when they won't survive
     death_message: 'You consumed the suicide pills...'
+  # Configuration for Cluster Grenade
+  cluster_grenade:
+  # Number of child grenades to spawn after the initial explosion
+    child_grenade_count: 3
+    # Fuse time for child grenades in seconds
+    child_grenade_fuse_time: 1.5
+    # Delay between spawning each child grenade in seconds
+    child_grenade_delay: 0.100000001
+    # Maximum radius for random spread of child grenades
+    spread_radius: 3
+    # Maximum damage radius for child grenades
+    child_grenade_radius: 5
+    # Maximum damage from child grenades (decreases with distance)
+    child_grenade_damage: 40
+    # Enables a scatter grenade for visual effect before child grenades
+    use_scatter_effect: true
+    # Minimum radius for random spread of child grenades
+    min_spread_radius: 1
+    # Damage falloff multiplier for child grenades
+    damage_falloff_multiplier: 1
+    # Enables logging for debugging purposes
+    enable_debug_logging: false
+  # Configuration for Impact Grenade
+  impact_grenade:
+  # Maximum damage dealt at the center of explosion
+    maximum_damage: 115
+    # Minimum damage dealt at the edge of explosion radius
+    minimum_damage: 35
+    # Radius of the explosion damage
+    damage_radius: 7
+    # Message shown to players hit by the grenade
+    effect_message: 'You were hit by an impact grenade!'
+    # Duration to show the effect message in seconds
+    message_duration: 3
+    # Whether to show hit message to affected players
+    show_effect_message: true
+    # Enable debug logging
+    enable_debug_logging: false
 ```
