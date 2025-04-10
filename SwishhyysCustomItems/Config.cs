@@ -38,6 +38,10 @@ namespace SCI
         [Description("Configuration for Cluster Grenade")]
         public ClusterGrenadeConfig ClusterGrenade { get; set; } = new ClusterGrenadeConfig();
 
+        
+        [Description("Configuration for Impact Grenade")]
+        public ImpactGrenadeConfig ImpactGrenade { get; set; } = new ImpactGrenadeConfig();
+
         // Additional modular configurations can be added here in the future.
         // For example, you can uncomment and define another feature configuration as needed.
         // [Description("Configuration for another feature")]
