@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Exiled.API.Features;
 using Newtonsoft.Json;
@@ -9,36 +10,49 @@ namespace SCI.Services
 {
     public class WebhookService
     {
-        private static readonly HttpClient Client = new HttpClient();
+        // Static HttpClient properly configured with timeout
+        private static readonly HttpClient Client = new HttpClient
+        {
+            Timeout = TimeSpan.FromSeconds(5)
+        };
+
         private readonly string _webhookUrl;
         private readonly bool _debug;
 
         public WebhookService(string webhookUrl, bool debug)
         {
-            Plugin.Instance?.DebugLog("WebhookService constructor called");
             _webhookUrl = webhookUrl;
             _debug = debug;
             Plugin.Instance?.DebugLog($"WebhookService initialized with URL: {(string.IsNullOrEmpty(_webhookUrl) ? "none" : "[URL hidden for security]")}");
         }
 
-        public async Task SendCommandUsageAsync(string commandName, string userName, string arguments, bool success)
+        /// <summary>
+        /// Sends a command usage notification to Discord webhook WITHOUT blocking the main thread
+        /// </summary>
+        public void SendCommandUsage(string commandName, string userName, string arguments, bool success)
         {
-            Plugin.Instance?.DebugLog($"SendCommandUsageAsync called: command={commandName}, user={userName}, success={success}");
-
             // Skip if webhook URL is not configured
             if (string.IsNullOrWhiteSpace(_webhookUrl))
             {
                 if (_debug)
                     Log.Debug("[WebhookService] Webhook URL is not configured. Skipping notification.");
-                Plugin.Instance?.DebugLog("SendCommandUsageAsync: Webhook URL is not configured, skipping");
                 return;
             }
 
+            // Fire and forget - do not await or block the main thread
+            Task.Run(() => SendWebhookInternalAsync(commandName, userName, arguments, success));
+        }
+
+        /// <summary>
+        /// Internal method that actually sends the webhook request on a background thread
+        /// </summary>
+        private async Task SendWebhookInternalAsync(string commandName, string userName, string arguments, bool success)
+        {
             try
             {
-                Plugin.Instance?.DebugLog("SendCommandUsageAsync: Creating webhook payload");
+                Plugin.Instance?.DebugLog($"SendWebhookInternal: Processing webhook for command={commandName}, user={userName}");
 
-                // Create webhook payload with explicit types for arrays
+                // Create webhook payload
                 var payload = new
                 {
                     embeds = new object[]
@@ -46,7 +60,7 @@ namespace SCI.Services
                         new
                         {
                             title = $"Command Used: {commandName}",
-                            color = success ? 3066993 : 15158332, // Green for success, red for failure
+                            color = success ? 3066993 : 15158332,
                             fields = new object[]
                             {
                                 new { name = "User", value = userName, inline = true },
@@ -54,44 +68,53 @@ namespace SCI.Services
                                 new { name = "Arguments", value = string.IsNullOrEmpty(arguments) ? "None" : arguments },
                                 new { name = "Timestamp", value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") }
                             },
-                            footer = new
-                            {
-                                text = "SwishhyysCustomItems"
-                            }
+                            footer = new { text = "SwishhyysCustomItems" }
                         }
                     }
                 };
 
                 // Convert to JSON and send
                 string json = JsonConvert.SerializeObject(payload);
-                Plugin.Instance?.DebugLog("SendCommandUsageAsync: Payload serialized to JSON");
-
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                Plugin.Instance?.DebugLog("SendCommandUsageAsync: Sending HTTP request to webhook URL");
-                var response = await Client.PostAsync(_webhookUrl, content);
-
-                if (!response.IsSuccessStatusCode)
+                // Create a cancellation token that will cancel the request after 5 seconds
+                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
                 {
-                    string errorContent = await response.Content.ReadAsStringAsync();
-                    Plugin.Instance?.DebugLog($"SendCommandUsageAsync: Request failed with status {response.StatusCode}");
-                    Plugin.Instance?.DebugLog($"SendCommandUsageAsync: Error content: {errorContent}");
+                    // Send the webhook with the cancellation token
+                    var response = await Client.PostAsync(_webhookUrl, content, cts.Token);
 
-                    if (_debug)
-                        Log.Debug($"[WebhookService] Failed to send webhook: {response.StatusCode} - {errorContent}");
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        string errorContent = await response.Content.ReadAsStringAsync();
+                        if (_debug)
+                            Log.Debug($"[WebhookService] Failed to send webhook: {response.StatusCode} - {errorContent}");
+                    }
                 }
-                else
-                {
-                    Plugin.Instance?.DebugLog($"SendCommandUsageAsync: Webhook sent successfully with status {response.StatusCode}");
-                }
+            }
+            catch (OperationCanceledException)
+            {
+                // This is expected if the request times out or is cancelled
+                if (_debug)
+                    Log.Debug("[WebhookService] Webhook request was cancelled or timed out");
             }
             catch (Exception ex)
             {
-                Plugin.Instance?.DebugLog($"SendCommandUsageAsync: Exception occurred: {ex.Message}\n{ex.StackTrace}");
-
+                // Log other exceptions but don't let them crash the server
                 if (_debug)
                     Log.Debug($"[WebhookService] Error sending webhook: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// Legacy method for backward compatibility
+        /// </summary>
+        public async Task SendCommandUsageAsync(string commandName, string userName, string arguments, bool success)
+        {
+            // This will run without blocking by delegating to the non-blocking implementation
+            SendCommandUsage(commandName, userName, arguments, success);
+
+            // Return a completed task to satisfy the async signature
+            await Task.CompletedTask;
         }
     }
 }
