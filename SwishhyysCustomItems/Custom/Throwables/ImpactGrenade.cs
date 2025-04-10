@@ -10,7 +10,6 @@ using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Map;
 using JetBrains.Annotations;
 using MEC;
-using SCI.Custom.Config;
 using UnityEngine;
 using YamlDotNet.Serialization;
 

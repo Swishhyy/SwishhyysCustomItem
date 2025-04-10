@@ -9,7 +9,6 @@ using SCI.Custom.Config;                             // Custom configuration cla
 using System;                                        // Provides basic system functionalities.
 using System.Collections.Generic;                    // Provides generic collection types, such as Dictionary.
 using System.Linq;                                   // Enables LINQ queries for collections.
-using UnityEngine;                                   // Provides Unity classes for vectors, random numbers, math functions, etc.
 
 namespace SCI.Custom.MedicalItems
 {

@@ -6,8 +6,6 @@ using Exiled.API.Features.Items;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Map;
-using InventorySystem.Items;
-using InventorySystem.Items.ThrowableProjectiles;
 using JetBrains.Annotations;
 using MEC;
 using SCI.Custom.Config;
@@ -85,15 +83,15 @@ namespace SCI.Custom.Items.Grenades
 
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
-            Log.Debug("VVUP Custom Items: Cluster Grenade, initial grenade detonated, running methods");
-            Log.Debug("VVUP Custom Items: Cluster Grenade, running spawning cluster grenades");
+            Log.Debug("Cluster Grenade, initial grenade detonated, running methods");
+            Log.Debug("Cluster Grenade, running spawning cluster grenades");
             Timing.CallDelayed(0.1f, () =>
             {
-                Log.Debug("VVUP Custom Items: Cluster Grenade, Spawning a small grenade to scatter the other grenades");
+                Log.Debug("Cluster Grenade, Spawning a small grenade to scatter the other grenades");
                 ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
                 grenade.FuseTime = 0.25f;
                 grenade.ScpDamageMultiplier = 0.5f;
-                Log.Debug($"VVUP Custom Items: Cluster Grenade, setting grenades ownership from the server to {ev.Player.Nickname}");
+                Log.Debug($"Cluster Grenade, setting grenades ownership from the server to {ev.Player.Nickname}");
                 grenade.ChangeItemOwner(null, ev.Player);
                 grenade.SpawnActive(ev.Position, ev.Player);
                 grenade.FuseTime = ClusterGrenadeFuseTime;
@@ -101,7 +99,7 @@ namespace SCI.Custom.Items.Grenades
                 for (int i = 0; i <= ClusterGrenadeCount; i++)
                 {
                     Log.Debug(
-                        $"VVUP Custom Items: Cluster Grenade, spawning {ClusterGrenadeCount - i} more grenades at {ev.Position}");
+                        $"Cluster Grenade, spawning {ClusterGrenadeCount - i} more grenades at {ev.Position}");
                     grenade.ChangeItemOwner(null, ev.Player);
                     if (ClusterGrenadeRandomSpread)
                         grenade.SpawnActive(GrenadeOffset(ev.Position), owner: ev.Player);
