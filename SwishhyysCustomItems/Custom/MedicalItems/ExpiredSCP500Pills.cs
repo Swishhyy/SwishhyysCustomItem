@@ -22,7 +22,7 @@ namespace SCI.Custom.MedicalItems
         public override ItemType Type { get; set; } = ItemType.SCP500;
 
         // The displayed name for the custom item.
-        public override string Name { get; set; } = "Expired SCP-500 Pills";
+        public override string Name { get; set; } = "<color=#663399>Expired Pills</color>";
 
         // A short description of the custom item.
         public override string Description { get; set; } = "An expired bottle of SCP-500 pills with unpredictable effects.";

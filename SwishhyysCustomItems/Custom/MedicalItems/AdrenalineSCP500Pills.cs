@@ -20,7 +20,7 @@ namespace SCI.Custom.MedicalItems
         public override ItemType Type { get; set; } = ItemType.SCP500;
 
         // The display name of the custom item.
-        public override string Name { get; set; } = "Adrenaline Pills";
+        public override string Name { get; set; } = "<color=#8A2BE2>Adrenaline Pills</color>";
 
         // A short description of what the custom item does.
         public override string Description { get; set; } = "A small bottle of pills that gives you a boost of energy.";
