@@ -35,7 +35,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
+    <OutputPath>..\Builds\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -43,7 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
+    <OutputPath>..\Builds\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -116,10 +116,21 @@
     <Compile Include="Commands\GrantItemCommand.cs" />
     <Compile Include="Commands\HeadCommand.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Config\AdrenalineSCP500PillsConfig.cs" />
+    <Compile Include="Config\ClusterGrenadeConfig.cs" />
+    <Compile Include="Config\ExpiredSCP500PillsConfig.cs" />
+    <Compile Include="Config\ImpactGrenadeConfig.cs" />
+    <Compile Include="Config\SmokeGrenadeConfig.cs" />
+    <Compile Include="Config\SuicideSCP500PillsConfig.cs" />
     <Compile Include="Custom\MedicalItems\AdrenalineSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\ExpiredSCP500Pills.cs" />
+    <Compile Include="Custom\MedicalItems\SuicideSCP500Pills.cs" />
+    <Compile Include="Custom\Throwables\ClusterGrenade.cs" />
+    <Compile Include="Custom\Throwables\ImpactGrenade.cs" />
+    <Compile Include="Custom\Throwables\SmokeGrenade.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\WebhookServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -128,6 +139,9 @@
   <ItemGroup>
     <PackageReference Include="ExMod.Exiled">
       <Version>9.5.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
