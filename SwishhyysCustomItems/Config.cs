@@ -35,6 +35,9 @@ namespace SCI
         // This property also uses a corresponding custom configuration class.
         public SuicideSCP500PillsConfig SuicideSCP500 { get; set; } = new SuicideSCP500PillsConfig();
 
+        [Description("Configuration for Cluster Grenade")]
+        public ClusterGrenadeConfig ClusterGrenade { get; set; } = new ClusterGrenadeConfig();
+
         // Additional modular configurations can be added here in the future.
         // For example, you can uncomment and define another feature configuration as needed.
         // [Description("Configuration for another feature")]

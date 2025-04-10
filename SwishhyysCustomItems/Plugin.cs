@@ -7,6 +7,7 @@
     using System;                           // Provides fundamental classes and base classes.
     using SCI.Custom.Config;                // For configuration access
     using SCI.Services;                     // For WebhookService
+    using SCI.Custom.Items.Grenades;
 
     // Define the main plugin class which extends Exiled's Plugin base class using a generic Config type.
     public class Plugin : Plugin<Config>
@@ -28,6 +29,7 @@
         private ExpiredSCP500Pills _expiredSCP500Pills;
         private AdrenalineSCP500Pills _adrenalineSCP500Pills;
         private SuicideSCP500Pills _suicideSCP500Pills;
+        private ClusterGrenade _clusterGrenade;
 
         // Define the minimum required version of the Exiled framework to run this plugin.
         private readonly Version requiredExiledVersion = new Version(9, 5, 1);
@@ -72,12 +74,14 @@
             _expiredSCP500Pills = new ExpiredSCP500Pills(Config.ExpiredSCP500);
             _adrenalineSCP500Pills = new AdrenalineSCP500Pills(Config.AdrenalineSCP500);
             _suicideSCP500Pills = new SuicideSCP500Pills(Config.SuicideSCP500);
+            _clusterGrenade = new ClusterGrenade(Config.ClusterGrenade);
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
             _expiredSCP500Pills.Register();
             _adrenalineSCP500Pills.Register();
             _suicideSCP500Pills.Register();
+            _clusterGrenade.Register();
 
             // Log a debug message listing the registered custom items.
             Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills");
@@ -95,12 +99,14 @@
             _expiredSCP500Pills?.Unregister();
             _adrenalineSCP500Pills?.Unregister();
             _suicideSCP500Pills?.Unregister();
+            _clusterGrenade?.Unregister();
 
             // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
             _adrenalineSCP500Pills = null;
             _suicideSCP500Pills = null;
             WebhookService = null;
+            _clusterGrenade = null;
 
             // Log that the plugin has been disabled.
             Log.Info($"{Name} has been disabled!");

@@ -8,6 +8,7 @@ using MEC;                                           // Used for managing delaye
 using SCI.Custom.Config;                             // Access to custom configuration classes for plugin features.
 using System;                                        // Provides basic system functionalities.
 using UnityEngine;                                   // Provides access to Unity engine features, such as Vector3 and Mathf.
+using Exiled.API.Features.Items;
 
 namespace SCI.Custom.MedicalItems
 {
@@ -124,12 +125,21 @@ namespace SCI.Custom.MedicalItems
         }
 
         // Handles the explosion effect for the player and nearby players.
+        // Handles the explosion effect for the player and nearby players.
         private void ExplodePlayer(Player player, bool survives)
         {
             Plugin.Instance?.DebugLog($"ExplodePlayer called for {player.Nickname}, survives={survives}");
 
             try
             {
+                // Create explosion effect at player's position
+                Plugin.Instance?.DebugLog("ExplodePlayer: Creating explosion effect");
+
+                // Create an explosive grenade at the player's position
+                ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
+                grenade.FuseTime = 0.1f; // Very short fuse
+                grenade.SpawnActive(player.Position + new Vector3(0, 0.1f, 0)); // Slightly above player to ensure visibility
+
                 // If the player does not survive, schedule a delayed kill
                 if (!survives)
                 {

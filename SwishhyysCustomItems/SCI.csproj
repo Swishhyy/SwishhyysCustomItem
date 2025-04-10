@@ -117,11 +117,13 @@
     <Compile Include="Commands\HeadCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Config\AdrenalineSCP500PillsConfig.cs" />
+    <Compile Include="Config\ClusterGrenadeConfig.cs" />
     <Compile Include="Config\ExpiredSCP500PillsConfig.cs" />
     <Compile Include="Config\SuicideSCP500PillsConfig.cs" />
     <Compile Include="Custom\MedicalItems\AdrenalineSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\ExpiredSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\SuicideSCP500Pills.cs" />
+    <Compile Include="Custom\Throwables\ClusterGrenade.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\WebhookServices.cs" />
