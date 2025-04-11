@@ -18,7 +18,7 @@ using Exiled.Events.EventArgs.Item;
 
 namespace SCI.Custom.Weapon
 {
-    public class Railgun : CustomItem
+    public class Railgun : CustomWeapon
     {
         // Readonly field to hold configuration for this weapon
         private readonly RailgunConfig _config;
@@ -36,26 +36,28 @@ namespace SCI.Custom.Weapon
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GunE11SR;
         public override uint Id { get; set; } = 107;
+        public override float Damage { get; set; } = 150f;
         public override string Name { get; set; } = "<color=#0066FF>Railgun</color>";
         public override string Description { get; set; } = "A powerful railgun created by combining a Micro HID and a Particle Disruptor";
         public override float Weight { get; set; } = 3.2f;
+        public override byte ClipSize { get; set; } = 1;
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 1,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-           {
-               new DynamicSpawnPoint
+            DynamicSpawnPoints =
+            [
+               new()
                {
                    Chance = 10,
                    Location = SpawnLocationType.InsideHczArmory,
                },
-               new DynamicSpawnPoint
+               new()
                {
                    Chance = 10,
                    Location = SpawnLocationType.InsideSurfaceNuke,
                }
-           }
+            ]
         };
 
         // Subscribe to events when item is registered
@@ -138,7 +140,7 @@ namespace SCI.Custom.Weapon
                 // but handle our own damage and effects
 
                 // Get the current item as a Firearm
-                if (!(ev.Player.CurrentItem is Firearm firearm))
+                if (ev.Player.CurrentItem is not Firearm firearm)
                 {
                     Plugin.Instance?.DebugLog("Failed to cast item to Firearm");
                     return;
@@ -294,7 +296,7 @@ namespace SCI.Custom.Weapon
                 Plugin.Instance?.DebugLog($"Error setting ammo: {ex.Message}");
             }
         }
-        private readonly Queue<Primitive> _spawnedPrimitives = new Queue<Primitive>();
+        private readonly Queue<Primitive> _spawnedPrimitives = new();
 
         private void FireRailgun(Player player)
         {
@@ -368,7 +370,7 @@ namespace SCI.Custom.Weapon
             }
         }
         // Add this field to store randomized beam color information
-        private readonly System.Random _random = new System.Random();
+        private readonly System.Random _random = new();
 
         // Method to spawn an animated beam effect with randomized hues
         private void SpawnBeam(Vector3 start, Vector3 end)
@@ -491,7 +493,7 @@ namespace SCI.Custom.Weapon
             while (_spawnedPrimitives.Count > 0)
             {
                 Primitive beam = _spawnedPrimitives.Dequeue();
-                beam?.Destroy(); 
+                beam?.Destroy();
             }
         }
 
@@ -503,5 +505,3 @@ namespace SCI.Custom.Weapon
         }
     }
 }
-
-          

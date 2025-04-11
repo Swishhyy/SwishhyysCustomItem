@@ -19,14 +19,9 @@ using Server = Exiled.API.Features.Server;
 namespace SCI.Custom.Items.Grenades
 {
     [CustomItem(ItemType.GrenadeHE)]
-    public class ClusterGrenade : CustomGrenade
+    public class ClusterGrenade(ClusterGrenadeConfig clusterGrenade) : CustomGrenade
     {
-        private readonly ClusterGrenadeConfig clusterGrenade;
-
-        public ClusterGrenade(ClusterGrenadeConfig clusterGrenade)
-        {
-            this.clusterGrenade = clusterGrenade;
-        }
+        private readonly ClusterGrenadeConfig clusterGrenade = clusterGrenade;
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeHE;
@@ -41,37 +36,37 @@ namespace SCI.Custom.Items.Grenades
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 2,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new DynamicSpawnPoint
+            DynamicSpawnPoints =
+            [
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideLczArmory,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideHczArmory,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.Inside049Armory,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideSurfaceNuke,
                 },
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.Inside079Armory,
                 },
-            },
+            ],
         };
         public override bool ExplodeOnCollision { get; set; } = false;
         public override float FuseTime { get; set; } = 5;
@@ -111,7 +106,7 @@ namespace SCI.Custom.Items.Grenades
 
         private Vector3 GrenadeOffset(Vector3 position)
         {
-            Random random = new Random();
+            Random random = new();
             float x = position.x - 1 + ((float)random.NextDouble() * random.Next(0, 3));
             float y = position.y;
             float z = position.z - 1 + ((float)random.NextDouble() * random.Next(0, 3));

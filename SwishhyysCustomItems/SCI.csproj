@@ -2,6 +2,9 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <LangVersion>12.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{20635FA3-B366-466D-A4A4-8ED161A26A8F}</ProjectGuid>
@@ -39,7 +42,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
@@ -48,7 +51,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
@@ -234,6 +237,7 @@
     <Compile Include="Config\AdrenalineSCP500PillsConfig.cs" />
     <Compile Include="Config\ClusterGrenadeConfig.cs" />
     <Compile Include="Config\ExpiredSCP500PillsConfig.cs" />
+    <Compile Include="Config\GrenadeLauncherConfig.cs" />
     <Compile Include="Config\ImpactGrenadeConfig.cs" />
     <Compile Include="Config\RailgunConfig.cs" />
     <Compile Include="Config\SmokeGrenadeConfig.cs" />
@@ -244,7 +248,8 @@
     <Compile Include="Custom\Throwables\ClusterGrenade.cs" />
     <Compile Include="Custom\Throwables\ImpactGrenade.cs" />
     <Compile Include="Custom\Throwables\SmokeGrenade.cs" />
-    <Compile Include="Custom\Weapon\Railgun.cs" />
+    <Compile Include="Custom\Weapons\GrenadeLauncher.cs" />
+    <Compile Include="Custom\Weapons\Railgun.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\WebhookServices.cs" />

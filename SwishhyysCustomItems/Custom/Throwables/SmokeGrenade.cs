@@ -14,14 +14,9 @@ using YamlDotNet.Serialization;
 namespace SCI.Custom.Throwables
 {
     [CustomItem(ItemType.GrenadeFlash)]
-    public class SmokeGrenade : CustomGrenade
+    public class SmokeGrenade(SmokeGrenadeConfig config) : CustomGrenade
     {
-        private readonly SmokeGrenadeConfig _config;
-
-        public SmokeGrenade(SmokeGrenadeConfig config)
-        {
-            _config = config;
-        }
+        private readonly SmokeGrenadeConfig _config = config;
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeFlash;
@@ -36,29 +31,29 @@ namespace SCI.Custom.Throwables
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 5,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new DynamicSpawnPoint
+            DynamicSpawnPoints =
+            [
+                new()
                 {
                     Chance = 25,
                     Location = SpawnLocationType.InsideHczArmory,
                 },
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 25,
                     Location = SpawnLocationType.InsideGr18,
                 },
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 25,
                     Location = SpawnLocationType.InsideSurfaceNuke,
                 },
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 25,
                     Location = SpawnLocationType.InsideLczArmory,
                 },
-            },
+            ],
         };
 
         public override void Init()

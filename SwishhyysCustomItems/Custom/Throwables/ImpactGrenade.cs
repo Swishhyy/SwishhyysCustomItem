@@ -16,14 +16,9 @@ using YamlDotNet.Serialization;
 namespace SCI.Custom.Throwables
 {
     [CustomItem(ItemType.GrenadeHE)]
-    public class ImpactGrenade : CustomGrenade
+    public class ImpactGrenade(ImpactGrenadeConfig config) : CustomGrenade
     {
-        private readonly ImpactGrenadeConfig _config;
-
-        public ImpactGrenade(ImpactGrenadeConfig config)
-        {
-            _config = config;
-        }
+        private readonly ImpactGrenadeConfig _config = config;
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeHE;
@@ -35,37 +30,7 @@ namespace SCI.Custom.Throwables
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 2,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new DynamicSpawnPoint
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.InsideLczArmory,
-                },
-
-                new DynamicSpawnPoint
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.InsideHczArmory,
-                },
-
-                new DynamicSpawnPoint
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.Inside049Armory,
-                },
-
-                new DynamicSpawnPoint
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.InsideSurfaceNuke,
-                },
-                new DynamicSpawnPoint
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.Inside079Armory,
-                },
-            },
+            DynamicSpawnPoints = [new() { Chance = 15, Location = SpawnLocationType.InsideLczArmory }, new() { Chance = 15, Location = SpawnLocationType.InsideHczArmory }, new() { Chance = 15, Location = SpawnLocationType.Inside049Armory }, new() { Chance = 15, Location = SpawnLocationType.InsideSurfaceNuke }, new() { Chance = 15, Location = SpawnLocationType.Inside079Armory },],
         };
 
         // Key settings for impact grenade

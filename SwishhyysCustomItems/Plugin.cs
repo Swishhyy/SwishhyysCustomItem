@@ -19,7 +19,7 @@
         // Override the plugin's author property.
         public override string Author => "Swishhyy";
         // Override the plugin's version property.
-        public override Version Version => new Version(2, 1, 0);
+        public override Version Version => new(2, 1, 0);
 
         // Public static instance for global access (singleton pattern)
         public static Plugin Instance { get; private set; }
@@ -35,9 +35,10 @@
         private ImpactGrenade _impactGrenade;
         private SmokeGrenade _smokeGrenade;
         private Railgun _railgun;
+        private GrenadeLauncher _grenadeLauncher;
 
         // Define the minimum required version of the Exiled framework to run this plugin.
-        private readonly Version requiredExiledVersion = new Version(9, 5, 1);
+        private readonly Version requiredExiledVersion = new(9, 5, 1);
 
         // Helper method for debug logging throughout the plugin
         public void DebugLog(string message)
@@ -83,6 +84,8 @@
             _impactGrenade = new ImpactGrenade(Config.ImpactGrenade);
             _smokeGrenade = new SmokeGrenade(Config.SmokeGrenade);
             _railgun = new Railgun(Config.Railgun);
+            _grenadeLauncher = new GrenadeLauncher(Config.GrenadeLauncher);
+
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
@@ -93,6 +96,7 @@
             _impactGrenade.Register();
             _smokeGrenade.Register();
             _railgun.Register();
+            _grenadeLauncher.Register();
 
             // Log a debug message listing the registered custom items.
             Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade");
@@ -113,7 +117,8 @@
             _clusterGrenade?.Unregister();
             _impactGrenade?.Unregister();
             _smokeGrenade?.Unregister();
-            _railgun.Unregister();
+            _railgun?.Unregister();
+            _grenadeLauncher?.Unregister();
 
             // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
@@ -123,6 +128,7 @@
             _impactGrenade = null;
             _smokeGrenade = null;
             _railgun = null;
+            _grenadeLauncher = null;
 
             WebhookService = null;
 

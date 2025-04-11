@@ -35,37 +35,37 @@ namespace SCI.Custom.MedicalItems
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 2,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new DynamicSpawnPoint
+            DynamicSpawnPoints =
+            [
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideLczCafe,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideLczWc,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.Inside914,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideGr18Glass,
                 },
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.Inside096,
                 },
-            },
+            ],
         };
 
         // Private field storing the configuration for this custom item.

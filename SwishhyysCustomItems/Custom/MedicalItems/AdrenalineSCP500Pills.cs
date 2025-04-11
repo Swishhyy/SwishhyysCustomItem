@@ -35,44 +35,44 @@ namespace SCI.Custom.MedicalItems
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 2,
-            DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new DynamicSpawnPoint
+            DynamicSpawnPoints =
+            [
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideLczCafe,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideLczWc,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.Inside914,
                 },
 
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.InsideGr18Glass,
                 },
-                new DynamicSpawnPoint
+                new()
                 {
                     Chance = 15,
                     Location = SpawnLocationType.Inside096,
                 },
-            },
+            ],
         };
 
         // Readonly field to store the custom configuration for this item.
         private readonly AdrenalineSCP500PillsConfig _config;
 
         // Dictionary to track cooldowns for each player by their UserId.
-        private readonly Dictionary<string, DateTime> cooldowns = new Dictionary<string, DateTime>();
+        private readonly Dictionary<string, DateTime> cooldowns = [];
 
         // Constructor that takes a custom configuration object.
         public AdrenalineSCP500Pills(AdrenalineSCP500PillsConfig config)
