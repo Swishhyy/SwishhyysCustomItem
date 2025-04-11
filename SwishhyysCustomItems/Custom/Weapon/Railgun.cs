@@ -11,6 +11,10 @@ using MEC;
 using Player = Exiled.API.Features.Player;
 using Log = Exiled.API.Features.Log;
 using JetBrains.Annotations;
+using AdminToys;
+using Exiled.API.Features.Toys;
+
+
 namespace SCI.Custom.Weapon
 {
     public class Railgun : CustomItem
@@ -243,8 +247,8 @@ namespace SCI.Custom.Weapon
                 Plugin.Instance?.DebugLog($"Error setting ammo: {ex.Message}");
             }
         }
+        private readonly Queue<Primitive> _spawnedPrimitives = new Queue<Primitive>();
 
-        // Railgun firing logic
         private void FireRailgun(Player player)
         {
             try
@@ -267,6 +271,9 @@ namespace SCI.Custom.Weapon
                 {
                     Plugin.Instance?.DebugLog($"Railgun hit at position {impactPoint}");
                 }
+
+                // Create a beam effect
+                SpawnBeam(player.CameraTransform.position, impactPoint);
 
                 // Find and damage players in the beam's path
                 foreach (Player target in Player.List)
@@ -313,5 +320,92 @@ namespace SCI.Custom.Weapon
                 Plugin.Instance?.DebugLog($"FireRailgun: Exception: {ex.Message}\n{ex.StackTrace}");
             }
         }
+
+        // Method to spawn a beam effect between two points
+        private void SpawnBeam(Vector3 start, Vector3 end)
+        {
+            try
+            {
+                Vector3 direction = end - start;
+                float distance = direction.magnitude;
+                Vector3 midPoint = start + direction * 0.5f;
+                Quaternion rotation = Quaternion.LookRotation(direction);
+
+                // Create beam primitive
+                Primitive beam = Primitive.Create(PrimitiveType.Cylinder);
+                beam.Flags = PrimitiveFlags.Visible;
+
+                // Set bright red color with slight transparency
+                beam.Color = new Color(10f, 0f, 0f, 0.9f);
+
+                // Position and orient the beam
+                beam.Position = midPoint;
+                beam.Rotation = rotation * Quaternion.Euler(90f, 0f, 0f);
+                beam.Scale = new Vector3(0.03f, distance / 2f, 0.03f);
+
+                // Add to queue for cleanup
+                _spawnedPrimitives.Enqueue(beam);
+
+                // Start fade out and destroy coroutine
+                Timing.RunCoroutine(FadeOutAndDestroy(beam, 2f));
+
+                Plugin.Instance?.DebugLog("Railgun beam effect created");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error creating beam effect: {ex.Message}");
+                Plugin.Instance?.DebugLog($"SpawnBeam: Exception: {ex.Message}\n{ex.StackTrace}");
+            }
+        }
+
+        // Coroutine to fade out and destroy the beam
+        private IEnumerator<float> FadeOutAndDestroy(Primitive primitive, float duration)
+        {
+            if (primitive == null)
+                yield break;
+
+            Color initialColor = primitive.Color;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                if (primitive == null)
+                    break;
+
+                elapsedTime += 0.1f;
+                float alpha = Mathf.Lerp(initialColor.a, 0f, elapsedTime / duration);
+                primitive.Color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+
+                yield return Timing.WaitForSeconds(0.1f);
+            }
+
+            if (primitive != null)
+            {
+                primitive.Destroy(); 
+                if (_spawnedPrimitives.Contains(primitive))
+                {
+                    _spawnedPrimitives.Dequeue();
+                }
+            }
+        }
+
+        // Method to clean up all beams when the weapon is unloaded
+        private void CleanupBeams()
+        {
+            while (_spawnedPrimitives.Count > 0)
+            {
+                Primitive beam = _spawnedPrimitives.Dequeue();
+                beam?.Destroy(); 
+            }
+        }
+
+        // Override OnDestroy to clean up any remaining beams
+        public override void Destroy()
+        {
+            CleanupBeams();
+            base.Destroy();
+        }
     }
 }
+
+          
