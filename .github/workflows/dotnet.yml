@@ -31,7 +31,7 @@ jobs:
 
       - name: Build Solution
         run: |
-          # Use MSBuild to build the solution
+          REM Use MSBuild to build the solution
           "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" ./SCI.sln /m /p:Configuration=Release
         shell: cmd
 
