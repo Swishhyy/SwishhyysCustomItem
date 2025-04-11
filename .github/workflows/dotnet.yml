@@ -11,15 +11,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # Step 1: Check out the repository
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2: Cache NuGet packages to speed up subsequent builds
       - name: Cache NuGet packages
         uses: actions/cache@v3
         with:
-          # The common NuGet package folder on Windows and in some cases the project's packages folder
           path: |
             ~/.nuget/packages
             **/packages
@@ -27,27 +24,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      # Step 3: Cache external dependencies (if they are not committed in the repo, adjust as needed)
-      - name: Cache External Dependencies
-        uses: actions/cache@v3
-        with:
-          # Update this path to match your external dependencies folder
-          path: ExternalDependencies
-          key: ${{ runner.os }}-external-dependencies-${{ hashFiles('ExternalDependencies/**') }}
-          restore-keys: |
-            ${{ runner.os }}-external-dependencies-
-
-      # Step 4: Restore NuGet dependencies using the NuGet CLI
       - name: Restore NuGet Packages
         run: nuget restore SCI.sln
 
-      # Step 5: Build the solution using MSBuild
       - name: Build Solution
         run: msbuild SCI.sln /m /p:Configuration=Release
 
-      # Step 6: (Optional) Upload the compiled DLLs as an artifact so you can download them if needed
-      - name: Upload Compiled DLLs
-        uses: actions/upload-artifact@v3
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: exiled-plugin-dlls
           path: '**\bin\Release\*.dll'
