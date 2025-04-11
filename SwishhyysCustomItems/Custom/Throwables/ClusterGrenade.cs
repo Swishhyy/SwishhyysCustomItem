@@ -21,7 +21,7 @@ namespace SCI.Custom.Items.Grenades
     [CustomItem(ItemType.GrenadeHE)]
     public class ClusterGrenade : CustomGrenade
     {
-        private ClusterGrenadeConfig clusterGrenade;
+        private readonly ClusterGrenadeConfig clusterGrenade;
 
         public ClusterGrenade(ClusterGrenadeConfig clusterGrenade)
         {

@@ -120,6 +120,7 @@
     <Compile Include="Config\ClusterGrenadeConfig.cs" />
     <Compile Include="Config\ExpiredSCP500PillsConfig.cs" />
     <Compile Include="Config\ImpactGrenadeConfig.cs" />
+    <Compile Include="Config\RailgunConfig.cs" />
     <Compile Include="Config\SmokeGrenadeConfig.cs" />
     <Compile Include="Config\SuicideSCP500PillsConfig.cs" />
     <Compile Include="Custom\MedicalItems\AdrenalineSCP500Pills.cs" />
@@ -128,8 +129,10 @@
     <Compile Include="Custom\Throwables\ClusterGrenade.cs" />
     <Compile Include="Custom\Throwables\ImpactGrenade.cs" />
     <Compile Include="Custom\Throwables\SmokeGrenade.cs" />
+    <Compile Include="Custom\Weapon\Railgun.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\PrimitiveManager.cs" />
     <Compile Include="Utilities\WebhookServices.cs" />
   </ItemGroup>
   <ItemGroup>

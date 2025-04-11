@@ -41,9 +41,18 @@ namespace SCI.Commands
             RegisterCommand(new GrantItemCommand());
             Plugin.Instance?.DebugLog("GrantItemCommand registered successfully");
 
-            // Additional subcommands can be registered in a similar fashion.
+            // Register the ItemListCommand as a subcommand
+            Plugin.Instance?.DebugLog("Registering ItemListCommand as subcommand");
+            RegisterCommand(new ItemListCommand());
+            Plugin.Instance?.DebugLog("ItemListCommand registered successfully");
+
+            Plugin.Instance?.DebugLog("Registering HelpCommand as subcommand");
+            RegisterCommand(new HelpCommand());
+            Plugin.Instance?.DebugLog("HelpCommand registered successfully");
+
             Plugin.Instance?.DebugLog("HeadCommand.LoadGeneratedCommands completed");
         }
+
 
         // This method is executed when the parent command is called without any subcommands.
         // It provides usage information to the user.
