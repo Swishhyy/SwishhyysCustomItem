@@ -1,6 +1,8 @@
-name: Build .NET Framework EXILED Plugin
+name: Nightly Build - Exiled Plugin
 
 on:
+  schedule:
+    - cron: '0 0 * * *' # Runs nightly at midnight UTC
   push:
     branches: [ "main" ]
   pull_request:
@@ -27,23 +29,14 @@ jobs:
       - name: Restore NuGet Packages
         run: nuget restore ./SCI.sln
 
-      - name: Build Solution with FullPath
-        id: build_fullpath
-        run: '"C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" ./SCI.sln /m /p:Configuration=Release'
-        continue-on-error: true
-
-      - name: Fallback - Add MSBuild to PATH
-        if: ${{ steps.build_fullpath.outcome != 'success' }}
+      - name: Build Solution
         run: |
-          echo "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin" >> $env:GITHUB_PATH
-        shell: pwsh
+          # Use MSBuild to build the solution
+          "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" ./SCI.sln /m /p:Configuration=Release
+        shell: cmd
 
-      - name: Build Solution with msbuild in PATH (Fallback)
-        if: ${{ steps.build_fullpath.outcome != 'success' }}
-        run: msbuild ./SCI.sln /m /p:Configuration=Release
-
-      - name: Upload a Build Artifact
+      - name: Upload Compiled Artifacts
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: exiled-plugin-dlls
+          name: Exiled-Plugin-Nightly
           path: '**\bin\Release\*.dll'
