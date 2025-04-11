@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Exiled.API.Enums;
-using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
-using JetBrains.Annotations;
-using SCI.Custom.Config;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using MEC;
 using Player = Exiled.API.Features.Player;
 using Log = Exiled.API.Features.Log;
-
+using JetBrains.Annotations;
 namespace SCI.Custom.Weapon
 {
     public class Railgun : CustomItem
@@ -38,25 +34,23 @@ namespace SCI.Custom.Weapon
         public override string Name { get; set; } = "<color=#0066FF>Railgun</color>";
         public override string Description { get; set; } = "A powerful railgun created by combining a Micro HID and a Particle Disruptor";
         public override float Weight { get; set; } = 3.2f;
-
-        // Define spawn properties
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 1,
             DynamicSpawnPoints = new List<DynamicSpawnPoint>
-            {
-                new DynamicSpawnPoint
-                {
-                    Chance = 10,
-                    Location = SpawnLocationType.InsideHczArmory,
-                },
-                new DynamicSpawnPoint
-                {
-                    Chance = 10,
-                    Location = SpawnLocationType.InsideSurfaceNuke,
-                }
-            }
+           {
+               new DynamicSpawnPoint
+               {
+                   Chance = 10,
+                   Location = SpawnLocationType.InsideHczArmory,
+               },
+               new DynamicSpawnPoint
+               {
+                   Chance = 10,
+                   Location = SpawnLocationType.InsideSurfaceNuke,
+               }
+           }
         };
 
         // Subscribe to events when item is registered

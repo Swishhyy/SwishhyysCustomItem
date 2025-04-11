@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using Exiled.API.Enums;
-using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
 using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
@@ -12,7 +10,6 @@ using JetBrains.Annotations;
 using MEC;
 using UnityEngine;
 using YamlDotNet.Serialization;
-using Log = Exiled.API.Features.Log;
 
 namespace SCI.Custom.Throwables
 {
@@ -35,7 +32,6 @@ namespace SCI.Custom.Throwables
 
         public override bool ExplodeOnCollision { get; set; } = false;
         public override float FuseTime { get; set; } = 3f;
-
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
