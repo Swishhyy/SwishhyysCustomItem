@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Cache NuGet packages
+      - name: Cache NuGet Packages
         uses: actions/cache@v3
         with:
           path: |
@@ -26,17 +26,40 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Validate Solution File
+        run: |
+          if not exist "./SCI.sln" (
+            echo "Error: Solution file (SCI.sln) is missing." && exit 1
+          )
+        shell: cmd
+
       - name: Restore NuGet Packages
         run: nuget restore ./SCI.sln
+        shell: cmd
+        timeout-minutes: 10
 
       - name: Build Solution
         run: |
-          REM Use MSBuild to build the solution
-          "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" ./SCI.sln /m /p:Configuration=Release
+          for /f "tokens=*" %%i in ('"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe') do set MSBUILD_PATH=%%i
+          "%MSBUILD_PATH%" ./SCI.sln /m /p:Configuration=Release
+        shell: cmd
+        timeout-minutes: 15
+
+      - name: Verify Build Output
+        run: |
+          if not exist "**\\bin\\Release\\*.dll" (
+            echo "Error: Build artifacts are missing in Release directory." && exit 1
+          )
         shell: cmd
 
       - name: Upload Compiled Artifacts
         uses: actions/upload-artifact@v4.6.2
         with:
           name: Exiled-Plugin-Nightly
-          path: '**\bin\Release\*.dll'
+          path: '**\\bin\\Release\\*.dll'
+
+      - name: Clean Up Cache (Optional)
+        run: |
+          echo "Cleaning up cache to avoid stale artifacts..."
+          del /q /s **\\bin\\Release\\*.dll
+        shell: cmd
