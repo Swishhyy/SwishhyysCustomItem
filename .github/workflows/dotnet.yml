@@ -38,6 +38,12 @@ jobs:
         shell: cmd
         timeout-minutes: 10
 
+      - name: Include External Dependencies
+        run: |
+          mkdir -p ./bin/ExternalDependencies
+          cp -r ExternalDependencies/* ./bin/ExternalDependencies
+        timeout-minutes: 10
+
       - name: Build Solution
         run: |
           for /f "tokens=*" %%i in ('"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe') do set MSBUILD_PATH=%%i
@@ -63,3 +69,6 @@ jobs:
           echo "Cleaning up cache to avoid stale artifacts..."
           del /q /s **\\bin\\Release\\*.dll
         shell: cmd
+
+
+       
