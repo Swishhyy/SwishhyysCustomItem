@@ -12,8 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -52,6 +51,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <!-- Updated References -->
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\..\Downloads\Dev\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
@@ -77,23 +77,13 @@
     <Reference Include="Pooling">
       <HintPath>..\..\..\..\Downloads\Dev\Pooling.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <!-- Ensure All Unity Modules Are Referenced -->
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
@@ -114,6 +104,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <!-- Compile Source Files -->
     <Compile Include="Commands\GrantItemCommand.cs" />
     <Compile Include="Commands\HeadCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
@@ -141,16 +132,11 @@
     <Compile Include="Utilities\WebhookServices.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <PackageReference Include="ExMod.Exiled">
-      <Version>9.5.1</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.3</Version>
-    </PackageReference>
+    <!-- Added Missing Dependencies -->
+    <PackageReference Include="ExMod.Exiled" Version="9.5.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="JetBrains.Annotations" Version="2023.1.1" />
+    <PackageReference Include="MEC" Version="3.0.0" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
