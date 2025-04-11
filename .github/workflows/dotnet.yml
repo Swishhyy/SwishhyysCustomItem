@@ -27,15 +27,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      # Step 3: Restore NuGet dependencies using the NuGet CLI
+      # Step 3: Cache external dependencies (if they are not committed in the repo, adjust as needed)
+      - name: Cache External Dependencies
+        uses: actions/cache@v3
+        with:
+          # Update this path to match your external dependencies folder
+          path: ExternalDependencies
+          key: ${{ runner.os }}-external-dependencies-${{ hashFiles('ExternalDependencies/**') }}
+          restore-keys: |
+            ${{ runner.os }}-external-dependencies-
+
+      # Step 4: Restore NuGet dependencies using the NuGet CLI
       - name: Restore NuGet Packages
         run: nuget restore SCI.sln
 
-      # Step 4: Build the solution using MSBuild
+      # Step 5: Build the solution using MSBuild
       - name: Build Solution
         run: msbuild SCI.sln /m /p:Configuration=Release
 
-      # Step 5: (Optional) Upload the compiled DLLs as an artifact so you can download them if needed
+      # Step 6: (Optional) Upload the compiled DLLs as an artifact so you can download them if needed
       - name: Upload Compiled DLLs
         uses: actions/upload-artifact@v3
         with:
