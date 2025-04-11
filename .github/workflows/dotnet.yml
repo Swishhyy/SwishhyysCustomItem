@@ -11,9 +11,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      # Step 1: Check out the repository.
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Step 2: Cache NuGet packages.
       - name: Cache NuGet packages
         uses: actions/cache@v3
         with:
@@ -24,12 +26,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      # Step 3: Restore NuGet Packages.
       - name: Restore NuGet Packages
         run: nuget restore SCI.sln
 
-      - name: Build Solution
+      # Step 4: Build the solution using the full path to MSBuild (Primary Approach).
+      - name: Build Solution with FullPath
+        id: build_fullpath
+        run: '"C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" SCI.sln /m /p:Configuration=Release'
+        continue-on-error: true
+
+      # Step 5: If the primary build step failed, add MSBuild to PATH (Fallback Approach).
+      - name: Fallback - Add MSBuild to PATH
+        if: ${{ steps.build_fullpath.outcome != 'success' }}
+        run: echo "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin" >> $Env:GITHUB_PATH
+        shell: pwsh
+
+      # Step 6: If the primary build step failed, attempt to build using msbuild from the PATH.
+      - name: Build Solution with msbuild in PATH (Fallback)
+        if: ${{ steps.build_fullpath.outcome != 'success' }}
         run: msbuild SCI.sln /m /p:Configuration=Release
 
+      # Step 7: Upload the compiled DLLs as an artifact.
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.6.2
         with:
