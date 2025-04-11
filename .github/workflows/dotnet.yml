@@ -1,0 +1,37 @@
+name: Build EXILED Plugin
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # Must be Windows because EXILED targets .NET Framework
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      
+      # If your plugin references packages from NuGet, restore them:
+      - name: Restore NuGet packages
+        # Replace 'SCI.sln' with the name of your solution file
+        run: nuget restore SCI.sln
+
+      # Build the solution using MSBuild
+      - name: Build solution
+        run: msbuild SCI.sln /m /p:Configuration=Release
+
+      # (Optional) If you have any unit tests, you can run them here.
+      # Example for MSTest or NUnit:
+      # - name: Run tests
+      #   run: vstest.console.exe .\Tests\bin\Release\YourTests.dll
+
+      # Upload the compiled DLLs as an artifact so you can download them from GitHub.
+      - name: Upload compiled plugin
+        uses: actions/upload-artifact@v3
+        with:
+          name: exiled-dlls
+          path: '**/bin/Release/*.dll'
