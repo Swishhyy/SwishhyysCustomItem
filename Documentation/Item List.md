@@ -10,4 +10,4 @@
   - Smoke Grenade (id = 106) // Deploys a smoke screen for a short time
 * **Weapons**:
   - Railgun (WIP) (id = 107)
-  - Grenade Launcher (N/A as of now) (id = 108)
+  - Grenade Launcher (WIP) (id = 108)
