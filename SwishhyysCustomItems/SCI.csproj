@@ -12,7 +12,8 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp></NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -56,7 +57,7 @@
       <HintPath>..\..\..\..\Downloads\Dev\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Downloads\Dev\Assembly-CSharp-Publicized.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Assembly-CSharp-Publicized.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mirror">
@@ -65,43 +66,23 @@
     <Reference Include="Mirror.Components">
       <HintPath>..\..\..\..\Downloads\Dev\Mirror.Components.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\Downloads\Dev\Mono.Cecil.dll</HintPath>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalDependencies\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\..\..\..\Downloads\Dev\Mono.Cecil.Mdb.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalDependencies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Security">
-      <HintPath>..\..\..\..\Downloads\Dev\Mono.Security.dll</HintPath>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalDependencies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="Pooling">
-      <HintPath>..\..\..\..\Downloads\Dev\Pooling.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.CoreModule.dll</HintPath>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalDependencies\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <!-- Ensure All Unity Modules Are Referenced -->
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.PhysicsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VideoModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.VideoModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VirtualTexturingModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.VirtualTexturingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VRModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.VRModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.WindModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.WindModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.XRModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.XRModule.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <!-- Compile Source Files -->
@@ -113,7 +94,6 @@
     <Compile Include="Config\AdrenalineSCP500PillsConfig.cs" />
     <Compile Include="Config\ClusterGrenadeConfig.cs" />
     <Compile Include="Config\ExpiredSCP500PillsConfig.cs" />
-    <Compile Include="Config\GrenadeLauncherConfig.cs" />
     <Compile Include="Config\ImpactGrenadeConfig.cs" />
     <Compile Include="Config\RailgunConfig.cs" />
     <Compile Include="Config\SmokeGrenadeConfig.cs" />
@@ -124,7 +104,6 @@
     <Compile Include="Custom\Throwables\ClusterGrenade.cs" />
     <Compile Include="Custom\Throwables\ImpactGrenade.cs" />
     <Compile Include="Custom\Throwables\SmokeGrenade.cs" />
-    <Compile Include="Custom\Weapon\GrenadeLauncher.cs" />
     <Compile Include="Custom\Weapon\Railgun.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,13 +113,15 @@
   <ItemGroup>
     <!-- Added Missing Dependencies -->
     <PackageReference Include="ExMod.Exiled" Version="9.5.1" />
+    <PackageReference Include="Microsoft.CSharp">
+      <Version>4.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="Mono.CSharp">
+      <Version>4.0.0.143</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="JetBrains.Annotations" Version="2023.1.1" />
-    <PackageReference Include="UnityEngine" Version="1.0.0" />
-    <PackageReference Include="Mono.Cecil" Version="0.11.4" />
-    <PackageReference Include="Mono.Security" Version="1.0.0" />
-    <PackageReference Include="Pooling" Version="1.0.0" />
- 
+    <PackageReference Include="Mono.Cecil" Version="0.11.6" />
+    <PackageReference Include="Pooling" Version="1.0.0.3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
