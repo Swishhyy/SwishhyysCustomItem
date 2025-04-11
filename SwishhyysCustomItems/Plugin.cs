@@ -19,7 +19,7 @@
         // Override the plugin's author property.
         public override string Author => "Swishhyy";
         // Override the plugin's version property.
-        public override Version Version => new Version(2, 0, 0);
+        public override Version Version => new Version(2, 1, 0);
 
         // Public static instance for global access (singleton pattern)
         public static Plugin Instance { get; private set; }

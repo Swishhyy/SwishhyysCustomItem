@@ -77,6 +77,7 @@
     <Reference Include="Pooling">
       <HintPath>..\..\..\..\Downloads\Dev\Pooling.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
@@ -115,10 +116,13 @@
   <ItemGroup>
     <Compile Include="Commands\GrantItemCommand.cs" />
     <Compile Include="Commands\HeadCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\ItemListCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Config\AdrenalineSCP500PillsConfig.cs" />
     <Compile Include="Config\ClusterGrenadeConfig.cs" />
     <Compile Include="Config\ExpiredSCP500PillsConfig.cs" />
+    <Compile Include="Config\GrenadeLauncherConfig.cs" />
     <Compile Include="Config\ImpactGrenadeConfig.cs" />
     <Compile Include="Config\RailgunConfig.cs" />
     <Compile Include="Config\SmokeGrenadeConfig.cs" />
@@ -129,6 +133,7 @@
     <Compile Include="Custom\Throwables\ClusterGrenade.cs" />
     <Compile Include="Custom\Throwables\ImpactGrenade.cs" />
     <Compile Include="Custom\Throwables\SmokeGrenade.cs" />
+    <Compile Include="Custom\Weapon\GrenadeLauncher.cs" />
     <Compile Include="Custom\Weapon\Railgun.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
