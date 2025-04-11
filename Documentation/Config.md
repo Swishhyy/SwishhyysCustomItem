@@ -1,14 +1,12 @@
-### Config
-
+### Config 
 ```
 s_c_i:
-# Whether the plugin is enabled.
+# Whether the plugin is enabled or not
   is_enabled: true
-  # Whether debug messages should be shown in the console.
+  # Whether to enable debug logging
   debug: false
-  # Displays Command Usages in Discord.
+  # Discord webhook URL for notifications
   discord_webhook: ''
-  # Configuration for Expired SCP-500 Pills
   expired_s_c_p500:
   # Default duration for applied effects (in seconds)
     default_effect_duration: 10
@@ -308,7 +306,6 @@ s_c_i:
     survival_message: 'You consumed the suicide pills, but somehow survived the explosion!'
     # Message shown to player when they won't survive
     death_message: 'You consumed the suicide pills...'
-  # Configuration for Cluster Grenade
   cluster_grenade:
   # Number of child grenades to spawn after the initial explosion
     child_grenade_count: 3
@@ -330,7 +327,6 @@ s_c_i:
     damage_falloff_multiplier: 1
     # Enables logging for debugging purposes
     enable_debug_logging: false
-  # Configuration for Impact Grenade
   impact_grenade:
   # Maximum damage dealt at the center of explosion
     maximum_damage: 115
@@ -344,6 +340,41 @@ s_c_i:
     message_duration: 3
     # Whether to show hit message to affected players
     show_effect_message: true
+    # Enable debug logging
+    enable_debug_logging: false
+  smoke_grenade:
+  # Whether to remove the smoke effect after a delay
+    remove_smoke: true
+    # How long the smoke cloud remains before being removed (seconds)
+    smoke_time: 10
+    # Scale factor for the smoke effect (0.01 is small, 1.0 is large)
+    smoke_scale: 0.00999999978
+    # Maximum diameter the smoke cloud can expand to
+    smoke_diameter: 0
+    # Show hint message to players caught in smoke
+    show_smoke_message: false
+    # Message to show to players caught in smoke
+    smoke_message: 'You''re in a smoke cloud!'
+    # Duration to show smoke message (seconds)
+    message_duration: 3
+    # Enable debug logging
+    enable_debug_logging: false
+  # Configuration for the Railgun weapon
+  railgun:
+  # Unique ID for the railgun
+    id: 107
+    # Maximum damage dealt by the railgun
+    damage: 75
+    # Maximum range of the railgun beam in meters
+    range: 50
+    # Width of the beam/hit detection in meters
+    beam_width: 0.5
+    # Whether the railgun creates an explosion at the impact point
+    spawn_explosive: true
+    # Maximum number of railguns that can spawn in a round
+    spawn_limit: 1
+    # Cooldown between shots in seconds
+    cooldown: 10
     # Enable debug logging
     enable_debug_logging: false
 ```
