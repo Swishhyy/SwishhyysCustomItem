@@ -2,7 +2,6 @@
 {
     using System.ComponentModel;
     using Exiled.API.Interfaces;
-    using SCI.Config;
 
     public class Config : IConfig
     {

@@ -132,6 +132,7 @@
     <Compile Include="Custom\Weapon\Railgun.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\PrimitiveManager.cs" />
     <Compile Include="Utilities\WebhookServices.cs" />
   </ItemGroup>
   <ItemGroup>
