@@ -10,7 +10,7 @@ using MEC;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using JetBrains.Annotations;
-using SCI.Custom.Config;
+using SCI.Config;
 
 namespace SCI.Custom.Weapon
 {
@@ -22,7 +22,6 @@ namespace SCI.Custom.Weapon
         {
             Plugin.Instance?.DebugLog("GrenadeLauncher constructor with config called");
             _config = config;
-            Id = config.Id;
             Plugin.Instance?.DebugLog($"GrenadeLauncher initialized with config: LaunchForce={_config.LaunchForce}, FuseTime={_config.FuseTime}");
         }
 

@@ -9,6 +9,7 @@ using System.Collections.Generic;                  // Provides generic collectio
 using Exiled.API.Features;
 using Exiled.API.Enums;
 using JetBrains.Annotations;                         // For accessing Log and other API features
+using SCI.Config;
 
 namespace SCI.Custom.MedicalItems
 {

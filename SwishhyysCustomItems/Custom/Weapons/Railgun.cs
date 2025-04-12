@@ -28,7 +28,6 @@ namespace SCI.Custom.Weapon
         {
             Plugin.Instance?.DebugLog("Railgun constructor with config called");
             _config = config;
-            Id = config.Id;
             Plugin.Instance?.DebugLog($"Railgun initialized with config: Damage={_config.Damage}, Range={_config.Range}, BeamWidth={_config.BeamWidth}");
         }
 

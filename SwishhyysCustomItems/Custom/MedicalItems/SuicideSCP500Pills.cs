@@ -10,7 +10,7 @@ using System;                                        // Provides basic system fu
 using UnityEngine;                                   // Provides access to Unity engine features, such as Vector3 and Mathf.
 using Exiled.API.Features.Items;
 using JetBrains.Annotations;
-using System.Collections.Generic;
+using SCI.Config;
 
 namespace SCI.Custom.MedicalItems
 {

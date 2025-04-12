@@ -9,6 +9,7 @@ using SCI.Custom.Config;                             // Custom configuration cla
 using System;                                        // Provides basic system functionalities.
 using System.Collections.Generic;                    // Provides generic collection types, such as Dictionary.
 using System.Linq;                                   // Enables LINQ queries for collections.
+using SCI.Config;
 
 namespace SCI.Custom.MedicalItems
 {

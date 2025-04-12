@@ -11,7 +11,7 @@ namespace SCI.Services
     public class WebhookService
     {
         // Static HttpClient properly configured with timeout
-        private static readonly HttpClient Client = new HttpClient
+        private static readonly HttpClient Client = new()
         {
             Timeout = TimeSpan.FromSeconds(5)
         };
@@ -78,17 +78,15 @@ namespace SCI.Services
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 // Create a cancellation token that will cancel the request after 5 seconds
-                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
-                {
-                    // Send the webhook with the cancellation token
-                    var response = await Client.PostAsync(_webhookUrl, content, cts.Token);
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                // Send the webhook with the cancellation token
+                var response = await Client.PostAsync(_webhookUrl, content, cts.Token);
 
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        string errorContent = await response.Content.ReadAsStringAsync();
-                        if (_debug)
-                            Log.Debug($"[WebhookService] Failed to send webhook: {response.StatusCode} - {errorContent}");
-                    }
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    if (_debug)
+                        Log.Debug($"[WebhookService] Failed to send webhook: {response.StatusCode} - {errorContent}");
                 }
             }
             catch (OperationCanceledException)
