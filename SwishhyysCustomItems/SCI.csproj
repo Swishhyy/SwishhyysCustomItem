@@ -229,19 +229,19 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Compile Source Files -->
-    <Compile Include="Commands\GrantItemCommand.cs" />
+    <Compile Include="Commands\Admin\GrantItemCommand.cs" />
     <Compile Include="Commands\HeadCommand.cs" />
-    <Compile Include="Commands\HelpCommand.cs" />
-    <Compile Include="Commands\ItemListCommand.cs" />
+    <Compile Include="Commands\Admin\HelpCommand.cs" />
+    <Compile Include="Commands\Admin\ItemListCommand.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Config\AdrenalineSCP500PillsConfig.cs" />
-    <Compile Include="Config\ClusterGrenadeConfig.cs" />
-    <Compile Include="Config\ExpiredSCP500PillsConfig.cs" />
-    <Compile Include="Config\GrenadeLauncherConfig.cs" />
-    <Compile Include="Config\ImpactGrenadeConfig.cs" />
-    <Compile Include="Config\RailgunConfig.cs" />
-    <Compile Include="Config\SmokeGrenadeConfig.cs" />
-    <Compile Include="Config\SuicideSCP500PillsConfig.cs" />
+    <Compile Include="Config\MedicalItems\AdrenalineSCP500PillsConfig.cs" />
+    <Compile Include="Config\Throwables\ClusterGrenadeConfig.cs" />
+    <Compile Include="Config\MedicalItems\ExpiredSCP500PillsConfig.cs" />
+    <Compile Include="Config\Weapons\GrenadeLauncherConfig.cs" />
+    <Compile Include="Config\Throwables\ImpactGrenadeConfig.cs" />
+    <Compile Include="Config\Weapons\RailgunConfig.cs" />
+    <Compile Include="Config\Throwables\SmokeGrenadeConfig.cs" />
+    <Compile Include="Config\MedicalItems\SuicideSCP500PillsConfig.cs" />
     <Compile Include="Custom\MedicalItems\AdrenalineSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\ExpiredSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\SuicideSCP500Pills.cs" />
