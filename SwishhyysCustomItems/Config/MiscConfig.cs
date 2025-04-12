@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace SCI.Config
 {
-    public class TacoBellStickConfig
-    {
-        public static float TacoBellStickWeight { get; set; } = 1f;
-    }
+
 }
