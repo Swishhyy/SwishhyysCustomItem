@@ -16,7 +16,7 @@ namespace SCI.Commands
         public string Command { get; } = "give";
 
         // Command aliases that can be used interchangeably with the main command.
-        public string[] Aliases { get; } = { "gitem" };
+        public string[] Aliases { get; } = ["gitem"];
 
         // A short description of what the command does.
         public string Description { get; } = "Grants a specified custom item to yourself.";

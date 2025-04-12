@@ -8,7 +8,7 @@ namespace SCI.Commands
     internal class HelpCommand : ICommand
     {
         public string Command { get; } = "help";
-        public string[] Aliases { get; } = { "h" };
+        public string[] Aliases { get; } = ["h"];
         public string Description { get; } = "Shows help information for all available commands.";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

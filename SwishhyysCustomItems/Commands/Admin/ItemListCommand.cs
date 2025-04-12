@@ -10,7 +10,7 @@ namespace SCI.Commands
     internal class ItemListCommand : ICommand
     {
         public string Command { get; } = "itemlist";
-        public string[] Aliases { get; } = { "items" };
+        public string[] Aliases { get; } = ["items"];
         public string Description { get; } = "Displays all custom item IDs in the project.";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

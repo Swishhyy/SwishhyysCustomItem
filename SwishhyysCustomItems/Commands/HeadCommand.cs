@@ -26,7 +26,7 @@ namespace SCI.Commands
         public override string Command { get; } = "sci";
 
         // Aliases for the command; an empty array is provided since there are no aliases.
-        public override string[] Aliases { get; } = new string[] { };
+        public override string[] Aliases { get; } = [];
 
         // A description of what the command does.
         public override string Description { get; } = "Root command for Swishhyys Custom Items.";
