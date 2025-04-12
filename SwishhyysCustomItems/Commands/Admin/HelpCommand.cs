@@ -13,7 +13,7 @@ namespace SCI.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            StringBuilder helpText = new StringBuilder();
+            StringBuilder helpText = new();
             helpText.AppendLine("Swishhyys Custom Items Commands:");
             helpText.AppendLine();
 

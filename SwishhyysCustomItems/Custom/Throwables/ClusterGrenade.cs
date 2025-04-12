@@ -14,6 +14,7 @@ using YamlDotNet.Serialization;
 using Item = Exiled.API.Features.Items.Item;
 using Log = Exiled.API.Features.Log;
 using Random = System.Random;
+using SCI.Config;
 using Server = Exiled.API.Features.Server;
 
 namespace SCI.Custom.Items.Grenades

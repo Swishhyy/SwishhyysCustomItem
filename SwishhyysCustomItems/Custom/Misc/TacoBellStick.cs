@@ -3,6 +3,7 @@ using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using JetBrains.Annotations;
 using SCI.Config;
+using YamlDotNet.Serialization;
 
 namespace SCI.Custom.Misc
 {
@@ -11,6 +12,7 @@ namespace SCI.Custom.Misc
         // Change the type from TacoBellStick to TacoBellStickConfig
         private readonly TacoBellStickConfig _config = config;
 
+        [YamlIgnore]
         public override uint Id { get; set; } = 110;
         public override ItemType Type { get; set; } = ItemType.Jailbird;
         public override string Name { get; set; } = "<color=#8A2BE2>TacoBell Stick</color>";

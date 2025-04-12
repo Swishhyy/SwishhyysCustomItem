@@ -10,6 +10,7 @@
     using SCI.Custom.Items.Grenades;
     using SCI.Custom.Throwables;           // Add this for the ImpactGrenade
     using SCI.Custom.Weapon;
+    using SCI.Config;
 
     // Define the main plugin class which extends Exiled's Plugin base class using a generic Config type.
     public class Plugin : Plugin<SCI.Custom.Config.Config>

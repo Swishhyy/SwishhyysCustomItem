@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using MEC;
 using UnityEngine;
 using YamlDotNet.Serialization;
+using SCI.Config;
 
 namespace SCI.Custom.Throwables
 {
