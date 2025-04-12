@@ -241,7 +241,6 @@
     <Compile Include="Custom\MedicalItems\AdrenalineSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\ExpiredSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\SuicideSCP500Pills.cs" />
-    <Compile Include="Custom\Misc\TacoBellStick.cs" />
     <Compile Include="Custom\Throwables\ClusterGrenade.cs" />
     <Compile Include="Custom\Throwables\ImpactGrenade.cs" />
     <Compile Include="Custom\Throwables\SmokeGrenade.cs" />

@@ -15,12 +15,13 @@ namespace SCI.Utilities
         private static readonly string BaseConfigPath = Path.Combine(Paths.Configs, "SCI");
 
         // Define category mappings based on the namespaces
-        private static readonly Dictionary<string, string> CategoryMappings = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> CategoryMappings = new()
         {
             { "SCI.Config.WeaponsConfig", "weapons" },
             { "SCI.Config.ThrowablesConfig", "throwables" },
             { "SCI.Config.MedicalItemsConfig", "medical" },
-            { "SCI.Config.MiscConfig", "misc" }
+            { "SCI.Config.MiscConfig", "misc" },
+            { "SCI.Config.WearablesConfig", "wearables" }
         };
 
         /// <summary>
@@ -59,25 +60,11 @@ namespace SCI.Utilities
         private static string GetCategoryFromConfigType(Type configType)
         {
             // First, try to determine category based on which file the type is defined in
-            var typeAssemblyName = configType.Assembly.GetName().Name;
+            _ = configType.Assembly.GetName().Name;
             var typeNamespace = configType.Namespace ?? string.Empty;
-            var typeFullName = configType.FullName ?? string.Empty;
+            _ = configType.FullName ?? string.Empty;
 
             Log.Debug($"Determining category for type {configType.Name} in namespace {typeNamespace}");
-
-            // Check specific types first for special cases
-            if (configType.Name == "GrenadeLauncherConfig")
-            {
-                return "weapons";
-            }
-            else if (configType.Name == "RailgunConfig")
-            {
-                return "weapons";
-            }
-            else if (configType.Name == "TacoBellStickConfig")
-            {
-                return "misc";
-            }
 
             // Check if it's defined in a specific config file
             if (typeNamespace == "SCI.Config")
@@ -94,6 +81,10 @@ namespace SCI.Utilities
                 if (configType.Name.Contains("SCP500") || configType.Name.Contains("Pills") || configType.Name.Contains("Medical"))
                 {
                     return "medical";
+                }
+                if (configType.Name.Contains("Armor") || configType.Name.Contains("Wearable") || configType.Name.Contains("Vest"))
+                {
+                    return "wearables";
                 }
             }
 
@@ -174,25 +165,6 @@ namespace SCI.Utilities
                 {
                     MergeConfigs(grenadeLauncherConfig, mainConfig.GrenadeLauncher);
                     mainConfig.GrenadeLauncher = grenadeLauncherConfig;
-                }
-
-                // Misc Items - Load static properties
-                var tacoBellConfig = LoadConfig<TacoBellStickConfig>("TacoBellStick", "misc");
-                if (tacoBellConfig != null)
-                {
-                    MergeConfigs(tacoBellConfig, mainConfig.TacoBellStick);
-                    mainConfig.TacoBellStick = tacoBellConfig;
-
-                    // Handle static properties
-                    var properties = typeof(TacoBellStickConfig).GetProperties(BindingFlags.Public | BindingFlags.Static);
-                    foreach (var property in properties)
-                    {
-                        var loadedValue = property.GetValue(tacoBellConfig);
-                        if (loadedValue != null)
-                        {
-                            property.SetValue(null, loadedValue);
-                        }
-                    }
                 }
             }
             catch (Exception ex)
