@@ -4,14 +4,11 @@
     using Exiled.API.Features;              // Core Exiled API features for plugins.
     using Exiled.CustomItems.API;           // API for registering and managing custom items.
     using SCI.Custom.MedicalItems;          // Custom namespace containing the custom medical items.
-    using System;                           // Provides fundamental classes and base classes.
-    using SCI.Custom.Config;                // For configuration access
+    using System;                           // Provides fundamental classes and base classes.               // For configuration access
     using SCI.Services;                     // For WebhookService
     using SCI.Custom.Items.Grenades;
     using SCI.Custom.Throwables;           // Add this for the ImpactGrenade
     using SCI.Custom.Weapon;
-    using SCI.Config;
-    using SCI.Custom.Misc;
 
     // Define the main plugin class which extends Exiled's Plugin base class using a generic Config type.
     public class Plugin : Plugin<SCI.Custom.Config.Config>
@@ -38,7 +35,6 @@
         private SmokeGrenade _smokeGrenade;
         private Railgun _railgun;
         private GrenadeLauncher _grenadeLauncher;
-        private TacoBellStick _tacoBellStick;
 
         // Define the minimum required version of the Exiled framework to run this plugin.
         private readonly Version requiredExiledVersion = new(9, 5, 1);
@@ -96,8 +92,6 @@
             _impactGrenade = new ImpactGrenade((SCI.Config.ImpactGrenadeConfig)Config.ImpactGrenade);
             _smokeGrenade = new SmokeGrenade((SCI.Config.SmokeGrenadeConfig)Config.SmokeGrenade);
             _railgun = new Railgun((SCI.Config.RailgunConfig)Config.Railgun);
-            _grenadeLauncher = new GrenadeLauncher((SCI.Config.GrenadeLauncherConfig)Config.GrenadeLauncher);
-            _tacoBellStick = new TacoBellStick((SCI.Config.TacoBellStickConfig)Config.TacoBellStick);
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
@@ -109,7 +103,6 @@
             _smokeGrenade.Register();
             _railgun.Register();
             _grenadeLauncher.Register();
-            _tacoBellStick.Register();
 
             // Log a debug message listing the registered custom items.
             Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade, Smoke Grenade, Railgun, Grenade Launcher");
@@ -132,7 +125,6 @@
             _smokeGrenade?.Unregister();
             _railgun?.Unregister();
             _grenadeLauncher?.Unregister();
-            _tacoBellStick?.Unregister();
 
             // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
@@ -143,7 +135,6 @@
             _smokeGrenade = null;
             _railgun = null;
             _grenadeLauncher = null;
-            _tacoBellStick = null;
 
             // Unregister the WebhookService to clean up resources.
             WebhookService = null;

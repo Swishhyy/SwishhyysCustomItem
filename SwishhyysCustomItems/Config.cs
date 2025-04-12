@@ -40,8 +40,5 @@ namespace SCI.Custom.Config
 
         [YamlIgnore]
         public SCI.Config.GrenadeLauncherConfig GrenadeLauncher { get; set; } = new SCI.Config.GrenadeLauncherConfig();
-
-        [YamlIgnore]
-        public SCI.Config.TacoBellStickConfig TacoBellStick { get; set; } = new SCI.Config.TacoBellStickConfig();
     }
 }
