@@ -11,6 +11,7 @@
     using SCI.Custom.Throwables;           // Add this for the ImpactGrenade
     using SCI.Custom.Weapon;
     using SCI.Config;
+    using SCI.Custom.Misc;
 
     // Define the main plugin class which extends Exiled's Plugin base class using a generic Config type.
     public class Plugin : Plugin<SCI.Custom.Config.Config>
@@ -20,7 +21,7 @@
         // Override the plugin's author property.
         public override string Author => "Swishhyy";
         // Override the plugin's version property.
-        public override Version Version => new(2, 2, 0);
+        public override Version Version => new(3, 0, 0);
 
         // Public static instance for global access (singleton pattern)
         public static Plugin Instance { get; private set; }
@@ -37,6 +38,7 @@
         private SmokeGrenade _smokeGrenade;
         private Railgun _railgun;
         private GrenadeLauncher _grenadeLauncher;
+        private TacoBellStick _tacoBellStick;
 
         // Define the minimum required version of the Exiled framework to run this plugin.
         private readonly Version requiredExiledVersion = new(9, 5, 1);
@@ -64,12 +66,20 @@
                 return;
             }
 
-            // Log that the plugin has been successfully enabled.
+            // Log that the plugin has been enabled.
             Log.Info($"{Name} has been enabled!");
             DebugLog("OnEnabled method called");
 
             // Call the base implementation to ensure any base setup is performed.
             base.OnEnabled();
+
+            // Generate individual config files on startup
+            DebugLog("Generating individual config files");
+            Utilities.ConfigWriter.GenerateAllConfigs(Config);
+
+            // Load configs from individual files (this will override the default values)
+            DebugLog("Loading individual config files");
+            Utilities.ConfigWriter.LoadAllConfigs(Config);
 
             // Initialize WebhookService
             DebugLog("Initializing WebhookService");
@@ -77,16 +87,17 @@
             DebugLog("WebhookService initialized");
 
             // Create instances of the custom items using their corresponding configuration sections.
+            // Explicitly cast each config object to its proper type
             DebugLog("Creating custom item instances with configuration");
-            _expiredSCP500Pills = new ExpiredSCP500Pills(Config.ExpiredSCP500);
-            _adrenalineSCP500Pills = new AdrenalineSCP500Pills(Config.AdrenalineSCP500);
-            _suicideSCP500Pills = new SuicideSCP500Pills(Config.SuicideSCP500);
-            _clusterGrenade = new ClusterGrenade(Config.ClusterGrenade);
-            _impactGrenade = new ImpactGrenade(Config.ImpactGrenade);
-            _smokeGrenade = new SmokeGrenade(Config.SmokeGrenade);
-            _railgun = new Railgun(Config.Railgun);
-            _grenadeLauncher = new GrenadeLauncher(Config.GrenadeLauncher);
-
+            _expiredSCP500Pills = new ExpiredSCP500Pills((SCI.Config.ExpiredSCP500PillsConfig)Config.ExpiredSCP500);
+            _adrenalineSCP500Pills = new AdrenalineSCP500Pills((SCI.Config.AdrenalineSCP500PillsConfig)Config.AdrenalineSCP500);
+            _suicideSCP500Pills = new SuicideSCP500Pills((SCI.Config.SuicideSCP500PillsConfig)Config.SuicideSCP500);
+            _clusterGrenade = new ClusterGrenade((SCI.Config.ClusterGrenadeConfig)Config.ClusterGrenade);
+            _impactGrenade = new ImpactGrenade((SCI.Config.ImpactGrenadeConfig)Config.ImpactGrenade);
+            _smokeGrenade = new SmokeGrenade((SCI.Config.SmokeGrenadeConfig)Config.SmokeGrenade);
+            _railgun = new Railgun((SCI.Config.RailgunConfig)Config.Railgun);
+            _grenadeLauncher = new GrenadeLauncher((SCI.Config.GrenadeLauncherConfig)Config.GrenadeLauncher);
+            _tacoBellStick = new TacoBellStick((SCI.Config.TacoBellStickConfig)Config.TacoBellStick);
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
@@ -98,9 +109,10 @@
             _smokeGrenade.Register();
             _railgun.Register();
             _grenadeLauncher.Register();
+            _tacoBellStick.Register();
 
             // Log a debug message listing the registered custom items.
-            Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade");
+            Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade, Smoke Grenade, Railgun, Grenade Launcher");
 
             DebugLog("OnEnabled method completed successfully");
         }
@@ -120,6 +132,7 @@
             _smokeGrenade?.Unregister();
             _railgun?.Unregister();
             _grenadeLauncher?.Unregister();
+            _tacoBellStick?.Unregister();
 
             // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
@@ -130,7 +143,9 @@
             _smokeGrenade = null;
             _railgun = null;
             _grenadeLauncher = null;
+            _tacoBellStick = null;
 
+            // Unregister the WebhookService to clean up resources.
             WebhookService = null;
 
             // Log that the plugin has been disabled.

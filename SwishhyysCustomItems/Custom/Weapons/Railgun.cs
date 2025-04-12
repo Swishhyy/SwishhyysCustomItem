@@ -14,6 +14,7 @@ using JetBrains.Annotations;
 using AdminToys;
 using Exiled.API.Features.Toys;
 using Exiled.Events.EventArgs.Item;
+using SCI.Config;
 
 
 namespace SCI.Custom.Weapon
