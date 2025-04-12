@@ -55,177 +55,325 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Updated References -->
+    <!-- Use conditional paths for dependencies that work in both local dev and GitHub Actions -->
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\Downloads\Dev\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\Assembly-CSharp-firstpass.dll')">..\ExternalDependencies\Dev\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Assembly-CSharp-firstpass.dll')">..\..\..\..\Downloads\Dev\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\ExternalDependencies\Assembly-CSharp-Publicized.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Assembly-CSharp-Publicized">
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\Assembly-CSharp-Publicized.dll')">..\ExternalDependencies\Dev\Assembly-CSharp-Publicized.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Assembly-CSharp-Publicized.dll')">..\..\..\..\Downloads\Dev\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
-      <HintPath>..\..\..\..\Downloads\Dev\Mirror.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\Mirror.dll')">..\ExternalDependencies\Dev\Mirror.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Mirror.dll')">..\..\..\..\Downloads\Dev\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="Mirror.Components">
-      <HintPath>..\..\..\..\Downloads\Dev\Mirror.Components.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\Mirror.Components.dll')">..\ExternalDependencies\Dev\Mirror.Components.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Mirror.Components.dll')">..\..\..\..\Downloads\Dev\Mirror.Components.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalDependencies\Mono.Security.dll</HintPath>
+    <Reference Include="Mono.Security">
+      <HintPath>..\ExternalDependencies\Dev\Mono.Security.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
-      <HintPath>..\..\..\..\Downloads\Dev\netstandard.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\netstandard.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\..\..\Downloads\Dev\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\Unity.TextMeshPro.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>..\..\..\..\Downloads\Dev\Unity.Timeline.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\Unity.Timeline.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualEffectGraph.Runtime">
-      <HintPath>..\..\..\..\Downloads\Dev\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalDependencies\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.AccessibilityModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.AccessibilityModule.dll</HintPath>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AccessibilityModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.AIModule.dll</HintPath>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AIModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.AndroidJNIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.AndroidJNIModule.dll</HintPath>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AndroidJNIModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AnimationModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.ARModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.ARModule.dll</HintPath>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ARModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.AssetBundleModule.dll</HintPath>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AssetBundleModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AudioModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.ClothModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.ClothModule.dll</HintPath>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ClothModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.ClusterInputModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.ClusterInputModule.dll</HintPath>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ClusterInputModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.ClusterRendererModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.ClusterRendererModule.dll</HintPath>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ClusterRendererModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalDependencies\UnityEngine.CoreModule.dll</HintPath>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalDependencies\UnityEngine.PhysicsModule.dll</HintPath>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.CrashReportingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.DirectorModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.DSPGraphModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.DSPGraphModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.GameCenterModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.GIModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.GIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.GridModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.HotReloadModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.InputModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.LocalizationModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.Physics2DModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ProfilerModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.StreamingModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.StreamingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SubstanceModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.SubsystemsModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SubsystemsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TerrainModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TextCoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TilemapModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TLSModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UIElementsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UIElementsModule.dll</HintPath>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UIElementsModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UIElementsNativeModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UIElementsNativeModule.dll</HintPath>
+    <Reference Include="UnityEngine.UIElementsNativeModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UIElementsNativeModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UIModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UmbraModule.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UmbraModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UNETModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UNETModule.dll</HintPath>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UNETModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityAnalyticsCommonModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityAnalyticsCommonModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityAnalyticsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityConnectModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityConnectModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityConnectModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityCurlModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityCurlModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityCurlModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityCurlModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.VehiclesModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.VehiclesModule.dll</HintPath>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VehiclesModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VFXModule">
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.VFXModule.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VFXModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.VideoModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.VideoModule.dll</HintPath>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VideoModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.VirtualTexturingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.VirtualTexturingModule.dll</HintPath>
+    <Reference Include="UnityEngine.VirtualTexturingModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VirtualTexturingModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.VRModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.VRModule.dll</HintPath>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VRModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.WindModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.WindModule.dll</HintPath>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.WindModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.XRModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dev\UnityEngine.XRModule.dll</HintPath>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>..\ExternalDependencies\Dev\UnityEngine.XRModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="zxing">
-      <HintPath>..\..\..\..\Downloads\Dev\zxing.dll</HintPath>
+      <HintPath>..\ExternalDependencies\Dev\zxing.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <!-- Ensure All Unity Modules Are Referenced -->
+    <!-- Add missing dependencies that were shown in the errors -->
+    <Reference Include="MEC">
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\MEC.dll')">..\ExternalDependencies\Dev\MEC.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\MEC.dll')">..\..\..\..\Downloads\Dev\MEC.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\JetBrains.Annotations.dll')">..\ExternalDependencies\Dev\JetBrains.Annotations.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\JetBrains.Annotations.dll')">..\..\..\..\Downloads\Dev\JetBrains.Annotations.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <!-- Compile Source Files -->
