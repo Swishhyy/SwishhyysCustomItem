@@ -64,14 +64,8 @@
   <ItemGroup>
     <!-- Added Missing Dependencies -->
     <PackageReference Include="Exiled.Dev.References" Version="1.0.4" />
-    <PackageReference Include="ExMod.Exiled">
-      <Version>9.5.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Mono.CSharp" Version="4.0.0.143" />
+    <PackageReference Include="ExMod.Exiled" Version="9.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Mono.Cecil" Version="0.11.6" />
-    <PackageReference Include="Pooling" Version="1.0.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

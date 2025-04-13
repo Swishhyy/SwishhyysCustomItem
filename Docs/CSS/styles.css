@@ -1,0 +1,497 @@
+/* SCP Foundation inspired styling */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+:root {
+    --primary-dark: #0e0e0e;
+    --secondary-dark: #1a1a1a;
+    --primary-light: #f0f0f0;
+    --secondary-light: #cacaca;
+    --accent-red: #af0000;
+    --accent-yellow: #ffcc00;
+    --accent-green: #00af00;
+    --font-classified: 'Special Elite', cursive;
+    --font-terminal: 'Share Tech Mono', monospace;
+    --font-display: 'VT323', monospace;
+}
+
+/* Base styles */
+body {
+    font-family: var(--font-terminal);
+    background-color: var(--primary-dark);
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: var(--primary-light);
+    margin: 0;
+    padding: 20px 40px;
+    line-height: 1.6;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-left: 1px solid var(--accent-red);
+    border-right: 1px solid var(--accent-red);
+    box-shadow: 0 0 30px rgba(175, 0, 0, 0.3);
+    position: relative;
+}
+
+body::before {
+    content: "DECLASSIFIED";
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-family: var(--font-classified);
+    font-size: 120px;
+    color: rgba(175, 0, 0, 0.15);
+    pointer-events: none;
+    z-index: -1;
+    white-space: nowrap;
+    letter-spacing: 15px;
+}
+
+/* Header styling */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-classified);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+h1 {
+    color: var(--accent-red);
+    border-bottom: 3px solid var(--accent-red);
+    padding-bottom: 10px;
+    text-shadow: 0 0 10px rgba(175, 0, 0, 0.5);
+    font-size: 2.2em;
+    position: relative;
+}
+
+h1::after {
+    content: "• TOP SECRET •";
+    position: absolute;
+    top: -20px;
+    right: 0;
+    font-size: 0.35em;
+    background: var(--accent-red);
+    color: var(--primary-dark);
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    transform: rotate(-2deg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    color: var(--accent-yellow);
+    border-bottom: 1px solid var(--accent-yellow);
+    padding-bottom: 5px;
+    position: relative;
+    font-size: 1.8em;
+}
+
+h3 {
+    color: var(--primary-light);
+    background-color: var(--secondary-dark);
+    padding: 8px 15px;
+    margin-top: 30px;
+    border-left: 4px solid var(--accent-red);
+    font-size: 1.5em;
+    position: relative;
+}
+
+h3::before {
+    content: "§";
+    position: absolute;
+    left: -25px;
+    color: var(--accent-yellow);
+    font-weight: bold;
+}
+
+.subtext {
+    font-size: 0.9em;
+    color: var(--secondary-light);
+    margin-top: 5px;
+    font-family: var(--font-terminal);
+}
+/* Link styling */
+a {
+    color: var(--accent-yellow);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-family: var(--font-terminal);
+    position: relative;
+    border-bottom: 1px dotted var(--accent-yellow);
+    padding: 0 3px;
+}
+
+a:hover {
+    color: var(--accent-red);
+    background-color: rgba(230, 184, 0, 0.1);
+    text-decoration: none;
+}
+
+/* List styling */
+ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 5px;
+    border-left: 2px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+ul li:hover {
+    border-left-color: var(--accent-yellow);
+}
+
+ul li::before {
+    content: "►";
+    color: var(--accent-red);
+    position: absolute;
+    left: -20px;
+    top: 0;
+    font-family: var(--font-terminal);
+}
+
+/* Nested lists */
+ul ul {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+ul ul li::before {
+    content: "■";
+    color: var(--accent-yellow);
+    font-size: 0.8em;
+}
+
+/* Code styling */
+code {
+    font-family: var(--font-terminal);
+    background-color: #2d2d2d;
+    color: var(--accent-green);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    border: 1px solid var(--accent-green);
+    text-shadow: 0 0 5px rgba(0, 170, 0, 0.5);
+}
+
+/* SCP classified content box */
+.classified-box {
+    border: 2px solid var(--accent-red);
+    padding: 15px;
+    margin: 20px 0;
+    background-color: var(--secondary-dark);
+    position: relative;
+}
+
+.classified-box::before {
+    content: "CLASSIFIED";
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background-color: var(--primary-dark);
+    color: var(--accent-red);
+    padding: 0 10px;
+    font-weight: bold;
+    font-family: var(--font-classified);
+}
+
+/* Warning elements */
+.warning {
+    background-color: rgba(175, 0, 0, 0.2);
+    border-left: 4px solid var(--accent-red);
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-family: var(--font-classified);
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border: 1px solid var(--secondary-light);
+    font-family: var(--font-terminal);
+}
+
+th {
+    background-color: var(--secondary-dark);
+    color: var(--accent-yellow);
+    text-align: left;
+    padding: 10px;
+    border: 1px solid var(--secondary-light);
+}
+
+td {
+    padding: 8px 10px;
+    border: 1px solid var(--secondary-light);
+}
+
+tr:nth-child(even) {
+    background-color: #1d1d1d;
+}
+
+/* Redacted text effect */
+.redacted {
+    background-color: #000;
+    color: transparent;
+    user-select: none;
+    padding: 0 5px;
+    position: relative;
+}
+
+.redacted:hover {
+    color: var(--primary-light);
+    background-color: var(--secondary-dark);
+    transition: background-color 0.5s ease;
+}
+
+/* Container for item details */
+.item-container {
+    border: 1px solid var(--secondary-light);
+    margin: 15px 0;
+    padding: 15px;
+    background-color: var(--secondary-dark);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.item-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(10, 10, 10, 0.1) 10px,
+        rgba(10, 10, 10, 0.1) 20px
+    );
+    pointer-events: none;
+}
+
+/* Special effect for SCP item IDs */
+.item-id {
+    font-weight: bold;
+    color: var(--accent-yellow);
+    font-family: var(--font-display);
+    font-size: 1.1em;
+}
+
+/* Folder Directory styling */
+.folder-section {
+    margin: 20px 0;
+    border-left: 2px solid var(--accent-red);
+    padding-left: 0;
+}
+
+.folder-header {
+    cursor: pointer;
+    background-color: var(--secondary-dark);
+    color: var(--primary-light);
+    padding: 8px 15px 8px 32px;
+    margin: 0 0 10px 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    font-family: var(--font-terminal);
+    border-left: 4px solid var(--accent-red);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.folder-header:hover {
+    background-color: #252525;
+}
+
+.folder-header:before {
+    content: "📁";
+    position: absolute;
+    left: 8px;
+    font-size: 1.1em;
+    transition: transform 0.3s ease;
+}
+
+.folder-header.open:before {
+    content: "📂";
+}
+
+.folder-header .folder-name {
+    margin: 0;
+    font-weight: bold;
+    flex-grow: 1;
+    color: var(--accent-yellow);
+    font-size: 1.2em;
+}
+
+.folder-header .file-count {
+    font-size: 0.7em;
+    color: var(--secondary-light);
+    background: #252525;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-right: 5px;
+    font-family: var(--font-terminal);
+}
+
+.folder-content {
+    padding-left: 25px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    position: relative;
+}
+
+.folder-content.open {
+    max-height: 2000px;
+    transition: max-height 1s ease;
+}
+
+.folder-content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 1px;
+    background: linear-gradient(to bottom, 
+                              var(--accent-red) 0%,
+                              var(--accent-red) 5%,
+                              transparent 5%,
+                              transparent 10%);
+    background-size: 1px 20px;
+    opacity: 0.5;
+}
+
+/* File icon styling for list items */
+.folder-content ul li:before {
+    content: "📄" !important;
+    color: var(--secondary-light) !important;
+    left: -25px;
+    font-size: 1em;
+}
+
+/* Special styling for code files */
+.folder-content ul li.code-file:before {
+    content: "📜" !important;
+}
+
+/* Styling for command files */
+.folder-content ul li.command-file:before {
+    content: "⌨️" !important;
+}
+
+/* Animation for folder opening */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(175, 0, 0, 0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(175, 0, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(175, 0, 0, 0); }
+}
+
+.folder-header.pulse {
+    animation: pulse 1s;
+}
+
+/* Footer styling */
+footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--accent-red);
+    font-size: 0.9em;
+    text-align: center;
+    color: var(--secondary-light);
+    font-family: var(--font-classified);
+}
+
+/* Override for strong tags */
+strong {
+    color: var(--accent-yellow);
+    font-weight: bold;
+    font-family: var(--font-classified);
+}
+
+/* Flickering text effect for warnings */
+@keyframes flicker {
+    0% { opacity: 1; }
+    3% { opacity: 0.8; }
+    6% { opacity: 1; }
+    7% { opacity: 0.9; }
+    9% { opacity: 1; }
+    30% { opacity: 1; }
+    40% { opacity: 0.9; }
+    42% { opacity: 1; }
+    45% { opacity: 0.7; }
+    46% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+.warning::before {
+    content: "⚠ WARNING";
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--accent-red);
+    animation: flicker 5s infinite;
+}
+
+/* Typewriter effect for important text */
+.typewriter {
+    overflow: hidden;
+    border-right: .15em solid var(--accent-yellow);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .1em;
+    animation: 
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--accent-yellow); }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    body::before {
+        font-size: 60px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .folder-header {
+        padding-left: 28px;
+    }
+    
+    .folder-content {
+        padding-left: 15px;
+    }
+}
