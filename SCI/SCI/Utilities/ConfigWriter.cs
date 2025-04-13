@@ -14,7 +14,7 @@ namespace SCI.Utilities
     {
         private static readonly string BaseConfigPath = Path.Combine(Paths.Configs, "SCI");
 
-        // Define category mappings based on the namespaces
+        // Define category mappings based on the namespaces and type names
         private static readonly Dictionary<string, string> CategoryMappings = new()
         {
             { "SCI.Config.WeaponsConfig", "weapons" },
@@ -22,6 +22,15 @@ namespace SCI.Utilities
             { "SCI.Config.MedicalItemsConfig", "medical" },
             { "SCI.Config.MiscConfig", "misc" },
             { "SCI.Config.WearablesConfig", "wearables" }
+        };
+
+        // Type name patterns to determine categories
+        private static readonly Dictionary<string, string> TypePatterns = new()
+        {
+            { "Weapon|Gun|Launcher|Railgun", "weapons" },
+            { "Grenade|Throwable|Impact|Cluster|Smoke", "throwables" },
+            { "SCP500|Pills|Medical|Adrenaline|Heal", "medical" },
+            { "Armor|Wearable|Vest|Helmet", "wearables" }
         };
 
         /// <summary>
@@ -60,31 +69,27 @@ namespace SCI.Utilities
         private static string GetCategoryFromConfigType(Type configType)
         {
             // First, try to determine category based on which file the type is defined in
-            _ = configType.Assembly.GetName().Name;
             var typeNamespace = configType.Namespace ?? string.Empty;
-            _ = configType.FullName ?? string.Empty;
+            var typeName = configType.Name;
 
-            Log.Debug($"Determining category for type {configType.Name} in namespace {typeNamespace}");
+            Log.Debug($"Determining category for type {typeName} in namespace {typeNamespace}");
 
-            // Check if it's defined in a specific config file
-            if (typeNamespace == "SCI.Config")
+            // Check if it's defined in a specific namespace that maps to a category
+            foreach (var mapping in CategoryMappings)
             {
-                // Check based on naming patterns in the type name
-                if (configType.Name.Contains("Weapon") || configType.Name.Contains("Gun") || configType.Name.Contains("Launcher"))
+                if (typeNamespace.StartsWith(mapping.Key))
                 {
-                    return "weapons";
+                    return mapping.Value;
                 }
-                if (configType.Name.Contains("Grenade") || configType.Name.Contains("Throwable"))
+            }
+
+            // If not found by namespace, check by type name patterns
+            foreach (var pattern in TypePatterns)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(typeName, pattern.Key,
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase))
                 {
-                    return "throwables";
-                }
-                if (configType.Name.Contains("SCP500") || configType.Name.Contains("Pills") || configType.Name.Contains("Medical"))
-                {
-                    return "medical";
-                }
-                if (configType.Name.Contains("Armor") || configType.Name.Contains("Wearable") || configType.Name.Contains("Vest"))
-                {
-                    return "wearables";
+                    return pattern.Value;
                 }
             }
 
@@ -166,6 +171,9 @@ namespace SCI.Utilities
                     MergeConfigs(grenadeLauncherConfig, mainConfig.GrenadeLauncher);
                     mainConfig.GrenadeLauncher = grenadeLauncherConfig;
                 }
+
+                // Add support for any other configs that might be in the directory
+                LoadAdditionalConfigs(mainConfig);
             }
             catch (Exception ex)
             {
@@ -173,6 +181,91 @@ namespace SCI.Utilities
             }
 
             Log.Info("Config loading completed");
+        }
+
+        /// <summary>
+        /// Loads any additional configs that might be in the directories but not explicitly handled
+        /// </summary>
+        private static void LoadAdditionalConfigs(SCI.Custom.Config.Config mainConfig)
+        {
+            try
+            {
+                // Get all category directories
+                var categoryDirs = Directory.GetDirectories(BaseConfigPath);
+
+                foreach (var categoryDir in categoryDirs)
+                {
+                    string category = Path.GetFileName(categoryDir);
+                    var configFiles = Directory.GetFiles(categoryDir, "*.yml");
+
+                    foreach (var configFile in configFiles)
+                    {
+                        string configName = Path.GetFileNameWithoutExtension(configFile);
+
+                        // Skip files we've already explicitly handled
+                        if (HasExplicitHandler(configName))
+                            continue;
+
+                        Log.Debug($"Attempting to load additional config: {configName} from category {category}");
+
+                        // Try to find a matching property in the main config
+                        var prop = typeof(SCI.Custom.Config.Config).GetProperty(configName);
+                        if (prop != null)
+                        {
+                            // Get the property type and try to load the config
+                            Type propType = prop.PropertyType;
+                            object defaultValue = prop.GetValue(mainConfig);
+
+                            try
+                            {
+                                // Use a generic method to load the config with the right type
+                                var loadMethod = typeof(ConfigWriter).GetMethod("LoadConfig",
+                                    BindingFlags.NonPublic | BindingFlags.Static)
+                                    .MakeGenericMethod(propType);
+
+                                object loadedConfig = loadMethod.Invoke(null, new object[] { configName, category });
+
+                                if (loadedConfig != null)
+                                {
+                                    // Use the MergeConfigs method to ensure collections are preserved
+                                    var mergeMethod = typeof(ConfigWriter).GetMethod("MergeConfigs",
+                                        BindingFlags.NonPublic | BindingFlags.Static)
+                                        .MakeGenericMethod(propType);
+
+                                    mergeMethod.Invoke(null, new[] { loadedConfig, defaultValue });
+
+                                    // Set the property value
+                                    prop.SetValue(mainConfig, loadedConfig);
+                                    Log.Debug($"Successfully loaded additional config: {configName}");
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Debug($"Error loading additional config {configName}: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error loading additional configs: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Checks if a config name is already handled explicitly in the LoadAllConfigs method
+        /// </summary>
+        private static bool HasExplicitHandler(string configName)
+        {
+            string[] explicitHandlers =
+            {
+                "ExpiredSCP500", "AdrenalineSCP500", "SuicideSCP500",
+                "ClusterGrenade", "ImpactGrenade", "SmokeGrenade",
+                "Railgun", "GrenadeLauncher"
+            };
+
+            return explicitHandlers.Contains(configName);
         }
 
         /// <summary>
@@ -201,12 +294,13 @@ namespace SCI.Utilities
                 }
                 // Special handling for dictionary properties to avoid nulls
                 else if (prop.PropertyType.IsGenericType &&
-                         prop.PropertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                         (prop.PropertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>) ||
+                          prop.PropertyType.GetGenericTypeDefinition() == typeof(List<>)))
                 {
                     if (loadedValue == null)
                     {
                         prop.SetValue(loadedConfig, defaultValue);
-                        Log.Debug($"Used default dictionary for {prop.Name} in {typeof(T).Name}");
+                        Log.Debug($"Used default collection for {prop.Name} in {typeof(T).Name}");
                     }
                 }
             }
