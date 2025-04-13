@@ -61,3 +61,18 @@ $RECYCLE.BIN/
 *.class
 *.swp
 *.DS_Store
+
+# Migration Backup
+*.bak
+*.backup
+*.old
+*.orig
+*.swp
+*.swo
+*.swn
+*.MigrationBackup
+*.migrated
+*.migratedbak
+*.migratedold
+*.migratedorig
+*.migratedswp
