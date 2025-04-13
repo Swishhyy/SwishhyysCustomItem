@@ -42,310 +42,464 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath Condition="Exists('..\ExternalDependencies\Dev\Assembly-CSharp-firstpass.dll')">..\ExternalDependencies\Dev\Assembly-CSharp-firstpass.dll</HintPath>
       <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Assembly-CSharp-firstpass.dll')">..\..\..\..\Downloads\Dev\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\Assembly-CSharp-firstpass.dll')">..\..\lib\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-Publicized">
       <HintPath Condition="Exists('..\ExternalDependencies\Dev\Assembly-CSharp-Publicized.dll')">..\ExternalDependencies\Dev\Assembly-CSharp-Publicized.dll</HintPath>
       <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Assembly-CSharp-Publicized.dll')">..\..\..\..\Downloads\Dev\Assembly-CSharp-Publicized.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\Assembly-CSharp-Publicized.dll')">..\..\lib\Assembly-CSharp-Publicized.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mirror">
       <HintPath Condition="Exists('..\ExternalDependencies\Dev\Mirror.dll')">..\ExternalDependencies\Dev\Mirror.dll</HintPath>
       <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Mirror.dll')">..\..\..\..\Downloads\Dev\Mirror.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\Mirror.dll')">..\..\lib\Mirror.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mirror.Components">
       <HintPath Condition="Exists('..\ExternalDependencies\Dev\Mirror.Components.dll')">..\ExternalDependencies\Dev\Mirror.Components.dll</HintPath>
       <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Mirror.Components.dll')">..\..\..\..\Downloads\Dev\Mirror.Components.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\Mirror.Components.dll')">..\..\lib\Mirror.Components.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mono.Security">
-      <HintPath>..\ExternalDependencies\Dev\Mono.Security.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\Mono.Security.dll')">..\ExternalDependencies\Dev\Mono.Security.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Mono.Security.dll')">..\..\..\..\Downloads\Dev\Mono.Security.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\Mono.Security.dll')">..\..\lib\Mono.Security.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
-      <HintPath>..\ExternalDependencies\Dev\netstandard.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\netstandard.dll')">..\ExternalDependencies\Dev\netstandard.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\netstandard.dll')">..\..\..\..\Downloads\Dev\netstandard.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\netstandard.dll')">..\..\lib\netstandard.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\ExternalDependencies\Dev\Unity.TextMeshPro.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\Unity.TextMeshPro.dll')">..\ExternalDependencies\Dev\Unity.TextMeshPro.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Unity.TextMeshPro.dll')">..\..\..\..\Downloads\Dev\Unity.TextMeshPro.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\Unity.TextMeshPro.dll')">..\..\lib\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>..\ExternalDependencies\Dev\Unity.Timeline.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\Unity.Timeline.dll')">..\ExternalDependencies\Dev\Unity.Timeline.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Unity.Timeline.dll')">..\..\..\..\Downloads\Dev\Unity.Timeline.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\Unity.Timeline.dll')">..\..\lib\Unity.Timeline.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualEffectGraph.Runtime">
-      <HintPath>..\ExternalDependencies\Dev\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\Unity.VisualEffectGraph.Runtime.dll')">..\ExternalDependencies\Dev\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\Unity.VisualEffectGraph.Runtime.dll')">..\..\..\..\Downloads\Dev\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\Unity.VisualEffectGraph.Runtime.dll')">..\..\lib\Unity.VisualEffectGraph.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.dll')">..\ExternalDependencies\Dev\UnityEngine.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.dll')">..\..\..\..\Downloads\Dev\UnityEngine.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.dll')">..\..\lib\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AccessibilityModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AccessibilityModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.AccessibilityModule.dll')">..\ExternalDependencies\Dev\UnityEngine.AccessibilityModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.AccessibilityModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.AccessibilityModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.AccessibilityModule.dll')">..\..\lib\UnityEngine.AccessibilityModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.AIModule.dll')">..\ExternalDependencies\Dev\UnityEngine.AIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.AIModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.AIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.AIModule.dll')">..\..\lib\UnityEngine.AIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AndroidJNIModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AndroidJNIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.AndroidJNIModule.dll')">..\ExternalDependencies\Dev\UnityEngine.AndroidJNIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.AndroidJNIModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.AndroidJNIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.AndroidJNIModule.dll')">..\..\lib\UnityEngine.AndroidJNIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.AnimationModule.dll')">..\ExternalDependencies\Dev\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.AnimationModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.AnimationModule.dll')">..\..\lib\UnityEngine.AnimationModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ARModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ARModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.ARModule.dll')">..\ExternalDependencies\Dev\UnityEngine.ARModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.ARModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.ARModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.ARModule.dll')">..\..\lib\UnityEngine.ARModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.AssetBundleModule.dll')">..\ExternalDependencies\Dev\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.AssetBundleModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.AssetBundleModule.dll')">..\..\lib\UnityEngine.AssetBundleModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.AudioModule.dll')">..\ExternalDependencies\Dev\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.AudioModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.AudioModule.dll')">..\..\lib\UnityEngine.AudioModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ClothModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.ClothModule.dll')">..\ExternalDependencies\Dev\UnityEngine.ClothModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.ClothModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.ClothModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.ClothModule.dll')">..\..\lib\UnityEngine.ClothModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClusterInputModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ClusterInputModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.ClusterInputModule.dll')">..\ExternalDependencies\Dev\UnityEngine.ClusterInputModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.ClusterInputModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.ClusterInputModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.ClusterInputModule.dll')">..\..\lib\UnityEngine.ClusterInputModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClusterRendererModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ClusterRendererModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.ClusterRendererModule.dll')">..\ExternalDependencies\Dev\UnityEngine.ClusterRendererModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.ClusterRendererModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.ClusterRendererModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.ClusterRendererModule.dll')">..\..\lib\UnityEngine.ClusterRendererModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.CoreModule.dll')">..\ExternalDependencies\Dev\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.CoreModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.CoreModule.dll')">..\..\lib\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CrashReportingModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.CrashReportingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.CrashReportingModule.dll')">..\ExternalDependencies\Dev\UnityEngine.CrashReportingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.CrashReportingModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.CrashReportingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.CrashReportingModule.dll')">..\..\lib\UnityEngine.CrashReportingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.DirectorModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.DirectorModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.DirectorModule.dll')">..\ExternalDependencies\Dev\UnityEngine.DirectorModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.DirectorModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.DirectorModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.DirectorModule.dll')">..\..\lib\UnityEngine.DirectorModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.DSPGraphModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.DSPGraphModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.DSPGraphModule.dll')">..\ExternalDependencies\Dev\UnityEngine.DSPGraphModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.DSPGraphModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.DSPGraphModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.DSPGraphModule.dll')">..\..\lib\UnityEngine.DSPGraphModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.GameCenterModule.dll')">..\ExternalDependencies\Dev\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.GameCenterModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.GameCenterModule.dll')">..\..\lib\UnityEngine.GameCenterModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.GIModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.GIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.GIModule.dll')">..\ExternalDependencies\Dev\UnityEngine.GIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.GIModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.GIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.GIModule.dll')">..\..\lib\UnityEngine.GIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.GridModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.GridModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.GridModule.dll')">..\ExternalDependencies\Dev\UnityEngine.GridModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.GridModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.GridModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.GridModule.dll')">..\..\lib\UnityEngine.GridModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.HotReloadModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.HotReloadModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.HotReloadModule.dll')">..\ExternalDependencies\Dev\UnityEngine.HotReloadModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.HotReloadModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.HotReloadModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.HotReloadModule.dll')">..\..\lib\UnityEngine.HotReloadModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.ImageConversionModule.dll')">..\ExternalDependencies\Dev\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.ImageConversionModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.ImageConversionModule.dll')">..\..\lib\UnityEngine.ImageConversionModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.IMGUIModule.dll')">..\ExternalDependencies\Dev\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.IMGUIModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.IMGUIModule.dll')">..\..\lib\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.InputLegacyModule.dll')">..\ExternalDependencies\Dev\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.InputLegacyModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.InputLegacyModule.dll')">..\..\lib\UnityEngine.InputLegacyModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.InputModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.InputModule.dll')">..\ExternalDependencies\Dev\UnityEngine.InputModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.InputModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.InputModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.InputModule.dll')">..\..\lib\UnityEngine.InputModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.JSONSerializeModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.JSONSerializeModule.dll')">..\ExternalDependencies\Dev\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.JSONSerializeModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.JSONSerializeModule.dll')">..\..\lib\UnityEngine.JSONSerializeModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.LocalizationModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.LocalizationModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.LocalizationModule.dll')">..\ExternalDependencies\Dev\UnityEngine.LocalizationModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.LocalizationModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.LocalizationModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.LocalizationModule.dll')">..\..\lib\UnityEngine.LocalizationModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.ParticleSystemModule.dll')">..\ExternalDependencies\Dev\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.ParticleSystemModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.ParticleSystemModule.dll')">..\..\lib\UnityEngine.ParticleSystemModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.PerformanceReportingModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.PerformanceReportingModule.dll')">..\ExternalDependencies\Dev\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.PerformanceReportingModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.PerformanceReportingModule.dll')">..\..\lib\UnityEngine.PerformanceReportingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.Physics2DModule.dll')">..\ExternalDependencies\Dev\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.Physics2DModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.Physics2DModule.dll')">..\..\lib\UnityEngine.Physics2DModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.PhysicsModule.dll')">..\ExternalDependencies\Dev\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.PhysicsModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.PhysicsModule.dll')">..\..\lib\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ProfilerModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ProfilerModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.ProfilerModule.dll')">..\ExternalDependencies\Dev\UnityEngine.ProfilerModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.ProfilerModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.ProfilerModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.ProfilerModule.dll')">..\..\lib\UnityEngine.ProfilerModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll')">..\ExternalDependencies\Dev\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll')">..\..\lib\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.ScreenCaptureModule.dll')">..\ExternalDependencies\Dev\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.ScreenCaptureModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.ScreenCaptureModule.dll')">..\..\lib\UnityEngine.ScreenCaptureModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SharedInternalsModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.SharedInternalsModule.dll')">..\ExternalDependencies\Dev\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.SharedInternalsModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.SharedInternalsModule.dll')">..\..\lib\UnityEngine.SharedInternalsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.SpriteMaskModule.dll')">..\ExternalDependencies\Dev\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.SpriteMaskModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.SpriteMaskModule.dll')">..\..\lib\UnityEngine.SpriteMaskModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SpriteShapeModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.SpriteShapeModule.dll')">..\ExternalDependencies\Dev\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.SpriteShapeModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.SpriteShapeModule.dll')">..\..\lib\UnityEngine.SpriteShapeModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.StreamingModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.StreamingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.StreamingModule.dll')">..\ExternalDependencies\Dev\UnityEngine.StreamingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.StreamingModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.StreamingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.StreamingModule.dll')">..\..\lib\UnityEngine.StreamingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SubstanceModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SubstanceModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.SubstanceModule.dll')">..\ExternalDependencies\Dev\UnityEngine.SubstanceModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.SubstanceModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.SubstanceModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.SubstanceModule.dll')">..\..\lib\UnityEngine.SubstanceModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SubsystemsModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.SubsystemsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.SubsystemsModule.dll')">..\ExternalDependencies\Dev\UnityEngine.SubsystemsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.SubsystemsModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.SubsystemsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.SubsystemsModule.dll')">..\..\lib\UnityEngine.SubsystemsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TerrainModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.TerrainModule.dll')">..\ExternalDependencies\Dev\UnityEngine.TerrainModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.TerrainModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.TerrainModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.TerrainModule.dll')">..\..\lib\UnityEngine.TerrainModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TerrainPhysicsModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.TerrainPhysicsModule.dll')">..\ExternalDependencies\Dev\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.TerrainPhysicsModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.TerrainPhysicsModule.dll')">..\..\lib\UnityEngine.TerrainPhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TextCoreModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.TextCoreModule.dll')">..\ExternalDependencies\Dev\UnityEngine.TextCoreModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.TextCoreModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.TextCoreModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.TextCoreModule.dll')">..\..\lib\UnityEngine.TextCoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.TextRenderingModule.dll')">..\ExternalDependencies\Dev\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.TextRenderingModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.TextRenderingModule.dll')">..\..\lib\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TilemapModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.TilemapModule.dll')">..\ExternalDependencies\Dev\UnityEngine.TilemapModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.TilemapModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.TilemapModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.TilemapModule.dll')">..\..\lib\UnityEngine.TilemapModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TLSModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.TLSModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.TLSModule.dll')">..\ExternalDependencies\Dev\UnityEngine.TLSModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.TLSModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.TLSModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.TLSModule.dll')">..\..\lib\UnityEngine.TLSModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UI.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UI.dll')">..\ExternalDependencies\Dev\UnityEngine.UI.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UI.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UI.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UI.dll')">..\..\lib\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UIElementsModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UIElementsModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UIElementsModule.dll')">..\..\lib\UnityEngine.UIElementsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIElementsNativeModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UIElementsNativeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UIElementsNativeModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UIElementsNativeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UIElementsNativeModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UIElementsNativeModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UIElementsNativeModule.dll')">..\..\lib\UnityEngine.UIElementsNativeModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UIModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UIModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UIModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UIModule.dll')">..\..\lib\UnityEngine.UIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UmbraModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UmbraModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UmbraModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UmbraModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UmbraModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UmbraModule.dll')">..\..\lib\UnityEngine.UmbraModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UNETModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UNETModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UNETModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UNETModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UNETModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UNETModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UNETModule.dll')">..\..\lib\UnityEngine.UNETModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsCommonModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityAnalyticsCommonModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityAnalyticsCommonModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityAnalyticsCommonModule.dll')">..\..\lib\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityAnalyticsModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityAnalyticsModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityAnalyticsModule.dll')">..\..\lib\UnityEngine.UnityAnalyticsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityConnectModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityConnectModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityConnectModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityConnectModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityConnectModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityConnectModule.dll')">..\..\lib\UnityEngine.UnityConnectModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityCurlModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityCurlModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityCurlModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityCurlModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityCurlModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityCurlModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityCurlModule.dll')">..\..\lib\UnityEngine.UnityCurlModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityTestProtocolModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityTestProtocolModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityTestProtocolModule.dll')">..\..\lib\UnityEngine.UnityTestProtocolModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestAssetBundleModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestAssetBundleModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityWebRequestAssetBundleModule.dll')">..\..\lib\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestAudioModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestAudioModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityWebRequestAudioModule.dll')">..\..\lib\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityWebRequestModule.dll')">..\..\lib\UnityEngine.UnityWebRequestModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestTextureModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestTextureModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityWebRequestTextureModule.dll')">..\..\lib\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestWWWModule.dll')">..\ExternalDependencies\Dev\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestWWWModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.UnityWebRequestWWWModule.dll')">..\..\lib\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VehiclesModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.VehiclesModule.dll')">..\ExternalDependencies\Dev\UnityEngine.VehiclesModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.VehiclesModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.VehiclesModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.VehiclesModule.dll')">..\..\lib\UnityEngine.VehiclesModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VFXModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VFXModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.VFXModule.dll')">..\ExternalDependencies\Dev\UnityEngine.VFXModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.VFXModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.VFXModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.VFXModule.dll')">..\..\lib\UnityEngine.VFXModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VideoModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.VideoModule.dll')">..\ExternalDependencies\Dev\UnityEngine.VideoModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.VideoModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.VideoModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.VideoModule.dll')">..\..\lib\UnityEngine.VideoModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VirtualTexturingModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VirtualTexturingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.VirtualTexturingModule.dll')">..\ExternalDependencies\Dev\UnityEngine.VirtualTexturingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.VirtualTexturingModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.VirtualTexturingModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.VirtualTexturingModule.dll')">..\..\lib\UnityEngine.VirtualTexturingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VRModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.VRModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.VRModule.dll')">..\ExternalDependencies\Dev\UnityEngine.VRModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.VRModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.VRModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.VRModule.dll')">..\..\lib\UnityEngine.VRModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.WindModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.WindModule.dll')">..\ExternalDependencies\Dev\UnityEngine.WindModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.WindModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.WindModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.WindModule.dll')">..\..\lib\UnityEngine.WindModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.XRModule">
-      <HintPath>..\ExternalDependencies\Dev\UnityEngine.XRModule.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\UnityEngine.XRModule.dll')">..\ExternalDependencies\Dev\UnityEngine.XRModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\UnityEngine.XRModule.dll')">..\..\..\..\Downloads\Dev\UnityEngine.XRModule.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\UnityEngine.XRModule.dll')">..\..\lib\UnityEngine.XRModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="zxing">
-      <HintPath>..\ExternalDependencies\Dev\zxing.dll</HintPath>
+      <HintPath Condition="Exists('..\ExternalDependencies\Dev\zxing.dll')">..\ExternalDependencies\Dev\zxing.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\..\Downloads\Dev\zxing.dll')">..\..\..\..\Downloads\Dev\zxing.dll</HintPath>
+      <HintPath Condition="Exists('..\..\lib\zxing.dll')">..\..\lib\zxing.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- Add missing dependencies that were shown in the errors -->
