@@ -25,6 +25,8 @@ namespace SCI.Custom.Config
 
         [YamlIgnore]
         public SCI.Config.SuicideSCP500PillsConfig SuicideSCP500 { get; set; } = new SCI.Config.SuicideSCP500PillsConfig();
+        [YamlIgnore]
+        public SCI.Config.VanishingSCP500PillsConfig VanishingSCP500 { get; set; } = new SCI.Config.VanishingSCP500PillsConfig();
 
         [YamlIgnore]
         public SCI.Config.ClusterGrenadeConfig ClusterGrenade { get; set; } = new SCI.Config.ClusterGrenadeConfig();

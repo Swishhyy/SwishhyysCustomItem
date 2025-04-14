@@ -51,8 +51,13 @@
     <Compile Include="Custom\MedicalItems\AdrenalineSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\ExpiredSCP500Pills.cs" />
     <Compile Include="Custom\MedicalItems\SuicideSCP500Pills.cs" />
+    <Compile Include="Custom\MedicalItems\VanishingSCP500Pills.cs" />
+    <Compile Include="Custom\Misc\Airdrop.cs" />
+    <Compile Include="Custom\Misc\HackingChip.cs" />
+    <Compile Include="Custom\Misc\ReinforcementCall.cs" />
     <Compile Include="Custom\Throwables\ClusterGrenade.cs" />
     <Compile Include="Custom\Throwables\ImpactGrenade.cs" />
+    <Compile Include="Custom\Throwables\BioGrenade.cs" />
     <Compile Include="Custom\Throwables\SmokeGrenade.cs" />
     <Compile Include="Custom\Weapons\GrenadeLauncher.cs" />
     <Compile Include="Custom\Weapons\Railgun.cs" />

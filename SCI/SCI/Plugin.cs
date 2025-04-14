@@ -30,6 +30,7 @@
         private ExpiredSCP500Pills _expiredSCP500Pills;
         private AdrenalineSCP500Pills _adrenalineSCP500Pills;
         private SuicideSCP500Pills _suicideSCP500Pills;
+        private VanishingSCP500Pills _vanishingSCP500Pills;
         private ClusterGrenade _clusterGrenade;
         private ImpactGrenade _impactGrenade;
         private SmokeGrenade _smokeGrenade;
@@ -92,7 +93,8 @@
             _impactGrenade = new ImpactGrenade((SCI.Config.ImpactGrenadeConfig)Config.ImpactGrenade);
             _smokeGrenade = new SmokeGrenade((SCI.Config.SmokeGrenadeConfig)Config.SmokeGrenade);
             _railgun = new Railgun((SCI.Config.RailgunConfig)Config.Railgun);
-            _grenadeLauncher = new GrenadeLauncher((SCI.Config.GrenadeLauncherConfig)Config.GrenadeLauncher); 
+            _grenadeLauncher = new GrenadeLauncher((SCI.Config.GrenadeLauncherConfig)Config.GrenadeLauncher);
+            _vanishingSCP500Pills = new VanishingSCP500Pills((SCI.Config.VanishingSCP500PillsConfig)Config.VanishingSCP500);
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
@@ -104,6 +106,7 @@
             _smokeGrenade.Register();
             _railgun.Register();
             _grenadeLauncher.Register();
+            _vanishingSCP500Pills.Register();
 
             // Log a debug message listing the registered custom items.
             Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade, Smoke Grenade, Railgun, Grenade Launcher");
@@ -126,6 +129,7 @@
             _smokeGrenade?.Unregister();
             _railgun?.Unregister();
             _grenadeLauncher?.Unregister();
+            _vanishingSCP500Pills?.Unregister();
 
             // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
@@ -136,6 +140,7 @@
             _smokeGrenade = null;
             _railgun = null;
             _grenadeLauncher = null;
+            _vanishingSCP500Pills = null;
 
             // Unregister the WebhookService to clean up resources.
             WebhookService = null;

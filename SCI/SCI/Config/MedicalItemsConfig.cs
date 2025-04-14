@@ -41,6 +41,11 @@ namespace SCI.Config
         public float ExplosionRadius { get; set; } = 10f;
     }
 
+    public class VanishingSCP500PillsConfig
+    {
+        public float Duration { get; set; } = 10f;
+    }
+
     public class ExpiredSCP500PillsConfig
     {
         [Description("Default duration for applied effects (in seconds)")]
