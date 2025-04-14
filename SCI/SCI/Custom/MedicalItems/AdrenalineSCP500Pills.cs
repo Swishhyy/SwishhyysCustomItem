@@ -30,7 +30,9 @@ namespace SCI.Custom.MedicalItems
 
         // The weight of the item which might affect in-game mechanics like inventory management.
         public override float Weight { get; set; } = 0.5f;
-
+        private readonly string ActivationMessage = "<color=yellow>You feel a rush of adrenaline!</color>";
+        private readonly string ExhaustionMessage = "<color=red>You feel exhausted after the adrenaline rush...</color>";
+        private readonly string CooldownMessage = "You must wait before using another pill!";
         // Spawn properties that define how and where the item spawns in the game.
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
@@ -151,8 +153,8 @@ namespace SCI.Custom.MedicalItems
                     if (secondsSinceLastUse < _config.Cooldown)
                     {
                         Plugin.Instance?.DebugLog($"OnUsingItem: Player is on cooldown, {_config.Cooldown - secondsSinceLastUse:F1} seconds remaining");
-                        ev.Player.ShowHint(_config.CooldownMessage, _config.HintDuration);
-                        Plugin.Instance?.DebugLog($"OnUsingItem: Showed cooldown message to player: {_config.CooldownMessage}");
+                        ev.Player.ShowHint(CooldownMessage, 5f);
+                        Plugin.Instance?.DebugLog($"OnUsingItem: Showed cooldown message to player: {CooldownMessage}");
                         return;
                     }
                     else
@@ -190,8 +192,8 @@ namespace SCI.Custom.MedicalItems
                 Plugin.Instance?.DebugLog($"OnUsingItem: Player stamina after: {ev.Player.Stamina:F1} (set to {_config.StaminaRestoreAmount})");
 
                 // Display an activation message hint to the player for a duration specified by the config.
-                Plugin.Instance?.DebugLog($"OnUsingItem: Showing activation message to player: {_config.ActivationMessage}");
-                ev.Player.ShowHint(_config.ActivationMessage, _config.HintDuration);
+                Plugin.Instance?.DebugLog($"OnUsingItem: Showing activation message to player: {ActivationMessage}");
+                ev.Player.ShowHint(ActivationMessage, 5f);
 
                 // Remove the item from the player's inventory as it is consumed on use.
                 Plugin.Instance?.DebugLog($"OnUsingItem: Removing item from player {ev.Player.Nickname}'s inventory");
@@ -213,8 +215,8 @@ namespace SCI.Custom.MedicalItems
                         // Apply an exhaustion effect to simulate fatigue using the Exhausted effect with the configured exhaustion duration.
                         ev.Player.EnableEffect<CustomPlayerEffects.Exhausted>(_config.ExhaustionDuration);
                         // Show a hint message indicating the exhaustion effect to the player.
-                        ev.Player.ShowHint(_config.ExhaustionMessage, _config.HintDuration);
-                        Plugin.Instance?.DebugLog($"Delayed callback: Showed exhaustion message to player: {_config.ExhaustionMessage}");
+                        ev.Player.ShowHint(ExhaustionMessage, 5f);
+                        Plugin.Instance?.DebugLog($"Delayed callback: Showed exhaustion message to player: {ExhaustionMessage}");
                     }
                     else
                     {

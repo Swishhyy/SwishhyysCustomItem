@@ -31,6 +31,8 @@ namespace SCI.Custom.MedicalItems
 
         // Weight property which may affect in-game item mechanics.
         public override float Weight { get; set; } = 0.5f;
+        private readonly string SurvivalMessage = "You consumed the suicide pills, but somehow survived the explosion!";
+        private readonly string DeathMessage = "You consumed the suicide pills...";
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
@@ -136,13 +138,13 @@ namespace SCI.Custom.MedicalItems
                 // Show message to player
                 if (survives)
                 {
-                    Plugin.Instance?.DebugLog($"OnUsingItem: Showing survival message to player: {_config.SurvivalMessage}");
-                    ev.Player.ShowHint(_config.SurvivalMessage, _config.HintDuration);
+                    Plugin.Instance?.DebugLog($"OnUsingItem: Showing survival message to player: {SurvivalMessage}");
+                    ev.Player.ShowHint(SurvivalMessage, 5f);
                 }
                 else
                 {
-                    Plugin.Instance?.DebugLog($"OnUsingItem: Showing death message to player: {_config.DeathMessage}");
-                    ev.Player.ShowHint(_config.DeathMessage, _config.HintDuration);
+                    Plugin.Instance?.DebugLog($"OnUsingItem: Showing death message to player: {DeathMessage}");
+                    ev.Player.ShowHint(DeathMessage, 5f);
                 }
 
                 // Execute explosion effect

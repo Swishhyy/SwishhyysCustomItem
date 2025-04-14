@@ -60,20 +60,17 @@ namespace SCI.Custom.Throwables
         public override void Init()
         {
             base.Init();
-            if (_config.EnableDebugLogging)
-                Plugin.Instance?.DebugLog($"SmokeGrenade initialized with smoke time: {_config.SmokeTime}");
+            Plugin.Instance?.DebugLog($"SmokeGrenade initialized with smoke time: {_config.SmokeTime}");
         }
 
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
-            if (_config.EnableDebugLogging)
-                Plugin.Instance?.DebugLog($"SmokeGrenade.OnExploding called at position {ev.Position}");
+            Plugin.Instance?.DebugLog($"SmokeGrenade.OnExploding called at position {ev.Position}");
 
             ev.IsAllowed = false;
             Vector3 savedGrenadePosition = ev.Position;
 
-            if (_config.EnableDebugLogging)
-                Plugin.Instance?.DebugLog("SmokeGrenade: Creating SCP-244 smoke effect");
+            Plugin.Instance?.DebugLog("SmokeGrenade: Creating SCP-244 smoke effect");
 
             Scp244 scp244 = (Scp244)Item.Create(ItemType.SCP244a);
             Pickup pickup = null;
@@ -83,35 +80,29 @@ namespace SCI.Custom.Throwables
             scp244.Primed = true;
             scp244.MaxDiameter = _config.SmokeDiameter;
 
-            if (_config.EnableDebugLogging)
-                Plugin.Instance?.DebugLog($"SmokeGrenade: Creating pickup at {savedGrenadePosition}");
+            Plugin.Instance?.DebugLog($"SmokeGrenade: Creating pickup at {savedGrenadePosition}");
 
             pickup = scp244.CreatePickup(savedGrenadePosition);
 
             if (_config.RemoveSmoke)
             {
-                if (_config.EnableDebugLogging)
-                    Plugin.Instance?.DebugLog($"SmokeGrenade: Scheduled smoke removal in {_config.SmokeTime} seconds");
+                Plugin.Instance?.DebugLog($"SmokeGrenade: Scheduled smoke removal in {_config.SmokeTime} seconds");
 
                 Timing.CallDelayed(_config.SmokeTime, () =>
                 {
-                    if (_config.EnableDebugLogging)
-                        Plugin.Instance?.DebugLog("SmokeGrenade: Removing smoke by moving it down");
+                    Plugin.Instance?.DebugLog("SmokeGrenade: Removing smoke by moving it down");
 
                     pickup.Position += Vector3.down * 10;
 
                     Timing.CallDelayed(10, () =>
                     {
-                        if (_config.EnableDebugLogging)
-                            Plugin.Instance?.DebugLog("SmokeGrenade: Destroying smoke pickup");
+                        Plugin.Instance?.DebugLog("SmokeGrenade: Destroying smoke pickup");
 
                         pickup.Destroy();
                     });
                 });
             }
-
-            if (_config.EnableDebugLogging)
-                Plugin.Instance?.DebugLog("SmokeGrenade.OnExploding completed successfully");
+            Plugin.Instance?.DebugLog("SmokeGrenade.OnExploding completed successfully");
         }
     }
 }

@@ -41,14 +41,13 @@ namespace SCI.Custom.Throwables
         public override void Init()
         {
             base.Init();
-            if (_config.EnableDebugLogging)
-                Log.Debug($"Impact Grenade initialized with damage radius: {_config.DamageRadius}");
+            Log.Debug($"Impact Grenade initialized with damage radius: {_config.DamageRadius}");
         }
 
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
-            if (_config.EnableDebugLogging)
-                Log.Debug($"Impact Grenade exploding at position {ev.Position}");
+
+            Log.Debug($"Impact Grenade exploding at position {ev.Position}");
 
             // Calculate enhanced damage for nearby players
             foreach (Player target in Player.List)
@@ -63,16 +62,12 @@ namespace SCI.Custom.Throwables
                     float damage = Mathf.Lerp(_config.MaximumDamage, _config.MinimumDamage,
                         distance / _config.DamageRadius);
 
-                    if (_config.EnableDebugLogging)
-                        Log.Debug($"Applying {damage} damage to {target.Nickname} at distance {distance}");
+                     Log.Debug($"Applying {damage} damage to {target.Nickname} at distance {distance}");
 
                     // Apply damage after a tiny delay to ensure explosion effect shows first
                     Timing.CallDelayed(0.1f, () =>
                     {
                         target.Hurt(damage, DamageType.Explosion);
-
-                        if (_config.ShowEffectMessage && damage > 0)
-                            target.ShowHint(_config.EffectMessage, _config.MessageDuration);
                     });
                 }
             }

@@ -15,27 +15,15 @@ namespace SCI.Config
 
         [Description("Duration of the adrenaline effect in seconds")]
         public float EffectDuration { get; set; } = 25f;
+        
+        [Description("Duration of the exhaustion effect after adrenaline wears off")]
+        public float ExhaustionDuration { get; set; } = 5f;
 
         [Description("Cooldown between using adrenaline pills in seconds")]
         public float Cooldown { get; set; } = 5f;
 
         [Description("Amount of stamina to restore when using the pills (0-100)")]
         public float StaminaRestoreAmount { get; set; } = 100f;
-
-        [Description("Duration of the hint message in seconds")]
-        public float HintDuration { get; set; } = 5f;
-
-        [Description("Duration of the exhaustion effect after adrenaline wears off")]
-        public float ExhaustionDuration { get; set; } = 5f;
-
-        [Description("Message shown when adrenaline effect begins")]
-        public string ActivationMessage { get; set; } = "<color=yellow>You feel a rush of adrenaline!</color>";
-
-        [Description("Message shown when adrenaline effect ends")]
-        public string ExhaustionMessage { get; set; } = "<color=red>You feel exhausted after the adrenaline rush...</color>";
-
-        [Description("Message shown when trying to use during cooldown")]
-        public string CooldownMessage { get; set; } = "You must wait before using another pill!";
     }
 
     public class SuicideSCP500PillsConfig
@@ -46,23 +34,11 @@ namespace SCI.Config
         [Description("Amount of health to give the player if they survive")]
         public float SurvivalHealthAmount { get; set; } = 5f;
 
-        [Description("Maximum explosion damage to the user")]
-        public float UserDamage { get; set; } = 1000f;
-
         [Description("Maximum damage to nearby players")]
         public float MaxNearbyPlayerDamage { get; set; } = 70f;
 
         [Description("Explosion radius (in meters)")]
         public float ExplosionRadius { get; set; } = 10f;
-
-        [Description("Duration of the hint message (in seconds)")]
-        public float HintDuration { get; set; } = 5f;
-
-        [Description("Message shown to player when they survive")]
-        public string SurvivalMessage { get; set; } = "You consumed the suicide pills, but somehow survived the explosion!";
-
-        [Description("Message shown to player when they won't survive")]
-        public string DeathMessage { get; set; } = "You consumed the suicide pills...";
     }
 
     public class ExpiredSCP500PillsConfig

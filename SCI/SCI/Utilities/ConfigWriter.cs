@@ -223,7 +223,7 @@ namespace SCI.Utilities
                                     BindingFlags.NonPublic | BindingFlags.Static)
                                     .MakeGenericMethod(propType);
 
-                                object loadedConfig = loadMethod.Invoke(null, new object[] { configName, category });
+                                object loadedConfig = loadMethod.Invoke(null, [configName, category]);
 
                                 if (loadedConfig != null)
                                 {
@@ -232,7 +232,7 @@ namespace SCI.Utilities
                                         BindingFlags.NonPublic | BindingFlags.Static)
                                         .MakeGenericMethod(propType);
 
-                                    mergeMethod.Invoke(null, new[] { loadedConfig, defaultValue });
+                                    mergeMethod.Invoke(null, [loadedConfig, defaultValue]);
 
                                     // Set the property value
                                     prop.SetValue(mainConfig, loadedConfig);
@@ -259,11 +259,11 @@ namespace SCI.Utilities
         private static bool HasExplicitHandler(string configName)
         {
             string[] explicitHandlers =
-            {
+            [
                 "ExpiredSCP500", "AdrenalineSCP500", "SuicideSCP500",
                 "ClusterGrenade", "ImpactGrenade", "SmokeGrenade",
                 "Railgun", "GrenadeLauncher"
-            };
+            ];
 
             return explicitHandlers.Contains(configName);
         }

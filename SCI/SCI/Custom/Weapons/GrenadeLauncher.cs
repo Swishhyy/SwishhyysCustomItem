@@ -22,7 +22,7 @@ namespace SCI.Custom.Weapon
         {
             Plugin.Instance?.DebugLog("GrenadeLauncher constructor with config called");
             _config = config;
-            Plugin.Instance?.DebugLog($"GrenadeLauncher initialized with config: LaunchForce={_config.LaunchForce}, FuseTime={_config.FuseTime}");
+            Plugin.Instance?.DebugLog($"GrenadeLauncher initialized with config: LaunchForce={_config.LaunchForce}, FuseTime={FuseTime}");
         }
 
         [YamlIgnore]
@@ -33,6 +33,8 @@ namespace SCI.Custom.Weapon
         public override string Description { get; set; } = "A weapon that fires grenades at a distance";
         public override byte ClipSize { get; set; } = 3;
         public override float Weight { get; set; } = 3.0f;
+        private float FuseTime { get; set; } = 1.0f;
+        private float SpawnDistance { get; set; } = 1.0f;
 
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
@@ -79,7 +81,7 @@ namespace SCI.Custom.Weapon
                 ev.CanHurt = false;
 
                 // Use configuration for spawn position distance
-                Vector3 spawnPos = ev.Player.CameraTransform.position + ev.Player.CameraTransform.forward * _config.SpawnDistance;
+                Vector3 spawnPos = ev.Player.CameraTransform.position + ev.Player.CameraTransform.forward * SpawnDistance;
                 Quaternion rotation = Quaternion.identity;
 
                 // Create and spawn the grenade
@@ -113,7 +115,7 @@ namespace SCI.Custom.Weapon
                         var grenadePickup = grenade.As<GrenadePickup>();
                         if (grenadePickup != null)
                         {
-                            grenadePickup.FuseTime = _config.FuseTime;
+                            grenadePickup.FuseTime = FuseTime;
                             grenadePickup.Explode();
                             Plugin.Instance?.DebugLog("Grenade explosion triggered");
                         }

@@ -24,12 +24,13 @@ namespace SCI.Custom.Weapon
         // Readonly field to hold configuration for this weapon
         private readonly RailgunConfig _config;
 
+        private float BeamWidth { get; set; } = 0.75f;
         // Constructor that takes a configuration object
         public Railgun(RailgunConfig config)
         {
             Plugin.Instance?.DebugLog("Railgun constructor with config called");
             _config = config;
-            Plugin.Instance?.DebugLog($"Railgun initialized with config: Damage={_config.Damage}, Range={_config.Range}, BeamWidth={_config.BeamWidth}");
+            Plugin.Instance?.DebugLog($"Railgun initialized with config: Damage={_config.Damage}, Range={_config.Range}, BeamWidth={BeamWidth}");
         }
 
         // Define item properties
@@ -41,6 +42,7 @@ namespace SCI.Custom.Weapon
         public override string Description { get; set; } = "A powerful railgun created by combining a Micro HID and a Particle Disruptor";
         public override float Weight { get; set; } = 3.2f;
         public override byte ClipSize { get; set; } = 1;
+        private readonly bool SpawnExplosive = true;
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
@@ -343,7 +345,7 @@ namespace SCI.Custom.Weapon
                     float distanceToBeam = perpendicularDirection.magnitude;
 
                     // If the player is close enough to the beam path, damage them
-                    if (distanceToBeam <= _config.BeamWidth)
+                    if (distanceToBeam <= BeamWidth)
                     {
                         Plugin.Instance?.DebugLog($"Damaging player {target.Nickname} for {_config.Damage} damage");
                         target.Hurt(_config.Damage, DamageType.Explosion);
@@ -352,7 +354,7 @@ namespace SCI.Custom.Weapon
                 }
 
                 // Create explosion effect at impact point
-                if (_config.SpawnExplosive)
+                if (SpawnExplosive)
                 {
                     Plugin.Instance?.DebugLog($"Creating explosion at impact point: {impactPoint}");
 
