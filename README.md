@@ -7,3 +7,5 @@ This configuration WILL be handled inside the primary config, sub configs will b
 
 
 REWORKING README INFO //AS WELL AS DOCUMENTATION
+
+This transfer is being made on the [V3.1.0 branch](https://github.com/Swishhyy/SUP/tree/V3.1.0)!
