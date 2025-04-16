@@ -16,14 +16,6 @@ namespace SCI.Custom.Weapon
 {
     public class GrenadeLauncher : CustomWeapon
     {
-        private readonly GrenadeLauncherConfig _config;
-
-        public GrenadeLauncher(GrenadeLauncherConfig config)
-        {
-            Plugin.Instance?.DebugLog("GrenadeLauncher constructor with config called");
-            _config = config;
-            Plugin.Instance?.DebugLog($"GrenadeLauncher initialized with config: LaunchForce={_config.LaunchForce}, FuseTime={FuseTime}");
-        }
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GunLogicer;
@@ -52,6 +44,15 @@ namespace SCI.Custom.Weapon
                 }
             ]
         };
+
+        private readonly GrenadeLauncherConfig _config;
+
+        public GrenadeLauncher(GrenadeLauncherConfig config)
+        {
+            Plugin.Instance?.DebugLog("GrenadeLauncher constructor with config called");
+            _config = config;
+            Plugin.Instance?.DebugLog($"GrenadeLauncher initialized with config: LaunchForce={_config.LaunchForce}, FuseTime={FuseTime}");
+        }
 
         protected override void SubscribeEvents()
         {

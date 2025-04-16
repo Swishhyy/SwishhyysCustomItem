@@ -21,18 +21,6 @@ namespace SCI.Custom.Weapon
 {
     public class Railgun : CustomWeapon
     {
-        // Readonly field to hold configuration for this weapon
-        private readonly RailgunConfig _config;
-
-        private float BeamWidth { get; set; } = 0.75f;
-        // Constructor that takes a configuration object
-        public Railgun(RailgunConfig config)
-        {
-            Plugin.Instance?.DebugLog("Railgun constructor with config called");
-            _config = config;
-            Plugin.Instance?.DebugLog($"Railgun initialized with config: Damage={_config.Damage}, Range={_config.Range}, BeamWidth={BeamWidth}");
-        }
-
         // Define item properties
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GunE11SR;
@@ -61,6 +49,18 @@ namespace SCI.Custom.Weapon
                }
             ]
         };
+
+        // Readonly field to hold configuration for this weapon
+        private readonly RailgunConfig _config;
+
+        private float BeamWidth { get; set; } = 0.75f;
+        // Constructor that takes a configuration object
+        public Railgun(RailgunConfig config)
+        {
+            Plugin.Instance?.DebugLog("Railgun constructor with config called");
+            _config = config;
+            Plugin.Instance?.DebugLog($"Railgun initialized with config: Damage={_config.Damage}, Range={_config.Range}, BeamWidth={BeamWidth}");
+        }
 
         // Subscribe to events when item is registered
         protected override void SubscribeEvents()

@@ -23,16 +23,22 @@ namespace SCI.Custom.Items.Grenades
     public class ClusterGrenade(ClusterGrenadeConfig clusterGrenade) : CustomGrenade
     {
         private readonly ClusterGrenadeConfig clusterGrenade = clusterGrenade;
-
+        // SETTINGS
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeHE;
         public override uint Id { get; set; } = 104;
         public override string Name { get; set; } = "<color=#FF0000>Cluster Grenade</color>";
-
-        public override string Description { get; set; } =
-            "When this grenade explodes, it spawns extra grenades near by";
-
+        public override string Description { get; set; } = "When this grenade explodes, it spawns extra grenades near by";
         public override float Weight { get; set; } = 1.75f;
+        public override bool ExplodeOnCollision { get; set; } = false;
+        public override float FuseTime { get; set; } = 5;
+        [Description("How long is the additional grenades fuse times")]
+        public float ClusterGrenadeFuseTime { get; set; } = 1.5f;
+        public int ClusterGrenadeCount { get; set; } = 5;
+        [Description("Enables a random spread of the cluster grenades, if its off it will spawn all of them on top of the detonation point")]
+        public bool ClusterGrenadeRandomSpread { get; set; } = true;
+        
+        // FUNCTIONALITY
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
@@ -69,14 +75,6 @@ namespace SCI.Custom.Items.Grenades
                 },
             ],
         };
-        public override bool ExplodeOnCollision { get; set; } = false;
-        public override float FuseTime { get; set; } = 5;
-        [Description("How long is the additional grenades fuse times")]
-        public float ClusterGrenadeFuseTime { get; set; } = 1.5f;
-        public int ClusterGrenadeCount { get; set; } = 5;
-        [Description("Enables a random spread of the cluster grenades, if its off it will spawn all of them on top of the detonation point")]
-        public bool ClusterGrenadeRandomSpread { get; set; } = true;
-
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
             Log.Debug("Cluster Grenade, initial grenade detonated, running methods");

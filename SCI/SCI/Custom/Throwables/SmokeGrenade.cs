@@ -25,7 +25,6 @@ namespace SCI.Custom.Throwables
         public override string Name { get; set; } = "<color=#6600CC>Smoke Grenade</color>";
         public override string Description { get; set; } = "This is a smoke grenade, when detonated, a smoke cloud will be deployed";
         public override float Weight { get; set; } = 1.15f;
-
         public override bool ExplodeOnCollision { get; set; } = false;
         public override float FuseTime { get; set; } = 3f;
         [CanBeNull]

@@ -27,16 +27,15 @@ namespace SCI.Custom.Throwables
         public override string Name { get; set; } = "<color=#00FFFF>Impact Grenade</color>";
         public override string Description { get; set; } = "Explodes immediately upon impact with any surface.";
         public override float Weight { get; set; } = 0.75f;
+        public override bool ExplodeOnCollision { get; set; } = true;
+        public override float FuseTime { get; set; } = 10f;
+
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 2,
             DynamicSpawnPoints = [new() { Chance = 15, Location = SpawnLocationType.InsideLczArmory }, new() { Chance = 15, Location = SpawnLocationType.InsideHczArmory }, new() { Chance = 15, Location = SpawnLocationType.Inside049Armory }, new() { Chance = 15, Location = SpawnLocationType.InsideSurfaceNuke }, new() { Chance = 15, Location = SpawnLocationType.Inside079Armory },],
         };
-
-        // Key settings for impact grenade
-        public override bool ExplodeOnCollision { get; set; } = true;
-        public override float FuseTime { get; set; } = 10f; // Backup fuse time if collision doesn't trigger
 
         public override void Init()
         {
