@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCR", "SCR\SCR.csproj", "{4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCE", "SCE\SCE.csproj", "{6B0AED12-529C-4839-8482-405028109B54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCT", "SCT\SCT.csproj", "{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,8 +43,19 @@ Global
 		{6B0AED12-529C-4839-8482-405028109B54}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B0AED12-529C-4839-8482-405028109B54}.Release|x64.ActiveCfg = Release|Any CPU
 		{6B0AED12-529C-4839-8482-405028109B54}.Release|x64.Build.0 = Release|Any CPU
+		{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}.Debug|x64.Build.0 = Debug|Any CPU
+		{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}.Release|x64.ActiveCfg = Release|Any CPU
+		{0CD94F25-AADE-4264-A3FC-2B70AF3E1964}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5C90249-CE28-4B6B-888A-B805BEB370D0}
 	EndGlobalSection
 EndGlobal
