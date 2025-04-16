@@ -1,9 +1,9 @@
-# Swishhyys Custom Items (SCI)
+# Swishhyys Ultimate Package (SUP)
+(ORIGINALLY KNOWN AS SWISHHYYS CUSTOM ITEMS!!!)
 
-## Table of contents
 
-- **[Permissions](https://github.com/Swishhyy/SCI/blob/main/Documentation/Permissions.md)**
-- **[Commands](https://github.com/Swishhyy/SCI/blob/main/Documentation/Commands.md)**
-- **[Dependencies](https://github.com/Swishhyy/SCI/blob/main/Documentation/Dependencies.md)**
-- **[Item List](https://github.com/Swishhyy/SCI/blob/main/Documentation/Item%20List.md)**
-- **[Config](https://github.com/Swishhyy/SCI/blob/main/Documentation/Config.md)**
+I decided to merge all of my plugins into one to make it easier for me to develop my other two and for the person installing them. But I will grant the option not to use certain modules, as you may like one thing but not others, and that's fine!
+This configuration WILL be handled inside the primary config, sub configs will be organized by the plugin in their dedicated folders (SCI, SCR, SCE)
+
+
+REWORKING README INFO //AS WELL AS DOCUMENTATION
