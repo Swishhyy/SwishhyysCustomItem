@@ -26,6 +26,12 @@ namespace SCI.Config
         public float StaminaRestoreAmount { get; set; } = 100f;
     }
 
+    public class VanishingSCP500PillsConfig
+    {
+        [Description("Duration of invisibility in seconds")]
+        public float Duration { get; set; } = 7f;
+    }
+
     public class SuicideSCP500PillsConfig
     {
         [Description("Chance that the player survives the explosion (0-100)")]
@@ -39,11 +45,6 @@ namespace SCI.Config
 
         [Description("Explosion radius (in meters)")]
         public float ExplosionRadius { get; set; } = 10f;
-    }
-
-    public class VanishingSCP500PillsConfig
-    {
-        public float Duration { get; set; } = 10f;
     }
 
     public class ExpiredSCP500PillsConfig
