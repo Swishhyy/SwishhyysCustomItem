@@ -15,7 +15,7 @@ namespace SCI.Custom.Misc
     public class ReinforcementCall(ReinforcementCallConfig config) : CustomItem
     {
         private readonly ReinforcementCallConfig _config = config;
-        public override string Name { get; set; } = "<color=#FF0000>Reinforcement Call</color>";
+        public override string Name { get; set; } = "<color=#FF0000>Reinforcement Call (Unusable As Of Now)</color>";
         public override string Description { get; set; } = "A Radio to call for reinforcements";
         public override float Weight { get; set; } = 0.5f;
         public override ItemType Type { get; set; } = ItemType.Radio;
