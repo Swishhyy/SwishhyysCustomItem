@@ -39,7 +39,7 @@
         private GrenadeLauncher _grenadeLauncher;
         private BioGrenade _bioGrenade;
         //private HackingChip _hackingChip;
-        //private ReinforcementCall _reinforcementCall;
+        private ReinforcementCall _reinforcementCall;
 
         // Define the minimum required version of the Exiled framework to run this plugin.
         private readonly Version requiredExiledVersion = new(9, 5, 1);
@@ -101,7 +101,7 @@
             _vanishingSCP500Pills = new VanishingSCP500Pills((SCI.Config.VanishingSCP500PillsConfig)Config.VanishingSCP500);
             _bioGrenade = new BioGrenade((SCI.Config.BioGrenadeConfig)Config.BioGrenade);
             //_hackingChip = new HackingChip((SCI.Config.HackingChipConfig)Config.HackingChip);
-            //_reinforcementCall = new ReinforcementCall((SCI.Config.ReinforcementCallConfig)Config.ReinforcementCall);
+            _reinforcementCall = new ReinforcementCall((SCI.Config.ReinforcementCallConfig)Config.ReinforcementCall);
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
@@ -116,7 +116,7 @@
             _vanishingSCP500Pills.Register();
             _bioGrenade.Register();
             //_hackingChip.Register();
-            //_reinforcementCall.Register();
+            _reinforcementCall.Register();
 
             // Log a debug message listing the registered custom items.
             Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade, Smoke Grenade, Railgun, Grenade Launcher");
@@ -142,7 +142,7 @@
             _vanishingSCP500Pills?.Unregister();
             _bioGrenade?.Unregister();
             //_hackingChip?.Unregister();
-            //_reinforcementCall?.Unregister();
+            _reinforcementCall?.Unregister();
 
             // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
@@ -156,7 +156,7 @@
             _vanishingSCP500Pills = null;
             _bioGrenade = null;
             //_hackingChip = null;
-            //_reinforcementCall = null;
+            _reinforcementCall = null;
 
             // Unregister the WebhookService to clean up resources.
             WebhookService = null;
