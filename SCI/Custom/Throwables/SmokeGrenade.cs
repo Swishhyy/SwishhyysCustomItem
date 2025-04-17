@@ -17,8 +17,7 @@ namespace SCI.Custom.Throwables
     [CustomItem(ItemType.GrenadeFlash)]
     public class SmokeGrenade(SmokeGrenadeConfig config) : CustomGrenade
     {
-        private readonly SmokeGrenadeConfig _config = config;
-
+        #region Configuration
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeFlash;
         public override uint Id { get; set; } = 110;
@@ -27,6 +26,7 @@ namespace SCI.Custom.Throwables
         public override float Weight { get; set; } = 1.15f;
         public override bool ExplodeOnCollision { get; set; } = false;
         public override float FuseTime { get; set; } = 3f;
+
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
@@ -55,53 +55,50 @@ namespace SCI.Custom.Throwables
                 },
             ],
         };
+        private readonly SmokeGrenadeConfig _config = config;
+        #endregion
 
         public override void Init()
         {
             base.Init();
-            Plugin.Instance?.DebugLog($"SmokeGrenade initialized with smoke time: {_config.SmokeTime}");
         }
 
+        #region Grenade Functionality
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
-            Plugin.Instance?.DebugLog($"SmokeGrenade.OnExploding called at position {ev.Position}");
-
+            // Prevent default explosion
             ev.IsAllowed = false;
+
+            // Save position for smoke creation
             Vector3 savedGrenadePosition = ev.Position;
 
-            Plugin.Instance?.DebugLog("SmokeGrenade: Creating SCP-244 smoke effect");
-
+            // Create SCP-244 item to use as smoke source
             Scp244 scp244 = (Scp244)Item.Create(ItemType.SCP244a);
-            Pickup pickup = null;
 
-            // Configure appearance and attributes
+            // Configure smoke appearance from config
             scp244.Scale = new Vector3(_config.SmokeScale, _config.SmokeScale, _config.SmokeScale);
             scp244.Primed = true;
             scp244.MaxDiameter = _config.SmokeDiameter;
 
-            Plugin.Instance?.DebugLog($"SmokeGrenade: Creating pickup at {savedGrenadePosition}");
+            // Create the smoke pickup at explosion position
+            Pickup pickup = scp244.CreatePickup(savedGrenadePosition);
 
-            pickup = scp244.CreatePickup(savedGrenadePosition);
-
+            // Set up smoke removal if enabled in config
             if (_config.RemoveSmoke)
             {
-                Plugin.Instance?.DebugLog($"SmokeGrenade: Scheduled smoke removal in {_config.SmokeTime} seconds");
-
                 Timing.CallDelayed(_config.SmokeTime, () =>
                 {
-                    Plugin.Instance?.DebugLog("SmokeGrenade: Removing smoke by moving it down");
-
+                    // Move smoke below the map
                     pickup.Position += Vector3.down * 10;
 
+                    // Clean up after a delay
                     Timing.CallDelayed(10, () =>
                     {
-                        Plugin.Instance?.DebugLog("SmokeGrenade: Destroying smoke pickup");
-
                         pickup.Destroy();
                     });
                 });
             }
-            Plugin.Instance?.DebugLog("SmokeGrenade.OnExploding completed successfully");
         }
+        #endregion
     }
 }

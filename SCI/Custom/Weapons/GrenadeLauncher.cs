@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
@@ -14,9 +13,9 @@ using SCI.Config;
 
 namespace SCI.Custom.Weapon
 {
-    public class GrenadeLauncher : CustomWeapon
+    public class GrenadeLauncher(GrenadeLauncherConfig config) : CustomWeapon
     {
-
+        #region Configuration
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GunLogicer;
         public override uint Id { get; set; } = 111;
@@ -25,8 +24,9 @@ namespace SCI.Custom.Weapon
         public override string Description { get; set; } = "A weapon that fires grenades at a distance";
         public override byte ClipSize { get; set; } = 3;
         public override float Weight { get; set; } = 3.0f;
-        private float FuseTime { get; set; } = 1.0f;
-        private float SpawnDistance { get; set; } = 1.0f;
+
+        private const float FuseTime = 1.0f;
+        private const float SpawnDistance = 1.0f;
 
         [CanBeNull]
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
@@ -44,71 +44,59 @@ namespace SCI.Custom.Weapon
                 }
             ]
         };
+        private readonly GrenadeLauncherConfig _config = config;
+        #endregion
 
-        private readonly GrenadeLauncherConfig _config;
-
-        public GrenadeLauncher(GrenadeLauncherConfig config)
-        {
-            Plugin.Instance?.DebugLog("GrenadeLauncher constructor with config called");
-            _config = config;
-            Plugin.Instance?.DebugLog($"GrenadeLauncher initialized with config: LaunchForce={_config.LaunchForce}, FuseTime={FuseTime}");
-        }
-
+        #region Constructor and Event Management
         protected override void SubscribeEvents()
         {
-            Plugin.Instance?.DebugLog("GrenadeLauncher.SubscribeEvents called");
-            Exiled.Events.Handlers.Player.Shot += OnShotDD;
+            Exiled.Events.Handlers.Player.Shot += OnShot;
             base.SubscribeEvents();
-            Plugin.Instance?.DebugLog("GrenadeLauncher event subscriptions completed");
         }
 
         protected override void UnsubscribeEvents()
         {
-            Plugin.Instance?.DebugLog("GrenadeLauncher.UnsubscribeEvents called");
-            Exiled.Events.Handlers.Player.Shot -= OnShotDD;
+            Exiled.Events.Handlers.Player.Shot -= OnShot;
             base.UnsubscribeEvents();
-            Plugin.Instance?.DebugLog("GrenadeLauncher event unsubscriptions completed");
         }
+        #endregion
 
-        private void OnShotDD(ShotEventArgs ev)
+        #region Weapon Functionality
+        private new void OnShot(ShotEventArgs ev)
         {
             try
             {
                 if (!Check(ev.Player.CurrentItem))
                     return;
 
-                Plugin.Instance?.DebugLog($"GrenadeLauncher fired by {ev.Player.Nickname}");
-
+                // Prevent direct damage from the shot
                 ev.CanHurt = false;
 
-                // Use configuration for spawn position distance
+                // Spawn position calculation
                 Vector3 spawnPos = ev.Player.CameraTransform.position + ev.Player.CameraTransform.forward * SpawnDistance;
-                Quaternion rotation = Quaternion.identity;
 
                 // Create and spawn the grenade
-                Pickup grenade = Pickup.CreateAndSpawn(ItemType.GrenadeHE, spawnPos, rotation);
+                Pickup grenade = Pickup.CreateAndSpawn(ItemType.GrenadeHE, spawnPos, Quaternion.identity);
 
+                // Apply physics to the grenade
                 if (grenade.Rigidbody is Rigidbody rb)
                 {
                     rb.isKinematic = false;
                     rb.useGravity = true;
 
-                    // Add configurable upward arc
+                    // Calculate launch direction with upward arc
                     Vector3 launchDirection = ev.Player.CameraTransform.forward + Vector3.up * _config.UpwardArc;
                     launchDirection.Normalize();
 
-                    // Use configurable launch force
+                    // Apply launch force
                     rb.velocity = launchDirection * _config.LaunchForce;
-
-                    Plugin.Instance?.DebugLog($"Grenade launched with force: {_config.LaunchForce}");
                 }
                 else
                 {
                     Log.Warn("Grenade doesn't have a rigidbody.");
-                    Plugin.Instance?.DebugLog("Failed to access grenade rigidbody");
                 }
 
-                // Use configurable fuse time
+                // Delayed explosion
                 Timing.CallDelayed(_config.ExplosionDelay, () =>
                 {
                     if (grenade != null)
@@ -118,7 +106,6 @@ namespace SCI.Custom.Weapon
                         {
                             grenadePickup.FuseTime = FuseTime;
                             grenadePickup.Explode();
-                            Plugin.Instance?.DebugLog("Grenade explosion triggered");
                         }
                     }
                 });
@@ -126,8 +113,8 @@ namespace SCI.Custom.Weapon
             catch (Exception ex)
             {
                 Log.Error($"GrenadeLauncher: Error in OnShot: {ex.Message}");
-                Plugin.Instance?.DebugLog($"OnShot: Exception: {ex.Message}\n{ex.StackTrace}");
             }
         }
+        #endregion
     }
 }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
-using Exiled.API.Features.Items;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Map;
@@ -19,7 +16,7 @@ namespace SCI.Custom.Throwables
     [CustomItem(ItemType.GrenadeHE)]
     public class ImpactGrenade(ImpactGrenadeConfig config) : CustomGrenade
     {
-        private readonly ImpactGrenadeConfig _config = config;
+        #region Configuration
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeHE;
@@ -34,21 +31,27 @@ namespace SCI.Custom.Throwables
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 2,
-            DynamicSpawnPoints = [new() { Chance = 15, Location = SpawnLocationType.InsideLczArmory }, new() { Chance = 15, Location = SpawnLocationType.InsideHczArmory }, new() { Chance = 15, Location = SpawnLocationType.Inside049Armory }, new() { Chance = 15, Location = SpawnLocationType.InsideSurfaceNuke }, new() { Chance = 15, Location = SpawnLocationType.Inside079Armory },],
+            DynamicSpawnPoints =
+            [
+                new() { Chance = 15, Location = SpawnLocationType.InsideLczArmory },
+                new() { Chance = 15, Location = SpawnLocationType.InsideHczArmory },
+                new() { Chance = 15, Location = SpawnLocationType.Inside049Armory },
+                new() { Chance = 15, Location = SpawnLocationType.InsideSurfaceNuke },
+                new() { Chance = 15, Location = SpawnLocationType.Inside079Armory },
+            ],
         };
+        private readonly ImpactGrenadeConfig _config = config;
+        #endregion
 
         public override void Init()
         {
             base.Init();
-            Log.Debug($"Impact Grenade initialized with damage radius: {_config.DamageRadius}");
         }
 
+        #region Grenade Functionality
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
-
-            Log.Debug($"Impact Grenade exploding at position {ev.Position}");
-
-            // Calculate enhanced damage for nearby players
+            // Enhanced damage calculation for nearby players
             foreach (Player target in Player.List)
             {
                 if (target == null || !target.IsAlive)
@@ -61,8 +64,6 @@ namespace SCI.Custom.Throwables
                     float damage = Mathf.Lerp(_config.MaximumDamage, _config.MinimumDamage,
                         distance / _config.DamageRadius);
 
-                     Log.Debug($"Applying {damage} damage to {target.Nickname} at distance {distance}");
-
                     // Apply damage after a tiny delay to ensure explosion effect shows first
                     Timing.CallDelayed(0.1f, () =>
                     {
@@ -71,5 +72,6 @@ namespace SCI.Custom.Throwables
                 }
             }
         }
+        #endregion
     }
 }

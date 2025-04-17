@@ -8,9 +8,7 @@ using Exiled.Events.EventArgs.Map;
 using JetBrains.Annotations;
 using MEC;
 using SCI.Config;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 using YamlDotNet.Serialization;
@@ -19,12 +17,7 @@ namespace SCI.Custom.Throwables
 {
     public class BioGrenade(BioGrenadeConfig config) : CustomGrenade
     {
-        private readonly BioGrenadeConfig _config = config;
-        private Pickup _smokeEffect = null;
-        private CoroutineHandle _effectCoroutine;
-        // Dictionary to track player exposure time
-        private readonly Dictionary<Player, float> _exposedPlayers = [];
-
+        #region Configuration
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeFlash;
         public override uint Id { get; set; } = 107;
@@ -40,50 +33,28 @@ namespace SCI.Custom.Throwables
             Limit = 2,
             DynamicSpawnPoints =
             [
-                new ()
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.InsideLczCafe,
-                },
-                new ()
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.InsideLczWc,
-                },
-                new()
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.Inside914,
-                },
-                new()
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.InsideGr18Glass,
-                },
-                new()
-                {
-                    Chance = 15,
-                    Location = SpawnLocationType.Inside096,
-                },
+                new() { Chance = 15, Location = SpawnLocationType.InsideLczCafe },
+                new() { Chance = 15, Location = SpawnLocationType.InsideLczWc },
+                new() { Chance = 15, Location = SpawnLocationType.Inside914 },
+                new() { Chance = 15, Location = SpawnLocationType.InsideGr18Glass },
+                new() { Chance = 15, Location = SpawnLocationType.Inside096 },
             ],
         };
 
-        public override void Init()
-        {
-            base.Init();
-            Plugin.Instance?.DebugLog($"BioGrenade initialized with smoke time: {_config.SmokeTime}");
-        }
+        private readonly BioGrenadeConfig _config = config;
+        private Pickup _smokeEffect = null;
+        private CoroutineHandle _effectCoroutine;
+        private readonly Dictionary<Player, float> _exposedPlayers = [];
+        #endregion
 
+        #region Event Management
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
-            Plugin.Instance?.DebugLog($"BioGrenade.OnExploding called at position {ev.Position}");
-
             // Prevent the default explosion
             ev.IsAllowed = false;
             Vector3 savedGrenadePosition = ev.Position;
 
             // Create the smoke effect using SCP-244
-            Plugin.Instance?.DebugLog("BioGrenade: Creating smoke effect");
             Scp244 scp244 = (Scp244)Item.Create(ItemType.SCP244a);
 
             // Configure smoke appearance
@@ -92,7 +63,6 @@ namespace SCI.Custom.Throwables
             scp244.MaxDiameter = _config.SmokeDiameter;
 
             // Create the pickup at the grenade position
-            Plugin.Instance?.DebugLog($"BioGrenade: Creating smoke pickup at {savedGrenadePosition}");
             _smokeEffect = scp244.CreatePickup(savedGrenadePosition);
 
             // Reset exposed players dictionary
@@ -104,36 +74,28 @@ namespace SCI.Custom.Throwables
             // Remove the smoke after the configured time
             if (_config.RemoveSmoke)
             {
-                Plugin.Instance?.DebugLog($"BioGrenade: Scheduled smoke removal in {_config.SmokeTime} seconds");
                 Timing.CallDelayed(_config.SmokeTime, () =>
                 {
                     if (_smokeEffect != null)
                     {
-                        Plugin.Instance?.DebugLog("BioGrenade: Removing smoke by moving it down");
                         _smokeEffect.Position += Vector3.down * 10;
 
                         // Stop the exposure tracking coroutine
-                        Plugin.Instance?.DebugLog("BioGrenade: Stopping effect tracking");
                         Timing.KillCoroutines(_effectCoroutine);
                         _exposedPlayers.Clear();
 
                         Timing.CallDelayed(10, () =>
                         {
-                            Plugin.Instance?.DebugLog("BioGrenade: Destroying smoke pickup");
                             _smokeEffect.Destroy();
                             _smokeEffect = null;
                         });
                     }
                 });
             }
-
-            Plugin.Instance?.DebugLog("BioGrenade.OnExploding completed successfully");
         }
 
         private IEnumerator<float> TrackPlayerExposureCoroutine(Vector3 position)
         {
-            Plugin.Instance?.DebugLog("BioGrenade: Starting player exposure tracking");
-
             // Continue tracking for the duration of the smoke
             float elapsed = 0f;
             while (elapsed < _config.SmokeTime && _smokeEffect != null)
@@ -151,17 +113,14 @@ namespace SCI.Custom.Throwables
                     if (distance <= _config.EffectRadius)
                     {
                         // Add or update exposure time for this player
-                        if (_exposedPlayers.ContainsKey(player))
+                        if (_exposedPlayers.TryGetValue(player, out float value))
                         {
-                            _exposedPlayers[player] += 1f; // Add 1 second of exposure
+                            _exposedPlayers[player] = value + 1f; // Add 1 second of exposure
 
-                            // If player has been exposed for 5 seconds
+                            // If player has been exposed for 10 seconds
                             if (_exposedPlayers[player] >= 10f)
                             {
                                 // Apply the Decontaminating effect
-                                Plugin.Instance?.DebugLog($"BioGrenade: Applying Decontaminating effect to {player.Nickname} after 5 seconds exposure");
-
-                                // Apply the effect using the correct method
                                 player.EnableEffect(EffectType.Corroding, _config.DecontaminationDuration);
 
                                 // Show a hint to the player
@@ -175,19 +134,16 @@ namespace SCI.Custom.Throwables
                         {
                             // First time player is detected in the smoke
                             _exposedPlayers.Add(player, 1f);
-                            Plugin.Instance?.DebugLog($"BioGrenade: Player {player.Nickname} entered smoke cloud");
                         }
                     }
                     else if (_exposedPlayers.ContainsKey(player))
                     {
                         // Player has left the smoke area, reset their exposure
-                        Plugin.Instance?.DebugLog($"BioGrenade: Player {player.Nickname} left smoke cloud, resetting exposure time");
                         _exposedPlayers.Remove(player);
                     }
                 }
             }
-
-            Plugin.Instance?.DebugLog("BioGrenade: Player exposure tracking ended");
         }
+        #endregion
     }
 }
