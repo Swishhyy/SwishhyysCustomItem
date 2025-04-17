@@ -19,7 +19,7 @@ namespace SCI.Custom.Weapon
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GunLogicer;
-        public override uint Id { get; set; } = 108;
+        public override uint Id { get; set; } = 111;
         public override float Damage { get; set; } = 0.1f;
         public override string Name { get; set; } = "<color=#FFA500>Grenade Launcher</color>";
         public override string Description { get; set; } = "A weapon that fires grenades at a distance";

@@ -23,7 +23,7 @@ namespace SCI.Custom.Throwables
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeHE;
-        public override uint Id { get; set; } = 105;
+        public override uint Id { get; set; } = 109;
         public override string Name { get; set; } = "<color=#00FFFF>Impact Grenade</color>";
         public override string Description { get; set; } = "Explodes immediately upon impact with any surface.";
         public override float Weight { get; set; } = 0.75f;

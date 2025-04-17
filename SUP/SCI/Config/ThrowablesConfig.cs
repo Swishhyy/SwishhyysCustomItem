@@ -55,4 +55,42 @@ namespace SCI.Config
         public float DamageFalloffMultiplier { get; set; } = 1f;
     }
     #endregion
+
+    #region BioGrenadeConfig
+    public class BioGrenadeConfig
+    {
+        [Description("Whether to remove the smoke effect after a delay")]
+        public bool RemoveSmoke { get; set; } = true;
+
+        [Description("How long the smoke cloud remains before being removed (seconds)")]
+        public float SmokeTime { get; set; } = 60f;
+
+        [Description("Scale factor for the smoke effect (0.01 is small, 1.0 is large)")]
+        public float SmokeScale { get; set; } = 0.01f;
+
+        [Description("Maximum diameter the smoke cloud can expand to")]
+        public float SmokeDiameter { get; set; } = 0.0f;
+
+        [Description("Delay before applying decontamination effect (seconds)")]
+        public float DecontaminationDelay { get; set; } = 5f;
+
+        [Description("Duration of the decontamination effect (seconds)")]
+        public float DecontaminationDuration { get; set; } = 30f;
+
+        [Description("Radius within which players receive the decontamination effect")]
+        public float EffectRadius { get; set; } = 5f;
+
+        [Description("AHP amount to grant to players")]
+        public float AhpAmount { get; set; } = 35f;
+
+        [Description("Amount of health to heal for players in range")]
+        public float HealAmount { get; set; } = 25f;
+
+        [Description("Continuous healing - heal every few seconds while in the cloud")]
+        public bool ContinuousHealing { get; set; } = true;
+
+        [Description("Interval between healing pulses (seconds)")]
+        public float HealingInterval { get; set; } = 5f;
+    }
+    #endregion
 }

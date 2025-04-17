@@ -24,9 +24,10 @@ namespace SCI.Commands
                 return true;
             }
 
-            // Build the response string
+            // Build the response string with items sorted by ID (ascending order)
             response = "Custom Items in the Project:\n" +
-                       string.Join("\n", items.Select(item => $"{item.Id}: {item.Name}"));
+                       string.Join("\n", items.OrderBy(item => item.Id)
+                                              .Select(item => $"{item.Id}: {item.Name}"));
 
             return true;
         }

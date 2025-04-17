@@ -15,7 +15,7 @@ namespace SCI.Custom.Misc
         public override string Description { get; set; } = "This is a hacking chip, it can be used to mess with the facility";
         public override float Weight { get; set; } = 0.5f;
         public override ItemType Type { get; set; } = ItemType.KeycardChaosInsurgency;
-        public override uint Id { get; set; } = 111;
+        public override uint Id { get; set; } = 105;
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties 
         {
             Limit = 2,

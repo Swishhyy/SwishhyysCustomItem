@@ -24,7 +24,7 @@ namespace SCI.Custom.Weapon
         // Define item properties
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GunE11SR;
-        public override uint Id { get; set; } = 107;
+        public override uint Id { get; set; } = 112;
         public override float Damage { get; set; } = 150f;
         public override string Name { get; set; } = "<color=#0066FF>Railgun</color>";
         public override string Description { get; set; } = "A powerful railgun created by combining a Micro HID and a Particle Disruptor";

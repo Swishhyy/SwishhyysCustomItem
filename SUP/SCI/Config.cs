@@ -42,5 +42,11 @@ namespace SCI.Custom.Config
 
         [YamlIgnore]
         public SCI.Config.GrenadeLauncherConfig GrenadeLauncher { get; set; } = new SCI.Config.GrenadeLauncherConfig();
+        [YamlIgnore]
+        public SCI.Config.BioGrenadeConfig BioGrenade { get; set; } = new SCI.Config.BioGrenadeConfig();
+        //[YamlIgnore]
+        //public SCI.Config.HackingChipConfig HackingChip { get; set; } = new SCI.Config.HackingChipConfig();
+        //[YamlIgnore]
+        //public SCI.Config.ReinforcementCallConfig ReinforcementCall { get; set; } = new SCI.Config.ReinforcementCallConfig();
     }
 }

@@ -21,7 +21,7 @@ namespace SCI.Custom.Throwables
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeFlash;
-        public override uint Id { get; set; } = 106;
+        public override uint Id { get; set; } = 110;
         public override string Name { get; set; } = "<color=#6600CC>Smoke Grenade</color>";
         public override string Description { get; set; } = "This is a smoke grenade, when detonated, a smoke cloud will be deployed";
         public override float Weight { get; set; } = 1.15f;

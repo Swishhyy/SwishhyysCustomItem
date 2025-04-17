@@ -15,7 +15,7 @@ namespace SCI.Custom.MedicalItems
         public override string Name { get; set; } = "<color=#FF0000>Vanishing SCP-500 Pills</color>";
         public override string Description { get; set; } = "These pills make people vanish for a short amount of time.";
         public override float Weight { get; set; } = 0.5f;
-        public override uint Id { get; set; } = 110;
+        public override uint Id { get; set; } = 104;
         public override ItemType Type { get; set; } = ItemType.SCP500;
         
         private readonly VanishingSCP500PillsConfig _config = config;

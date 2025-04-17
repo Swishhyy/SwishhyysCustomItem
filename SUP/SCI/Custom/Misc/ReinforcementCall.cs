@@ -15,7 +15,7 @@ namespace SCI.Custom.Misc
         public override string Description { get; set; } = "A Radio to call for reinforcements";
         public override float Weight { get; set; } = 0.5f;
         public override ItemType Type { get; set; } = ItemType.Radio;
-        public override uint Id { get; set; } = 111;
+        public override uint Id { get; set; } = 106;
         public override SpawnProperties SpawnProperties { get; set; } = new SpawnProperties
         {
             Limit = 2,

@@ -26,7 +26,7 @@ namespace SCI.Custom.Items.Grenades
         // SETTINGS
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeHE;
-        public override uint Id { get; set; } = 104;
+        public override uint Id { get; set; } = 108;
         public override string Name { get; set; } = "<color=#FF0000>Cluster Grenade</color>";
         public override string Description { get; set; } = "When this grenade explodes, it spawns extra grenades near by";
         public override float Weight { get; set; } = 1.75f;
