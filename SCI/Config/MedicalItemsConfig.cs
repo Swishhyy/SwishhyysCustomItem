@@ -50,81 +50,60 @@ namespace SCI.Config
         public float DefaultEffectDuration { get; set; } = 10f;
 
         [Description("Category probabilities (must sum to 100)")]
-        public Dictionary<string, float> CategoryChances { get; set; } = new Dictionary<string, float>
-        {
-            { "Positive", 50f },
-            { "Negative", 30f },
-            { "SCP", 20f }
-        };
+        public Dictionary<string, float> CategoryChances { get; set; } = new() { { "Positive", 50f }, { "Negative", 30f }, { "SCP", 20f } };
 
         [Description("Positive effects with their individual chances and intensities")]
-        public Dictionary<EffectType, EffectSettings> PositiveEffects { get; set; } = new Dictionary<EffectType, EffectSettings>
-        {
-            { EffectType.Scp207, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 3 } },
-            { EffectType.Invigorated, new EffectSettings { Chance = 15f, MinIntensity = 1, MaxIntensity = 5 } },
-            { EffectType.BodyshotReduction, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 3 } },
-            { EffectType.Invisible, new EffectSettings { Chance = 5f, MinIntensity = 1, MaxIntensity = 2 } },
-            { EffectType.Vitality, new EffectSettings { Chance = 15f, MinIntensity = 1, MaxIntensity = 4 } },
-            { EffectType.DamageReduction, new EffectSettings { Chance = 15f, MinIntensity = 1, MaxIntensity = 3 } },
-            { EffectType.AntiScp207, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 1 } }
-        };
+        public Dictionary<EffectType, EffectSettings> PositiveEffects { get; set; } = CreateEffects(
+            (EffectType.Scp207, 10f, 1, 3), (EffectType.Invigorated, 15f, 1, 5),
+            (EffectType.BodyshotReduction, 10f, 1, 3), (EffectType.Invisible, 5f, 1, 2),
+            (EffectType.Vitality, 15f, 1, 4), (EffectType.DamageReduction, 15f, 1, 3),
+            (EffectType.AntiScp207, 10f, 1, 1));
 
         [Description("Negative effects with their individual chances and intensities")]
-        public Dictionary<EffectType, EffectSettings> NegativeEffects { get; set; } = new Dictionary<EffectType, EffectSettings>
-        {
-            { EffectType.Concussed, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 8 } },
-            { EffectType.Bleeding, new EffectSettings { Chance = 12f, MinIntensity = 1, MaxIntensity = 10 } },
-            { EffectType.Burned, new EffectSettings { Chance = 8f, MinIntensity = 1, MaxIntensity = 6 } },
-            { EffectType.Deafened, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 8 } },
-            { EffectType.Exhausted, new EffectSettings { Chance = 12f, MinIntensity = 1, MaxIntensity = 10 } },
-            { EffectType.Flashed, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 6 } },
-            { EffectType.Disabled, new EffectSettings { Chance = 5f, MinIntensity = 1, MaxIntensity = 6 } },
-            { EffectType.Ensnared, new EffectSettings { Chance = 8f, MinIntensity = 1, MaxIntensity = 8 } },
-            { EffectType.Hemorrhage, new EffectSettings { Chance = 5f, MinIntensity = 1, MaxIntensity = 10 } },
-            { EffectType.Poisoned, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 10 } }
-        };
+        public Dictionary<EffectType, EffectSettings> NegativeEffects { get; set; } = CreateEffects(
+            (EffectType.Concussed, 10f, 1, 8), (EffectType.Bleeding, 12f, 1, 10),
+            (EffectType.Burned, 8f, 1, 6), (EffectType.Deafened, 10f, 1, 8),
+            (EffectType.Exhausted, 12f, 1, 10), (EffectType.Flashed, 10f, 1, 6),
+            (EffectType.Disabled, 5f, 1, 6), (EffectType.Ensnared, 8f, 1, 8),
+            (EffectType.Hemorrhage, 5f, 1, 10), (EffectType.Poisoned, 10f, 1, 10));
 
         [Description("SCP-like effects with their individual chances and intensities")]
-        public Dictionary<EffectType, EffectSettings> SCPEffects { get; set; } = new Dictionary<EffectType, EffectSettings>
-        {
-            { EffectType.Asphyxiated, new EffectSettings { Chance = 15f, MinIntensity = 1, MaxIntensity = 10 } },
-            { EffectType.CardiacArrest, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 10 } },
-            { EffectType.Decontaminating, new EffectSettings { Chance = 15f, MinIntensity = 1, MaxIntensity = 8 } },
-            { EffectType.SeveredHands, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 1 } },
-            { EffectType.Stained, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 8 } },
-            { EffectType.AmnesiaVision, new EffectSettings { Chance = 15f, MinIntensity = 1, MaxIntensity = 1 } },
-            { EffectType.Corroding, new EffectSettings { Chance = 10f, MinIntensity = 1, MaxIntensity = 8 } }
-        };
+        public Dictionary<EffectType, EffectSettings> SCPEffects { get; set; } = CreateEffects(
+            (EffectType.Asphyxiated, 15f, 1, 10), (EffectType.CardiacArrest, 10f, 1, 10),
+            (EffectType.Decontaminating, 15f, 1, 8), (EffectType.SeveredHands, 10f, 1, 1),
+            (EffectType.Stained, 10f, 1, 8), (EffectType.AmnesiaVision, 15f, 1, 1),
+            (EffectType.Corroding, 10f, 1, 8));
 
         [Description("Healing fallback settings if no effects are applied")]
-        public HealSettings HealFallback { get; set; } = new HealSettings
+        public HealSettings HealFallback { get; set; } = new() { MinHeal = 15f, MaxHeal = 35f };
+
+        // Helper method to create effects dictionary inline
+        private static Dictionary<EffectType, EffectSettings> CreateEffects(params (EffectType type, float chance, byte min, byte max)[] effects) =>
+            effects.ToDictionary(e => e.type, e => new EffectSettings { Chance = e.chance, MinIntensity = e.min, MaxIntensity = e.max });
+
+        // Define nested classes for settings to keep everything in one class
+        public class EffectSettings
         {
-            MinHeal = 15f,
-            MaxHeal = 35f
-        };
-    }
+            [Description("Chance for this effect to be selected (within its category)")]
+            public float Chance { get; set; } = 10f;
 
-    public class EffectSettings
-    {
-        [Description("Chance for this effect to be selected (within its category)")]
-        public float Chance { get; set; } = 10f;
+            [Description("Minimum intensity level for this effect")]
+            public byte MinIntensity { get; set; } = 1;
 
-        [Description("Minimum intensity level for this effect")]
-        public byte MinIntensity { get; set; } = 1;
+            [Description("Maximum intensity level for this effect")]
+            public byte MaxIntensity { get; set; } = 10;
 
-        [Description("Maximum intensity level for this effect")]
-        public byte MaxIntensity { get; set; } = 10;
+            [Description("Custom duration for this effect (in seconds). Set to 0 to use default duration.")]
+            public float CustomDuration { get; set; } = 0f;
+        }
 
-        [Description("Custom duration for this effect (in seconds). Set to 0 to use default duration.")]
-        public float CustomDuration { get; set; } = 0f;
-    }
+        public class HealSettings
+        {
+            [Description("Minimum healing amount when no effects are applied")]
+            public float MinHeal { get; set; } = 15f;
 
-    public class HealSettings
-    {
-        [Description("Minimum healing amount when no effects are applied")]
-        public float MinHeal { get; set; } = 15f;
-
-        [Description("Maximum healing amount when no effects are applied")]
-        public float MaxHeal { get; set; } = 35f;
+            [Description("Maximum healing amount when no effects are applied")]
+            public float MaxHeal { get; set; } = 35f;
+        }
     }
 }
