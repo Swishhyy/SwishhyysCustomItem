@@ -24,7 +24,7 @@ namespace SCI.Custom.Config
         public SCI.Config.AdrenalineSCP500PillsConfig AdrenalineSCP500 { get; set; } = new SCI.Config.AdrenalineSCP500PillsConfig();
 
         [YamlIgnore]
-        public SCI.Config.SuicideSCP500PillsConfig SuicideSCP500 { get; set; } = new SCI.Config.SuicideSCP500PillsConfig();
+        public SCI.Config.Anti096SCP500pPillsConfig Anti096SCP500 { get; set; } = new SCI.Config.Anti096SCP500pPillsConfig();
         [YamlIgnore]
         public SCI.Config.VanishingSCP500PillsConfig VanishingSCP500 { get; set; } = new SCI.Config.VanishingSCP500PillsConfig();
 

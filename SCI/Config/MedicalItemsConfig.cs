@@ -32,19 +32,16 @@ namespace SCI.Config
         public float Duration { get; set; } = 7f;
     }
 
-    public class SuicideSCP500PillsConfig
+    public class Anti096SCP500pPillsConfig
     {
-        [Description("Chance that the player survives the explosion (0-100)")]
-        public float SurvivalChance { get; set; } = 5f;
+        [Description("Duration to show success/failure message hints (in seconds)")]
+        public float MessageDuration { get; set; } = 5f;
 
-        [Description("Amount of health to give the player if they survive")]
-        public float SurvivalHealthAmount { get; set; } = 5f;
+        [Description("Whether to give the player immunity from being targeted by SCP-096 again for a period")]
+        public bool ProvideTemporaryImmunity { get; set; } = false;
 
-        [Description("Maximum damage to nearby players")]
-        public float MaxNearbyPlayerDamage { get; set; } = 70f;
-
-        [Description("Explosion radius (in meters)")]
-        public float ExplosionRadius { get; set; } = 10f;
+        [Description("Duration of immunity from SCP-096 targeting (in seconds)")]
+        public float ImmunityDuration { get; set; } = 60f;
     }
 
     public class ExpiredSCP500PillsConfig

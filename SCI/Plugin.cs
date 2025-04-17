@@ -9,6 +9,7 @@
     using SCI.Custom.Items.Grenades;
     using SCI.Custom.Throwables;           // Add this for the ImpactGrenade
     using SCI.Custom.Weapon;
+    using SCI.Config;
 
     // Define the main plugin class which extends Exiled's Plugin base class using a generic Config type.
     public class Plugin : Plugin<SCI.Custom.Config.Config>
@@ -29,7 +30,7 @@
         // Private fields to store instances of the custom item classes.
         private ExpiredSCP500Pills _expiredSCP500Pills;
         private AdrenalineSCP500Pills _adrenalineSCP500Pills;
-        private SuicideSCP500Pills _suicideSCP500Pills;
+        private Anti096SCP500Pills _anti096SCP500pPills;
         private VanishingSCP500Pills _vanishingSCP500Pills;
         private ClusterGrenade _clusterGrenade;
         private ImpactGrenade _impactGrenade;
@@ -91,7 +92,7 @@
             DebugLog("Creating custom item instances with configuration");
             _expiredSCP500Pills = new ExpiredSCP500Pills((SCI.Config.ExpiredSCP500PillsConfig)Config.ExpiredSCP500);
             _adrenalineSCP500Pills = new AdrenalineSCP500Pills((SCI.Config.AdrenalineSCP500PillsConfig)Config.AdrenalineSCP500);
-            _suicideSCP500Pills = new SuicideSCP500Pills((SCI.Config.SuicideSCP500PillsConfig)Config.SuicideSCP500);
+            _anti096SCP500pPills = new Anti096SCP500Pills((SCI.Config.Anti096SCP500pPillsConfig)Config.Anti096SCP500);
             _clusterGrenade = new ClusterGrenade((SCI.Config.ClusterGrenadeConfig)Config.ClusterGrenade);
             _impactGrenade = new ImpactGrenade((SCI.Config.ImpactGrenadeConfig)Config.ImpactGrenade);
             _smokeGrenade = new SmokeGrenade((SCI.Config.SmokeGrenadeConfig)Config.SmokeGrenade);
@@ -106,7 +107,7 @@
             DebugLog("Registering custom items");
             _expiredSCP500Pills.Register();
             _adrenalineSCP500Pills.Register();
-            _suicideSCP500Pills.Register();
+            _anti096SCP500pPills.Register();
             _clusterGrenade.Register();
             _impactGrenade.Register();
             _smokeGrenade.Register();
@@ -132,7 +133,7 @@
             DebugLog("Unregistering custom items");
             _expiredSCP500Pills?.Unregister();
             _adrenalineSCP500Pills?.Unregister();
-            _suicideSCP500Pills?.Unregister();
+            _anti096SCP500pPills?.Unregister();
             _clusterGrenade?.Unregister();
             _impactGrenade?.Unregister();
             _smokeGrenade?.Unregister();
@@ -146,7 +147,7 @@
             // Set the custom item instances to null to free resources.
             _expiredSCP500Pills = null;
             _adrenalineSCP500Pills = null;
-            _suicideSCP500Pills = null;
+            _anti096SCP500pPills = null;
             _clusterGrenade = null;
             _impactGrenade = null;
             _smokeGrenade = null;
