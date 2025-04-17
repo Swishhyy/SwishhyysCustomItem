@@ -17,18 +17,19 @@ using YamlDotNet.Serialization;
 
 namespace SCI.Custom.Throwables
 {
-
     public class BioGrenade(BioGrenadeConfig config) : CustomGrenade
     {
         private readonly BioGrenadeConfig _config = config;
         private Pickup _smokeEffect = null;
-        private CoroutineHandle _healingCoroutine;
+        private CoroutineHandle _effectCoroutine;
+        // Dictionary to track player exposure time
+        private readonly Dictionary<Player, float> _exposedPlayers = [];
 
         [YamlIgnore]
         public override ItemType Type { get; set; } = ItemType.GrenadeFlash;
         public override uint Id { get; set; } = 107;
         public override string Name { get; set; } = "<color=#00FF00>Bio Grenade</color>";
-        public override string Description { get; set; } = "When this grenade explodes, it emits a smoke cloud that grants decontamination effects";
+        public override string Description { get; set; } = "When this grenade explodes, it emits a toxic cloud that applies decontamination effects";
         public override float Weight { get; set; } = 1.75f;
         public override bool ExplodeOnCollision { get; set; } = false;
         public override float FuseTime { get; set; } = 3f;
@@ -72,6 +73,7 @@ namespace SCI.Custom.Throwables
             base.Init();
             Plugin.Instance?.DebugLog($"BioGrenade initialized with smoke time: {_config.SmokeTime}");
         }
+
         protected override void OnExploding(ExplodingGrenadeEventArgs ev)
         {
             Plugin.Instance?.DebugLog($"BioGrenade.OnExploding called at position {ev.Position}");
@@ -93,18 +95,11 @@ namespace SCI.Custom.Throwables
             Plugin.Instance?.DebugLog($"BioGrenade: Creating smoke pickup at {savedGrenadePosition}");
             _smokeEffect = scp244.CreatePickup(savedGrenadePosition);
 
-            // Apply initial decontamination effect after delay
-            Timing.CallDelayed(_config.DecontaminationDelay, () =>
-            {
-                ApplyDecontaminationEffect(savedGrenadePosition);
-            });
+            // Reset exposed players dictionary
+            _exposedPlayers.Clear();
 
-            // Start continuous healing if enabled
-            if (_config.ContinuousHealing)
-            {
-                Plugin.Instance?.DebugLog($"BioGrenade: Starting continuous healing every {_config.HealingInterval} seconds");
-                _healingCoroutine = Timing.RunCoroutine(ContinuousHealingCoroutine(savedGrenadePosition));
-            }
+            // Start tracking player exposure to the smoke
+            _effectCoroutine = Timing.RunCoroutine(TrackPlayerExposureCoroutine(savedGrenadePosition));
 
             // Remove the smoke after the configured time
             if (_config.RemoveSmoke)
@@ -117,12 +112,10 @@ namespace SCI.Custom.Throwables
                         Plugin.Instance?.DebugLog("BioGrenade: Removing smoke by moving it down");
                         _smokeEffect.Position += Vector3.down * 10;
 
-                        // Also stop the healing coroutine if it's running
-                        if (_config.ContinuousHealing)
-                        {
-                            Plugin.Instance?.DebugLog("BioGrenade: Stopping continuous healing");
-                            Timing.KillCoroutines(_healingCoroutine);
-                        }
+                        // Stop the exposure tracking coroutine
+                        Plugin.Instance?.DebugLog("BioGrenade: Stopping effect tracking");
+                        Timing.KillCoroutines(_effectCoroutine);
+                        _exposedPlayers.Clear();
 
                         Timing.CallDelayed(10, () =>
                         {
@@ -137,57 +130,64 @@ namespace SCI.Custom.Throwables
             Plugin.Instance?.DebugLog("BioGrenade.OnExploding completed successfully");
         }
 
-        private void ApplyDecontaminationEffect(Vector3 position)
+        private IEnumerator<float> TrackPlayerExposureCoroutine(Vector3 position)
         {
-            Plugin.Instance?.DebugLog($"BioGrenade: Applying decontamination effect to players within {_config.EffectRadius}m");
+            Plugin.Instance?.DebugLog("BioGrenade: Starting player exposure tracking");
 
-            // Get all players within the effect radius
-            foreach (Player player in Player.List.Where(p =>
-                p.IsAlive &&
-                Vector3.Distance(p.Position, position) <= _config.EffectRadius))
-            {
-                Plugin.Instance?.DebugLog($"BioGrenade: Applying decontamination to {player.Nickname}");
-
-                try
-                {
-                    // Apply AHP
-                    float previousAhp = player.ArtificialHealth;
-                    player.ArtificialHealth += _config.AhpAmount;
-
-                    // Apply healing
-                    float previousHealth = player.Health;
-                    player.Health += _config.HealAmount;
-
-                    Plugin.Instance?.DebugLog($"BioGrenade: Applied effects to {player.Nickname}, AHP: {previousAhp} -> {player.ArtificialHealth}, Health: {previousHealth} -> {player.Health}");
-
-                    // Show a hint to the player
-                    player.ShowHint("<color=green>You feel the decontamination chemicals cleansing your body!</color>", 5f);
-                }
-                catch (Exception ex)
-                {
-                    Plugin.Instance?.DebugLog($"BioGrenade: Error applying effect to {player.Nickname}: {ex.Message}");
-                    Log.Error($"BioGrenade: Error applying effect: {ex.Message}");
-                }
-            }
-        }
-
-        private IEnumerator<float> ContinuousHealingCoroutine(Vector3 position)
-        {
-            // Continue healing pulses for the duration of the smoke
+            // Continue tracking for the duration of the smoke
             float elapsed = 0f;
             while (elapsed < _config.SmokeTime && _smokeEffect != null)
             {
-                // Wait for the next interval
-                yield return Timing.WaitForSeconds(_config.HealingInterval);
-                elapsed += _config.HealingInterval;
+                // Wait for a short interval (checking every second)
+                yield return Timing.WaitForSeconds(1f);
+                elapsed += 1f;
 
-                // Apply healing to players in range
-                ApplyDecontaminationEffect(position);
+                // Check all alive players
+                foreach (Player player in Player.List.Where(p => p.IsAlive))
+                {
+                    float distance = Vector3.Distance(player.Position, position);
 
-                Plugin.Instance?.DebugLog($"BioGrenade: Continuous healing pulse applied at {elapsed} seconds");
+                    // If player is within effect radius
+                    if (distance <= _config.EffectRadius)
+                    {
+                        // Add or update exposure time for this player
+                        if (_exposedPlayers.ContainsKey(player))
+                        {
+                            _exposedPlayers[player] += 1f; // Add 1 second of exposure
+
+                            // If player has been exposed for 5 seconds
+                            if (_exposedPlayers[player] >= 10f)
+                            {
+                                // Apply the Decontaminating effect
+                                Plugin.Instance?.DebugLog($"BioGrenade: Applying Decontaminating effect to {player.Nickname} after 5 seconds exposure");
+
+                                // Apply the effect using the correct method
+                                player.EnableEffect(EffectType.Corroding, _config.DecontaminationDuration);
+
+                                // Show a hint to the player
+                                player.ShowHint("<color=red>You've been exposed to decontamination chemicals!</color>", 5f);
+
+                                // Remove from tracking to avoid multiple effect applications
+                                _exposedPlayers.Remove(player);
+                            }
+                        }
+                        else
+                        {
+                            // First time player is detected in the smoke
+                            _exposedPlayers.Add(player, 1f);
+                            Plugin.Instance?.DebugLog($"BioGrenade: Player {player.Nickname} entered smoke cloud");
+                        }
+                    }
+                    else if (_exposedPlayers.ContainsKey(player))
+                    {
+                        // Player has left the smoke area, reset their exposure
+                        Plugin.Instance?.DebugLog($"BioGrenade: Player {player.Nickname} left smoke cloud, resetting exposure time");
+                        _exposedPlayers.Remove(player);
+                    }
+                }
             }
 
-            Plugin.Instance?.DebugLog("BioGrenade: Continuous healing coroutine ended");
+            Plugin.Instance?.DebugLog("BioGrenade: Player exposure tracking ended");
         }
     }
 }
