@@ -105,18 +105,19 @@
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
-            _scp500C.Register();
-            _scp500A.Register();
-            _scp500B.Register();
-            _clusterGrenade.Register();
-            _impactGrenade.Register();
-            _smokeGrenade.Register();
-            _railgun.Register();
-            _grenadeLauncher.Register();
-            _scp500D.Register();
-            _bioGrenade.Register();
-            //_hackingChip.Register();
-            //_reinforcementCall.Register();
+            if (Config.SCP500A.IsEnabled) _scp500A.Register();
+            if (Config.SCP500B.IsEnabled) _scp500B.Register();
+            if (Config.SCP500C.IsEnabled) _scp500C.Register();
+            if (Config.SCP500D.IsEnabled) _scp500D.Register();
+            if (Config.ClusterGrenade.IsEnabled) _clusterGrenade.Register();
+            if (Config.ImpactGrenade.IsEnabled) _impactGrenade.Register();
+            if (Config.SmokeGrenade.IsEnabled) _smokeGrenade.Register();
+            if (Config.Railgun.IsEnabled) _railgun.Register();
+            if (Config.GrenadeLauncher.IsEnabled) _grenadeLauncher.Register();
+            if (Config.SCP500D.IsEnabled) _scp500D.Register();
+            if (Config.BioGrenade.IsEnabled) _bioGrenade.Register();
+            //if (Config.HackingChip.IsEnabled) _hackingChip.Register();
+            //if (Config.ReinforcementCall.IsEnabled) _reinforcementCall.Register();
 
             // Log a debug message listing the registered custom items.
             Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade, Smoke Grenade, Railgun, Grenade Launcher");

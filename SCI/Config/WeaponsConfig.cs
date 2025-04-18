@@ -9,6 +9,8 @@ namespace SCI.Config
 {
     public class RailgunConfig
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
 
         [Description("Maximum damage dealt by the railgun")]
         public float Damage { get; set; } = 85f;
@@ -19,6 +21,9 @@ namespace SCI.Config
 
     public class GrenadeLauncherConfig
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
+
         [Description("Force applied to launched grenades")]
         public float LaunchForce { get; set; } = 20f;
 

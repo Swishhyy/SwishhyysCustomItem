@@ -59,6 +59,8 @@ namespace SCI.Config
     #region BioGrenadeConfig
     public class BioGrenadeConfig
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
         [Description("Whether to remove the smoke effect after a delay")]
         public bool RemoveSmoke { get; set; } = true;
 

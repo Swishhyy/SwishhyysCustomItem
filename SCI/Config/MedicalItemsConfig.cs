@@ -10,6 +10,9 @@ namespace SCI.Config
 {
     public class SCP500A_Config
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
+
         [Description("Speed multiplier for the player when using the adrenaline pills")]
         public float SpeedMultiplier { get; set; } = 1.8f;
 
@@ -28,12 +31,17 @@ namespace SCI.Config
 
     public class SCP500D_Config
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
         [Description("Duration of invisibility in seconds")]
         public float Duration { get; set; } = 7f;
     }
 
     public class SCP500B_Config
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
+
         [Description("Duration to show success/failure message hints (in seconds)")]
         public float MessageDuration { get; set; } = 5f;
 
@@ -46,6 +54,9 @@ namespace SCI.Config
 
     public class SCP500C_Config
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
+
         [Description("Default duration for applied effects (in seconds)")]
         public float DefaultEffectDuration { get; set; } = 10f;
 
