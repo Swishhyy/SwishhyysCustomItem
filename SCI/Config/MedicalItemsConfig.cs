@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SCI.Config
 {
-    public class AdrenalineSCP500PillsConfig
+    public class SCP500A_Config
     {
         [Description("Speed multiplier for the player when using the adrenaline pills")]
         public float SpeedMultiplier { get; set; } = 1.8f;
@@ -26,13 +26,13 @@ namespace SCI.Config
         public float StaminaRestoreAmount { get; set; } = 100f;
     }
 
-    public class VanishingSCP500PillsConfig
+    public class SCP500D_Config
     {
         [Description("Duration of invisibility in seconds")]
         public float Duration { get; set; } = 7f;
     }
 
-    public class Anti096SCP500pPillsConfig
+    public class SCP500B_Config
     {
         [Description("Duration to show success/failure message hints (in seconds)")]
         public float MessageDuration { get; set; } = 5f;
@@ -44,7 +44,7 @@ namespace SCI.Config
         public float ImmunityDuration { get; set; } = 60f;
     }
 
-    public class ExpiredSCP500PillsConfig
+    public class SCP500C_Config
     {
         [Description("Default duration for applied effects (in seconds)")]
         public float DefaultEffectDuration { get; set; } = 10f;

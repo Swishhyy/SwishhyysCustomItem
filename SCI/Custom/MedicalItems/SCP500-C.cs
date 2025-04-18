@@ -8,16 +8,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SCI.Config;
-using static SCI.Config.ExpiredSCP500PillsConfig;
+using static SCI.Config.SCP500C_Config;
 
 namespace SCI.Custom.MedicalItems
 {
-    public class ExpiredSCP500Pills(ExpiredSCP500PillsConfig config) : CustomItem
+    public class SCP500C(SCP500C_Config config) : CustomItem
     {
         #region Configuration
         public override uint Id { get; set; } = 102;
         public override ItemType Type { get; set; } = ItemType.SCP500;
-        public override string Name { get; set; } = "<color=#663399>Expired Pills</color>";
+        public override string Name { get; set; } = "<color=#663399>SCP500-C</color>";
         public override string Description { get; set; } = "An expired bottle of SCP-500 pills with unpredictable effects.";
         public override float Weight { get; set; } = 0.5f;
 
@@ -35,7 +35,7 @@ namespace SCI.Custom.MedicalItems
             ],
         };
 
-        private readonly ExpiredSCP500PillsConfig _config = config;
+        private readonly SCP500C_Config _config = config;
         #endregion
 
         protected override void SubscribeEvents()
@@ -58,7 +58,7 @@ namespace SCI.Custom.MedicalItems
                 if (!Check(ev.Player?.CurrentItem) || ev.Player == null ||
                     ev.Player.ReferenceHub?.playerEffectsController == null)
                 {
-                    Log.Debug("ExpiredSCP500Pills: Invalid state for pill usage");
+                    Log.Debug("SCP500C: Invalid state for pill usage");
                     return;
                 }
 
@@ -85,7 +85,7 @@ namespace SCI.Custom.MedicalItems
             }
             catch (Exception ex)
             {
-                Log.Error($"ExpiredSCP500Pills: Error in OnUsingItem: {ex.Message}");
+                Log.Error($"SCP500C: Error in OnUsingItem: {ex.Message}");
             }
         }
 
@@ -114,7 +114,7 @@ namespace SCI.Custom.MedicalItems
             }
             catch (Exception ex)
             {
-                Log.Error($"ExpiredSCP500Pills: Error applying effect {effectType}: {ex.Message}");
+                Log.Error($"SCP500C: Error applying effect {effectType}: {ex.Message}");
                 return false;
             }
         }

@@ -28,10 +28,10 @@
         public WebhookService WebhookService { get; private set; }
 
         // Private fields to store instances of the custom item classes.
-        private ExpiredSCP500Pills _expiredSCP500Pills;
-        private AdrenalineSCP500Pills _adrenalineSCP500Pills;
-        private Anti096SCP500Pills _anti096SCP500pPills;
-        private VanishingSCP500Pills _vanishingSCP500Pills;
+        private SCP500C _scp500C;
+        private SCP500A _scp500A;
+        private SCP500B _scp500B;
+        private SCP500D _scp500D;
         private ClusterGrenade _clusterGrenade;
         private ImpactGrenade _impactGrenade;
         private SmokeGrenade _smokeGrenade;
@@ -90,30 +90,30 @@
             // Create instances of the custom items using their corresponding configuration sections.
             // Explicitly cast each config object to its proper type
             DebugLog("Creating custom item instances with configuration");
-            _expiredSCP500Pills = new ExpiredSCP500Pills((SCI.Config.ExpiredSCP500PillsConfig)Config.ExpiredSCP500);
-            _adrenalineSCP500Pills = new AdrenalineSCP500Pills((SCI.Config.AdrenalineSCP500PillsConfig)Config.AdrenalineSCP500);
-            _anti096SCP500pPills = new Anti096SCP500Pills((SCI.Config.Anti096SCP500pPillsConfig)Config.Anti096SCP500);
+            _scp500C = new SCP500C((SCI.Config.SCP500C_Config)Config.SCP500C);
+            _scp500A = new SCP500A((SCI.Config.SCP500A_Config)Config.SCP500A);
+            _scp500B = new SCP500B((SCI.Config.SCP500B_Config)Config.SCP500B);
+            _scp500D = new SCP500D((SCI.Config.SCP500D_Config)Config.SCP500D);
             _clusterGrenade = new ClusterGrenade((SCI.Config.ClusterGrenadeConfig)Config.ClusterGrenade);
             _impactGrenade = new ImpactGrenade((SCI.Config.ImpactGrenadeConfig)Config.ImpactGrenade);
             _smokeGrenade = new SmokeGrenade((SCI.Config.SmokeGrenadeConfig)Config.SmokeGrenade);
             _railgun = new Railgun((SCI.Config.RailgunConfig)Config.Railgun);
             _grenadeLauncher = new GrenadeLauncher((SCI.Config.GrenadeLauncherConfig)Config.GrenadeLauncher);
-            _vanishingSCP500Pills = new VanishingSCP500Pills((SCI.Config.VanishingSCP500PillsConfig)Config.VanishingSCP500);
             _bioGrenade = new BioGrenade((SCI.Config.BioGrenadeConfig)Config.BioGrenade);
             //_hackingChip = new HackingChip((SCI.Config.HackingChipConfig)Config.HackingChip);
             //_reinforcementCall = new ReinforcementCall((SCI.Config.ReinforcementCallConfig)Config.ReinforcementCall);
 
             // Register the custom items with the Exiled framework so that they are recognized in-game.
             DebugLog("Registering custom items");
-            _expiredSCP500Pills.Register();
-            _adrenalineSCP500Pills.Register();
-            _anti096SCP500pPills.Register();
+            _scp500C.Register();
+            _scp500A.Register();
+            _scp500B.Register();
             _clusterGrenade.Register();
             _impactGrenade.Register();
             _smokeGrenade.Register();
             _railgun.Register();
             _grenadeLauncher.Register();
-            _vanishingSCP500Pills.Register();
+            _scp500D.Register();
             _bioGrenade.Register();
             //_hackingChip.Register();
             //_reinforcementCall.Register();
@@ -131,29 +131,29 @@
 
             // Unregister each custom item if they have been initialized (using the null-conditional operator).
             DebugLog("Unregistering custom items");
-            _expiredSCP500Pills?.Unregister();
-            _adrenalineSCP500Pills?.Unregister();
-            _anti096SCP500pPills?.Unregister();
+            _scp500C?.Unregister();
+            _scp500A?.Unregister();
+            _scp500B?.Unregister();
             _clusterGrenade?.Unregister();
             _impactGrenade?.Unregister();
             _smokeGrenade?.Unregister();
             _railgun?.Unregister();
             _grenadeLauncher?.Unregister();
-            _vanishingSCP500Pills?.Unregister();
+            _scp500D?.Unregister();
             _bioGrenade?.Unregister();
             //_hackingChip?.Unregister();
             //_reinforcementCall?.Unregister();
 
             // Set the custom item instances to null to free resources.
-            _expiredSCP500Pills = null;
-            _adrenalineSCP500Pills = null;
-            _anti096SCP500pPills = null;
+            _scp500C = null;
+            _scp500A = null;
+            _scp500B = null;
             _clusterGrenade = null;
             _impactGrenade = null;
             _smokeGrenade = null;
             _railgun = null;
             _grenadeLauncher = null;
-            _vanishingSCP500Pills = null;
+            _scp500D = null;
             _bioGrenade = null;
             //_hackingChip = null;
             //_reinforcementCall = null;

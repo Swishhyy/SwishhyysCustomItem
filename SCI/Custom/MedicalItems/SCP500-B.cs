@@ -15,12 +15,12 @@ using System.Collections.Generic;
 
 namespace SCI.Custom.MedicalItems
 {
-    public class Anti096SCP500Pills(Anti096SCP500pPillsConfig config) : CustomItem
+    public class SCP500B(SCP500B_Config config) : CustomItem
     {
         #region Configuration
         public override uint Id { get; set; } = 103;
         public override ItemType Type { get; set; } = ItemType.SCP500;
-        public override string Name { get; set; } = "<color=#00FF00>Anti-096 Pills</color>";
+        public override string Name { get; set; } = "<color=#00FF00>SCP500-B</color>";
         public override string Description { get; set; } = "Pills that cause the user to no longer be a target of SCP-096";
         public override float Weight { get; set; } = 0.5f;
 
@@ -42,7 +42,7 @@ namespace SCI.Custom.MedicalItems
             ],
         };
 
-        private readonly Anti096SCP500pPillsConfig _config = config;
+        private readonly SCP500B_Config _config = config;
         private readonly Dictionary<string, DateTime> _immunityExpiration = [];
 
         #endregion

@@ -11,12 +11,12 @@ using SCI.Config;
 
 namespace SCI.Custom.MedicalItems
 {
-    public class AdrenalineSCP500Pills(AdrenalineSCP500PillsConfig config) : CustomItem
+    public class SCP500A(SCP500A_Config config) : CustomItem
     {
         #region Configuration
         public override uint Id { get; set; } = 101;
         public override ItemType Type { get; set; } = ItemType.SCP500;
-        public override string Name { get; set; } = "<color=#8A2BE2>Adrenaline Pills</color>";
+        public override string Name { get; set; } = "<color=#8A2BE2>SCP500-A</color>";
         public override string Description { get; set; } = "A small bottle of pills that gives you a boost of energy.";
         public override float Weight { get; set; } = 0.5f;
 
@@ -38,7 +38,7 @@ namespace SCI.Custom.MedicalItems
             ],
         };
 
-        private readonly AdrenalineSCP500PillsConfig _config = config;
+        private readonly SCP500A_Config _config = config;
         private readonly Dictionary<string, DateTime> _cooldowns = [];
 
         #endregion
@@ -108,7 +108,7 @@ namespace SCI.Custom.MedicalItems
             }
             catch (Exception ex)
             {
-                Log.Error($"AdrenalineSCP500Pills: Error in OnUsingItem: {ex.Message}");
+                Log.Error($"SCP500A: Error in OnUsingItem: {ex.Message}");
             }
         }
     }

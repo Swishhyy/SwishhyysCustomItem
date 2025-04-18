@@ -4,18 +4,16 @@ using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Scp939;
-using JetBrains.Annotations;
 using MEC;
 using SCI.Config;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SCI.Custom.MedicalItems
 {
-    public class VanishingSCP500Pills(VanishingSCP500PillsConfig config) : CustomItem
+    public class SCP500D(SCP500D_Config config) : CustomItem
     {
         #region Configuration
-        public override string Name { get; set; } = "<color=#FF0000>Vanishing Pills</color>";
+        public override string Name { get; set; } = "<color=#FF0000>SCP500-D</color>";
         public override string Description { get; set; } = "These pills make people vanish for a short amount of time. They can only be used once.";
         public override float Weight { get; set; } = 0.5f;
         public override uint Id { get; set; } = 104;
@@ -34,7 +32,7 @@ namespace SCI.Custom.MedicalItems
             ],
         };
 
-        private readonly VanishingSCP500PillsConfig _config = config;
+        private readonly SCP500D_Config _config = config;
         private const string ActivationMessage = "<color=#FF0000>You have become invisible for 7 seconds!</color>";
         private const string DeactivationMessage = "<color=red>You are visible again!</color>";
         private readonly HashSet<string> _usedByPlayers = [];
@@ -118,7 +116,7 @@ namespace SCI.Custom.MedicalItems
 
                 if (ev.Player == null)
                 {
-                    Log.Error("VanishingSCP500Pills: Player is null in OnUsingItem");
+                    Log.Error("SCP500D: Player is null in OnUsingItem");
                     return;
                 }
 
@@ -157,7 +155,7 @@ namespace SCI.Custom.MedicalItems
             }
             catch (System.Exception ex)
             {
-                Log.Error($"VanishingSCP500Pills: Error in OnUsingItem: {ex.Message}");
+                Log.Error($"SCP500D: Error in OnUsingItem: {ex.Message}");
             }
         }
     }

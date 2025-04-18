@@ -7,6 +7,7 @@ using SCI.Config;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SCI.Utilities
 {
@@ -14,23 +15,14 @@ namespace SCI.Utilities
     {
         private static readonly string BaseConfigPath = Path.Combine(Paths.Configs, "SCI");
 
-        // Define category mappings based on the namespaces and type names
-        private static readonly Dictionary<string, string> CategoryMappings = new()
+        // Category mappings based on filename patterns
+        private static readonly Dictionary<string, string> CategoryPatterns = new()
         {
-            { "SCI.Config.WeaponsConfig", "weapons" },
-            { "SCI.Config.ThrowablesConfig", "throwables" },
-            { "SCI.Config.MedicalItemsConfig", "medical" },
-            { "SCI.Config.MiscConfig", "misc" },
-            { "SCI.Config.WearablesConfig", "wearables" }
-        };
-
-        // Type name patterns to determine categories
-        private static readonly Dictionary<string, string> TypePatterns = new()
-        {
-            { "Weapon|Gun|Launcher|Railgun", "weapons" },
-            { "Grenade|Throwable|Impact|Cluster|Smoke", "throwables" },
-            { "SCP500|Pills|Medical|Adrenaline|Heal", "medical" },
-            { "Armor|Wearable|Vest|Helmet", "wearables" }
+            { @"(?i)gun|weapon|launcher|railgun", "weapons" },
+            { @"(?i)grenade|throwable|impact|cluster|smoke|bio", "throwables" },
+            { @"(?i)scp500|pill|medical|adrenaline|heal|anti096", "medical" },
+            { @"(?i)armor|wearable|vest|helmet", "wearables" },
+            { @"(?i)misc|chip|call|utility", "misc" }
         };
 
         /// <summary>
@@ -55,7 +47,7 @@ namespace SCI.Utilities
 
             foreach (var prop in configProperties)
             {
-                string category = GetCategoryFromConfigType(prop.PropertyType);
+                string category = DetermineCategoryFromName(prop.Name);
                 object configObj = prop.GetValue(mainConfig);
                 if (configObj != null)
                 {
@@ -66,35 +58,19 @@ namespace SCI.Utilities
             Log.Info("Config generation completed");
         }
 
-        private static string GetCategoryFromConfigType(Type configType)
+        /// <summary>
+        /// Determines the category for a config item based on its name
+        /// </summary>
+        private static string DetermineCategoryFromName(string name)
         {
-            // First, try to determine category based on which file the type is defined in
-            var typeNamespace = configType.Namespace ?? string.Empty;
-            var typeName = configType.Name;
-
-            Log.Debug($"Determining category for type {typeName} in namespace {typeNamespace}");
-
-            // Check if it's defined in a specific namespace that maps to a category
-            foreach (var mapping in CategoryMappings)
+            foreach (var pattern in CategoryPatterns)
             {
-                if (typeNamespace.StartsWith(mapping.Key))
-                {
-                    return mapping.Value;
-                }
-            }
-
-            // If not found by namespace, check by type name patterns
-            foreach (var pattern in TypePatterns)
-            {
-                if (System.Text.RegularExpressions.Regex.IsMatch(typeName, pattern.Key,
-                    System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(name, pattern.Key))
                 {
                     return pattern.Value;
                 }
             }
-
-            // Default to misc if we can't determine otherwise
-            return "misc";
+            return "misc"; // Default category
         }
 
         /// <summary>
@@ -112,68 +88,21 @@ namespace SCI.Utilities
 
             try
             {
-                // Medical Items
-                var expiredConfig = LoadConfig<ExpiredSCP500PillsConfig>("ExpiredSCP500", "medical");
-                if (expiredConfig != null)
+                // Get all categories (directories)
+                var categoryDirs = Directory.GetDirectories(BaseConfigPath);
+                if (categoryDirs.Length == 0)
                 {
-                    // Make sure we preserve any default collections that might be null after deserialization
-                    MergeConfigs(expiredConfig, mainConfig.ExpiredSCP500);
-                    mainConfig.ExpiredSCP500 = expiredConfig;
+                    Log.Info("No category directories found. Looking for files in the base directory.");
+                    LoadConfigsFromDirectory(BaseConfigPath, mainConfig);
                 }
-
-                var adrenalineConfig = LoadConfig<AdrenalineSCP500PillsConfig>("AdrenalineSCP500", "medical");
-                if (adrenalineConfig != null)
+                else
                 {
-                    MergeConfigs(adrenalineConfig, mainConfig.AdrenalineSCP500);
-                    mainConfig.AdrenalineSCP500 = adrenalineConfig;
+                    // Process each category directory
+                    foreach (var categoryDir in categoryDirs)
+                    {
+                        LoadConfigsFromDirectory(categoryDir, mainConfig);
+                    }
                 }
-
-                var suicideConfig = LoadConfig<SuicideSCP500PillsConfig>("SuicideSCP500", "medical");
-                if (suicideConfig != null)
-                {
-                    MergeConfigs(suicideConfig, mainConfig.SuicideSCP500);
-                    mainConfig.SuicideSCP500 = suicideConfig;
-                }
-
-                // Throwables
-                var clusterConfig = LoadConfig<ClusterGrenadeConfig>("ClusterGrenade", "throwables");
-                if (clusterConfig != null)
-                {
-                    MergeConfigs(clusterConfig, mainConfig.ClusterGrenade);
-                    mainConfig.ClusterGrenade = clusterConfig;
-                }
-
-                var impactConfig = LoadConfig<ImpactGrenadeConfig>("ImpactGrenade", "throwables");
-                if (impactConfig != null)
-                {
-                    MergeConfigs(impactConfig, mainConfig.ImpactGrenade);
-                    mainConfig.ImpactGrenade = impactConfig;
-                }
-
-                var smokeConfig = LoadConfig<SmokeGrenadeConfig>("SmokeGrenade", "throwables");
-                if (smokeConfig != null)
-                {
-                    MergeConfigs(smokeConfig, mainConfig.SmokeGrenade);
-                    mainConfig.SmokeGrenade = smokeConfig;
-                }
-
-                // Weapons
-                var railgunConfig = LoadConfig<RailgunConfig>("Railgun", "weapons");
-                if (railgunConfig != null)
-                {
-                    MergeConfigs(railgunConfig, mainConfig.Railgun);
-                    mainConfig.Railgun = railgunConfig;
-                }
-
-                var grenadeLauncherConfig = LoadConfig<GrenadeLauncherConfig>("GrenadeLauncher", "weapons");
-                if (grenadeLauncherConfig != null)
-                {
-                    MergeConfigs(grenadeLauncherConfig, mainConfig.GrenadeLauncher);
-                    mainConfig.GrenadeLauncher = grenadeLauncherConfig;
-                }
-
-                // Add support for any other configs that might be in the directory
-                LoadAdditionalConfigs(mainConfig);
             }
             catch (Exception ex)
             {
@@ -184,99 +113,150 @@ namespace SCI.Utilities
         }
 
         /// <summary>
-        /// Loads any additional configs that might be in the directories but not explicitly handled
+        /// Loads all configuration files from a specific directory
         /// </summary>
-        private static void LoadAdditionalConfigs(SCI.Custom.Config.Config mainConfig)
+        private static void LoadConfigsFromDirectory(string directory, SCI.Custom.Config.Config mainConfig)
+        {
+            string category = Path.GetFileName(directory);
+            var configFiles = Directory.GetFiles(directory, "*.yml");
+
+            Log.Debug($"Found {configFiles.Length} config files in {category}");
+
+            foreach (var configFile in configFiles)
+            {
+                string configName = Path.GetFileNameWithoutExtension(configFile);
+                Log.Debug($"Processing config file: {configName}");
+
+                // Try to find a matching property in the main config
+                var prop = FindMatchingConfigProperty(configName);
+                if (prop != null)
+                {
+                    try
+                    {
+                        // Get the property type
+                        Type propType = prop.PropertyType;
+                        object defaultValue = prop.GetValue(mainConfig);
+
+                        // Load the config using the appropriate type
+                        object loadedConfig = LoadConfigGeneric(propType, configName, category);
+
+                        if (loadedConfig != null)
+                        {
+                            // Merge with defaults
+                            MergeConfigsGeneric(propType, loadedConfig, defaultValue);
+
+                            // Set the property value
+                            prop.SetValue(mainConfig, loadedConfig);
+                            Log.Debug($"Successfully loaded config: {configName}");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error($"Error loading config {configName}: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Log.Debug($"No matching property found for config: {configName}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Finds a property in the main config that matches the config filename
+        /// </summary>
+        private static PropertyInfo FindMatchingConfigProperty(string configName)
+        {
+            // Check exact match first
+            var exactMatch = typeof(SCI.Custom.Config.Config).GetProperty(configName);
+            if (exactMatch != null)
+                return exactMatch;
+
+            // Try normalized name matching (ignore case, remove special characters)
+            string normalizedName = NormalizeName(configName);
+            var properties = typeof(SCI.Custom.Config.Config).GetProperties();
+
+            foreach (var prop in properties)
+            {
+                if (NormalizeName(prop.Name).Equals(normalizedName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return prop;
+                }
+            }
+
+            // Try fuzzy matching
+            foreach (var prop in properties)
+            {
+                // Check if property name contains the config name or vice versa
+                if (prop.Name.Contains(configName, StringComparison.OrdinalIgnoreCase) ||
+                    configName.Contains(prop.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return prop;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Normalizes a name for comparison (removes special characters, makes lowercase)
+        /// </summary>
+        private static string NormalizeName(string name)
+        {
+            return Regex.Replace(name, @"[^a-zA-Z0-9]", "").ToLowerInvariant();
+        }
+
+        /// <summary>
+        /// Generic method to load a config file with the appropriate type
+        /// </summary>
+        private static object LoadConfigGeneric(Type configType, string itemName, string category)
         {
             try
             {
-                // Get all category directories
-                var categoryDirs = Directory.GetDirectories(BaseConfigPath);
+                string configPath = Path.Combine(BaseConfigPath, category, $"{itemName}.yml");
 
-                foreach (var categoryDir in categoryDirs)
+                if (!File.Exists(configPath))
                 {
-                    string category = Path.GetFileName(categoryDir);
-                    var configFiles = Directory.GetFiles(categoryDir, "*.yml");
-
-                    foreach (var configFile in configFiles)
-                    {
-                        string configName = Path.GetFileNameWithoutExtension(configFile);
-
-                        // Skip files we've already explicitly handled
-                        if (HasExplicitHandler(configName))
-                            continue;
-
-                        Log.Debug($"Attempting to load additional config: {configName} from category {category}");
-
-                        // Try to find a matching property in the main config
-                        var prop = typeof(SCI.Custom.Config.Config).GetProperty(configName);
-                        if (prop != null)
-                        {
-                            // Get the property type and try to load the config
-                            Type propType = prop.PropertyType;
-                            object defaultValue = prop.GetValue(mainConfig);
-
-                            try
-                            {
-                                // Use a generic method to load the config with the right type
-                                var loadMethod = typeof(ConfigWriter).GetMethod("LoadConfig",
-                                    BindingFlags.NonPublic | BindingFlags.Static)
-                                    .MakeGenericMethod(propType);
-
-                                object loadedConfig = loadMethod.Invoke(null, [configName, category]);
-
-                                if (loadedConfig != null)
-                                {
-                                    // Use the MergeConfigs method to ensure collections are preserved
-                                    var mergeMethod = typeof(ConfigWriter).GetMethod("MergeConfigs",
-                                        BindingFlags.NonPublic | BindingFlags.Static)
-                                        .MakeGenericMethod(propType);
-
-                                    mergeMethod.Invoke(null, [loadedConfig, defaultValue]);
-
-                                    // Set the property value
-                                    prop.SetValue(mainConfig, loadedConfig);
-                                    Log.Debug($"Successfully loaded additional config: {configName}");
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Debug($"Error loading additional config {configName}: {ex.Message}");
-                            }
-                        }
-                    }
+                    Log.Debug($"Config file does not exist: {configPath}");
+                    return null;
                 }
+
+                string yaml = File.ReadAllText(configPath);
+
+                // Create a YAML deserializer
+                var deserializer = new DeserializerBuilder()
+                    .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                    .IgnoreUnmatchedProperties()
+                    .Build();
+
+                // Deserialize the YAML to the appropriate type
+                object result = deserializer.Deserialize(yaml, configType);
+
+                // Create a new instance if deserialization returned null
+                if (result == null)
+                {
+                    Log.Debug($"Deserialized {itemName} config was null, creating new instance");
+                    result = Activator.CreateInstance(configType);
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
-                Log.Error($"Error loading additional configs: {ex.Message}");
+                Log.Error($"Error loading config for {itemName}: {ex.Message}\n{ex.StackTrace}");
+                return null;
             }
         }
 
         /// <summary>
-        /// Checks if a config name is already handled explicitly in the LoadAllConfigs method
+        /// Generic method to merge configs to ensure no null collections
         /// </summary>
-        private static bool HasExplicitHandler(string configName)
-        {
-            string[] explicitHandlers =
-            [
-                "ExpiredSCP500", "AdrenalineSCP500", "SuicideSCP500",
-                "ClusterGrenade", "ImpactGrenade", "SmokeGrenade",
-                "Railgun", "GrenadeLauncher"
-            ];
-
-            return explicitHandlers.Contains(configName);
-        }
-
-        /// <summary>
-        /// Merges properties from loaded config into default config to ensure no null collections
-        /// </summary>
-        private static void MergeConfigs<T>(T loadedConfig, T defaultConfig) where T : class
+        private static void MergeConfigsGeneric(Type configType, object loadedConfig, object defaultConfig)
         {
             if (loadedConfig == null || defaultConfig == null)
                 return;
 
-            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var properties = configType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var prop in properties)
             {
@@ -290,7 +270,7 @@ namespace SCI.Utilities
                 if (loadedValue == null && defaultValue != null)
                 {
                     prop.SetValue(loadedConfig, defaultValue);
-                    Log.Debug($"Replaced null {prop.Name} with default value in {typeof(T).Name}");
+                    Log.Debug($"Replaced null {prop.Name} with default value in {configType.Name}");
                 }
                 // Special handling for dictionary properties to avoid nulls
                 else if (prop.PropertyType.IsGenericType &&
@@ -300,12 +280,15 @@ namespace SCI.Utilities
                     if (loadedValue == null)
                     {
                         prop.SetValue(loadedConfig, defaultValue);
-                        Log.Debug($"Used default collection for {prop.Name} in {typeof(T).Name}");
+                        Log.Debug($"Used default collection for {prop.Name} in {configType.Name}");
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Generic method to generate a config file
+        /// </summary>
         private static void GenerateConfig<T>(string itemName, T config, string category) where T : class
         {
             try
@@ -339,43 +322,20 @@ namespace SCI.Utilities
             }
         }
 
+        /// <summary>
+        /// Generic method for strong-typed config loading, preserved for compatibility
+        /// </summary>
         private static T LoadConfig<T>(string itemName, string category) where T : class
         {
-            try
-            {
-                string configPath = Path.Combine(BaseConfigPath, category, $"{itemName}.yml");
+            return LoadConfigGeneric(typeof(T), itemName, category) as T;
+        }
 
-                if (!File.Exists(configPath))
-                {
-                    Log.Debug($"Config file does not exist: {configPath}");
-                    return null;
-                }
-
-                string yaml = File.ReadAllText(configPath);
-
-                // Create a YAML deserializer
-                var deserializer = new DeserializerBuilder()
-                    .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                    .IgnoreUnmatchedProperties()
-                    .Build();
-
-                // Deserialize the YAML
-                T result = deserializer.Deserialize<T>(yaml);
-
-                // Create a new instance if deserialization returned null
-                if (result == null)
-                {
-                    Log.Debug($"Deserialized {itemName} config was null, creating new instance");
-                    result = Activator.CreateInstance<T>();
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Error loading config for {itemName}: {ex.Message}\n{ex.StackTrace}");
-                return null;
-            }
+        /// <summary>
+        /// Generic method for strong-typed config merging, preserved for compatibility
+        /// </summary>
+        private static void MergeConfigs<T>(T loadedConfig, T defaultConfig) where T : class
+        {
+            MergeConfigsGeneric(typeof(T), loadedConfig, defaultConfig);
         }
     }
 }
