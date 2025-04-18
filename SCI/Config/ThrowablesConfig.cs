@@ -5,6 +5,9 @@ namespace SCI.Config
     #region SmokeGrenadeConfig
     public class SmokeGrenadeConfig
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
+
         [Description("Whether to remove the smoke effect after a delay")]
         public bool RemoveSmoke { get; set; } = true;
 
@@ -22,6 +25,9 @@ namespace SCI.Config
     #region ImpactGrenadeConfig
     public class ImpactGrenadeConfig
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
+
         [Description("Maximum damage dealt at the center of explosion")]
         public float MaximumDamage { get; set; } = 115f;
 
@@ -36,6 +42,9 @@ namespace SCI.Config
     #region ClusterGrenadeConfig
     public class ClusterGrenadeConfig
     {
+        [Description("Whether this item is enabled or not")]
+        public bool IsEnabled { get; set; } = true;
+
         [Description("Number of child grenades to spawn after the initial explosion")]
         public int ChildGrenadeCount { get; set; } = 3;
 
@@ -61,6 +70,7 @@ namespace SCI.Config
     {
         [Description("Whether this item is enabled or not")]
         public bool IsEnabled { get; set; } = true;
+
         [Description("Whether to remove the smoke effect after a delay")]
         public bool RemoveSmoke { get; set; } = true;
 

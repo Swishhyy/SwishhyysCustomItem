@@ -1,50 +1,35 @@
 ﻿namespace SCI
 {
-    // Include the necessary namespaces.
-    using Exiled.API.Features;              // Core Exiled API features for plugins.
-    using Exiled.CustomItems.API;           // API for registering and managing custom items.
-    using SCI.Custom.MedicalItems;          // Custom namespace containing the custom medical items.
-    using System;                           // Provides fundamental classes and base classes.               // For configuration access
-    using SCI.Services;                     // For WebhookService
-    using SCI.Custom.Items.Grenades;
-    using SCI.Custom.Throwables;           // Add this for the ImpactGrenade
-    using SCI.Custom.Weapon;
+    using Exiled.API.Features;
+    using Exiled.CustomItems.API;
+    using Exiled.CustomItems.API.Features;
     using SCI.Config;
+    using SCI.Custom.Items.Grenades;
+    using SCI.Custom.MedicalItems;
+    using SCI.Custom.Throwables;
+    using SCI.Custom.Weapon;
+    using SCI.Services;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
-    // Define the main plugin class which extends Exiled's Plugin base class using a generic Config type.
+    /// <summary>
+    /// Main plugin class for SCI (Swishhyy's Custom Items)
+    /// </summary>
     public class Plugin : Plugin<SCI.Custom.Config.Config>
     {
-        // Override the plugin's name property.
-        public override string Name => "SCI";
-        // Override the plugin's author property.
-        public override string Author => "Swishhyy";
-        // Override the plugin's version property.
-        public override Version Version => new(3, 1, 0);
+        #region Properties and Fields
+        public override string Name => "SCI"; /// Gets the plugin name
+        public override string Author => "Swishhyy"; // Gets the plugin author
+        public override Version Version => new(3, 1, 0);// Gets the plugin version
+        public static Plugin Instance { get; private set; } // Singleton instance for global access
+        public WebhookService WebhookService { get; private set; } // Discord webhook service
+        private readonly Version _requiredExiledVersion = new(9, 5, 1);  // Minimum required Exiled version
+        private readonly Dictionary<string, object> _customItems = new(); // Dictionary to store custom items (more maintainable than individual fields)
+        #endregion
 
-        // Public static instance for global access (singleton pattern)
-        public static Plugin Instance { get; private set; }
-
-        // Public webhook service property
-        public WebhookService WebhookService { get; private set; }
-
-        // Private fields to store instances of the custom item classes.
-        private SCP500C _scp500C;
-        private SCP500A _scp500A;
-        private SCP500B _scp500B;
-        private SCP500D _scp500D;
-        private ClusterGrenade _clusterGrenade;
-        private ImpactGrenade _impactGrenade;
-        private SmokeGrenade _smokeGrenade;
-        private Railgun _railgun;
-        private GrenadeLauncher _grenadeLauncher;
-        private BioGrenade _bioGrenade;
-        //private HackingChip _hackingChip;
-        //private ReinforcementCall _reinforcementCall;
-
-        // Define the minimum required version of the Exiled framework to run this plugin.
-        private readonly Version requiredExiledVersion = new(9, 5, 1);
-
-        // Helper method for debug logging throughout the plugin
+        #region Helper Methods
+        // Logs debug messages if debug mode is enabled
         public void DebugLog(string message)
         {
             if (Config.Debug)
@@ -53,122 +38,167 @@
             }
         }
 
-        // This method is called when the plugin is enabled.
+        // Gets a custom item from the dictionary
+        private T GetItem<T>(string key) where T : class
+        {
+            return _customItems.TryGetValue(key, out object item) ? item as T : null;
+        }
+        #endregion
+
+        #region Lifecycle Methods
+        // Called when the plugin is enabled
         public override void OnEnabled()
         {
             // Set the singleton instance
             Instance = this;
 
-            // Check if the current Exiled framework version meets the minimum required version.
-            if (Exiled.Loader.Loader.Version < requiredExiledVersion)
+            try
             {
-                // Log an error and return early to avoid running on an unsupported version.
-                Log.Error($"{Name} requires Exiled version {requiredExiledVersion} or higher. Current version: {Exiled.Loader.Loader.Version}");
-                return;
+                // Version check
+                if (Exiled.Loader.Loader.Version < _requiredExiledVersion)
+                {
+                    Log.Error($"{Name} requires Exiled version {_requiredExiledVersion} or higher. Current version: {Exiled.Loader.Loader.Version}");
+                    return;
+                }
+
+                Log.Info($"{Name} has been enabled!");
+                DebugLog("OnEnabled method called");
+
+                // Call base implementation
+                base.OnEnabled();
+
+                // Initialize configurations
+                InitializeConfigurations();
+
+                // Initialize services
+                InitializeServices();
+
+                // Create and register custom items
+                InitializeCustomItems();
+
+                DebugLog("OnEnabled method completed successfully");
             }
+            catch (Exception ex)
+            {
+                Log.Error($"Error enabling {Name}: {ex}");
+            }
+        }
 
-            // Log that the plugin has been enabled.
-            Log.Info($"{Name} has been enabled!");
-            DebugLog("OnEnabled method called");
+        public override void OnDisabled() // Called when the plugin is disabled
+        {
+            try
+            {
+                DebugLog("OnDisabled method called");
 
-            // Call the base implementation to ensure any base setup is performed.
-            base.OnEnabled();
+                // Unregister custom items
+                UnregisterAllItems();
 
-            // Generate individual config files on startup
+                // Clean up services
+                WebhookService = null;
+
+                Log.Info($"{Name} has been disabled!");
+
+                // Clear the singleton instance
+                Instance = null;
+
+                DebugLog("OnDisabled method completed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error disabling {Name}: {ex}");
+            }
+        }
+        #endregion
+
+        #region Initialization Methods
+        private void InitializeConfigurations() // Initializes configuration files
+        {
             DebugLog("Generating individual config files");
             Utilities.ConfigWriter.GenerateAllConfigs(Config);
 
-            // Load configs from individual files (this will override the default values)
             DebugLog("Loading individual config files");
             Utilities.ConfigWriter.LoadAllConfigs(Config);
+        }
 
-            // Initialize WebhookService
+        private void InitializeServices() // Initializes services
+        {
             DebugLog("Initializing WebhookService");
             WebhookService = new WebhookService(Config.DiscordWebhook, Config.Debug);
             DebugLog("WebhookService initialized");
-
-            // Create instances of the custom items using their corresponding configuration sections.
-            // Explicitly cast each config object to its proper type
-            DebugLog("Creating custom item instances with configuration");
-            _scp500C = new SCP500C((SCI.Config.SCP500C_Config)Config.SCP500C);
-            _scp500A = new SCP500A((SCI.Config.SCP500A_Config)Config.SCP500A);
-            _scp500B = new SCP500B((SCI.Config.SCP500B_Config)Config.SCP500B);
-            _scp500D = new SCP500D((SCI.Config.SCP500D_Config)Config.SCP500D);
-            _clusterGrenade = new ClusterGrenade((SCI.Config.ClusterGrenadeConfig)Config.ClusterGrenade);
-            _impactGrenade = new ImpactGrenade((SCI.Config.ImpactGrenadeConfig)Config.ImpactGrenade);
-            _smokeGrenade = new SmokeGrenade((SCI.Config.SmokeGrenadeConfig)Config.SmokeGrenade);
-            _railgun = new Railgun((SCI.Config.RailgunConfig)Config.Railgun);
-            _grenadeLauncher = new GrenadeLauncher((SCI.Config.GrenadeLauncherConfig)Config.GrenadeLauncher);
-            _bioGrenade = new BioGrenade((SCI.Config.BioGrenadeConfig)Config.BioGrenade);
-            //_hackingChip = new HackingChip((SCI.Config.HackingChipConfig)Config.HackingChip);
-            //_reinforcementCall = new ReinforcementCall((SCI.Config.ReinforcementCallConfig)Config.ReinforcementCall);
-
-            // Register the custom items with the Exiled framework so that they are recognized in-game.
-            DebugLog("Registering custom items");
-            if (Config.SCP500A.IsEnabled) _scp500A.Register();
-            if (Config.SCP500B.IsEnabled) _scp500B.Register();
-            if (Config.SCP500C.IsEnabled) _scp500C.Register();
-            if (Config.SCP500D.IsEnabled) _scp500D.Register();
-            if (Config.ClusterGrenade.IsEnabled) _clusterGrenade.Register();
-            if (Config.ImpactGrenade.IsEnabled) _impactGrenade.Register();
-            if (Config.SmokeGrenade.IsEnabled) _smokeGrenade.Register();
-            if (Config.Railgun.IsEnabled) _railgun.Register();
-            if (Config.GrenadeLauncher.IsEnabled) _grenadeLauncher.Register();
-            if (Config.SCP500D.IsEnabled) _scp500D.Register();
-            if (Config.BioGrenade.IsEnabled) _bioGrenade.Register();
-            //if (Config.HackingChip.IsEnabled) _hackingChip.Register();
-            //if (Config.ReinforcementCall.IsEnabled) _reinforcementCall.Register();
-
-            // Log a debug message listing the registered custom items.
-            Log.Debug($"Registered {Name} custom items: Expired SCP-500 Pills, Adrenaline Pills, Suicide Pills, Cluster Grenade, Impact Grenade, Smoke Grenade, Railgun, Grenade Launcher");
-
-            DebugLog("OnEnabled method completed successfully");
         }
 
-        // This method is called when the plugin is disabled.
-        public override void OnDisabled()
+        private void InitializeCustomItems() // Creates and registers all custom items
         {
-            DebugLog("OnDisabled method called");
+            DebugLog("Creating custom item instances with configuration");
 
-            // Unregister each custom item if they have been initialized (using the null-conditional operator).
-            DebugLog("Unregistering custom items");
-            _scp500C?.Unregister();
-            _scp500A?.Unregister();
-            _scp500B?.Unregister();
-            _clusterGrenade?.Unregister();
-            _impactGrenade?.Unregister();
-            _smokeGrenade?.Unregister();
-            _railgun?.Unregister();
-            _grenadeLauncher?.Unregister();
-            _scp500D?.Unregister();
-            _bioGrenade?.Unregister();
-            //_hackingChip?.Unregister();
-            //_reinforcementCall?.Unregister();
+            _customItems["SCP500A"] = new SCP500A((SCP500A_Config)Config.SCP500A);
+            _customItems["SCP500B"] = new SCP500B((SCP500B_Config)Config.SCP500B);
+            _customItems["SCP500C"] = new SCP500C((SCP500C_Config)Config.SCP500C);
+            _customItems["SCP500D"] = new SCP500D((SCP500D_Config)Config.SCP500D);
+            _customItems["ClusterGrenade"] = new ClusterGrenade((ClusterGrenadeConfig)Config.ClusterGrenade);
+            _customItems["ImpactGrenade"] = new ImpactGrenade((ImpactGrenadeConfig)Config.ImpactGrenade);
+            _customItems["SmokeGrenade"] = new SmokeGrenade((SmokeGrenadeConfig)Config.SmokeGrenade);
+            _customItems["BioGrenade"] = new BioGrenade((BioGrenadeConfig)Config.BioGrenade);
+            _customItems["Railgun"] = new Railgun((RailgunConfig)Config.Railgun);
+            _customItems["GrenadeLauncher"] = new GrenadeLauncher((GrenadeLauncherConfig)Config.GrenadeLauncher);
+            //_customItems["HackingChip"] = new HackingChip((HackingChipConfig)Config.HackingChip);
+            //_customItems["ReinforcementCall"] = new ReinforcementCall((ReinforcementCallConfig)Config.ReinforcementCall);
 
-            // Set the custom item instances to null to free resources.
-            _scp500C = null;
-            _scp500A = null;
-            _scp500B = null;
-            _clusterGrenade = null;
-            _impactGrenade = null;
-            _smokeGrenade = null;
-            _railgun = null;
-            _grenadeLauncher = null;
-            _scp500D = null;
-            _bioGrenade = null;
-            //_hackingChip = null;
-            //_reinforcementCall = null;
-
-            // Unregister the WebhookService to clean up resources.
-            WebhookService = null;
-
-            // Log that the plugin has been disabled.
-            Log.Info($"{Name} has been disabled!");
-
-            // Clear the singleton instance
-            Instance = null;
-
-            DebugLog("OnDisabled method completed");
+            RegisterEnabledItems(); // Register enabled items
         }
+
+        private void RegisterEnabledItems() // Registers all enabled custom items
+        {
+            DebugLog("Registering custom items");
+
+            RegisterItemIfEnabled<SCP500A>("SCP500A", Config.SCP500A.IsEnabled);
+            RegisterItemIfEnabled<SCP500B>("SCP500B", Config.SCP500B.IsEnabled);
+            RegisterItemIfEnabled<SCP500C>("SCP500C", Config.SCP500C.IsEnabled);
+            RegisterItemIfEnabled<SCP500D>("SCP500D", Config.SCP500D.IsEnabled);
+            RegisterItemIfEnabled<ClusterGrenade>("ClusterGrenade", Config.ClusterGrenade.IsEnabled);
+            RegisterItemIfEnabled<ImpactGrenade>("ImpactGrenade", Config.ImpactGrenade.IsEnabled);
+            RegisterItemIfEnabled<SmokeGrenade>("SmokeGrenade", Config.SmokeGrenade.IsEnabled);
+            RegisterItemIfEnabled<BioGrenade>("BioGrenade", Config.BioGrenade.IsEnabled);
+            RegisterItemIfEnabled<Railgun>("Railgun", Config.Railgun.IsEnabled);
+            RegisterItemIfEnabled<GrenadeLauncher>("GrenadeLauncher", Config.GrenadeLauncher.IsEnabled);
+            //RegisterItemIfEnabled<HackingChip>("HackingChip", Config.HackingChip.IsEnabled);
+            //RegisterItemIfEnabled<ReinforcementCall>("ReinforcementCall", Config.ReinforcementCall.IsEnabled);
+
+            LogRegisteredItems(); // Log registered items
+        }
+
+        private void RegisterItemIfEnabled<T>(string key, bool isEnabled) where T : CustomItem // Registers a specific item if it's enabled in config
+        {
+            if (isEnabled)
+            {
+                var item = GetItem<T>(key);
+                item?.Register();
+            }
+        }
+
+        private void LogRegisteredItems() // Logs all registered custom items
+        {
+            var registeredNames = _customItems.Keys
+                .Where(k => k != "HackingChip" && k != "ReinforcementCall") // Skip commented items
+                .Select(k => k.Replace("SCP500", "SCP-500 ").Replace("Grenade", " Grenade"))
+                .ToList();
+
+            Log.Debug($"Registered {Name} custom items: {string.Join(", ", registeredNames)}");
+        }
+
+        private void UnregisterAllItems() // Unregisters all custom items
+        {
+            DebugLog("Unregistering custom items");
+
+            foreach (var kvp in _customItems) // Unregister each item
+            {
+                if (kvp.Value is CustomItem item)
+                {
+                    item.Unregister();
+                }
+            }
+            _customItems.Clear(); // Clear the dictionary
+        }
+        #endregion
     }
 }
