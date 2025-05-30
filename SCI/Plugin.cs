@@ -21,11 +21,11 @@
         #region Properties and Fields
         public override string Name => "SCI"; /// Gets the plugin name
         public override string Author => "Swishhyy"; // Gets the plugin author
-        public override Version Version => new(3, 1, 0);// Gets the plugin version
+        public override Version Version => new(3, 1, 1);// Gets the plugin version
         public static Plugin Instance { get; private set; } // Singleton instance for global access
         public WebhookService WebhookService { get; private set; } // Discord webhook service
         private readonly Version _requiredExiledVersion = new(9, 5, 1);  // Minimum required Exiled version
-        private readonly Dictionary<string, object> _customItems = new(); // Dictionary to store custom items (more maintainable than individual fields)
+        private readonly Dictionary<string, object> _customItems = []; // Dictionary to store custom items (more maintainable than individual fields)
         #endregion
 
         #region Helper Methods

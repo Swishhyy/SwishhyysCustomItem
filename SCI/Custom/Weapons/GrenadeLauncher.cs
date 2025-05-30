@@ -50,19 +50,19 @@ namespace SCI.Custom.Weapon
         #region Constructor and Event Management
         protected override void SubscribeEvents()
         {
-            Exiled.Events.Handlers.Player.Shot += OnShot;
+            Exiled.Events.Handlers.Player.Shooting += OnShooting;
             base.SubscribeEvents();
         }
 
         protected override void UnsubscribeEvents()
         {
-            Exiled.Events.Handlers.Player.Shot -= OnShot;
+            Exiled.Events.Handlers.Player.Shooting -= OnShooting;
             base.UnsubscribeEvents();
         }
         #endregion
 
         #region Weapon Functionality
-        private new void OnShot(ShotEventArgs ev)
+        protected override void OnShooting(ShootingEventArgs ev)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace SCI.Custom.Weapon
                     return;
 
                 // Prevent direct damage from the shot
-                ev.CanHurt = false;
+                ev.IsAllowed = false;
 
                 // Spawn position calculation
                 Vector3 spawnPos = ev.Player.CameraTransform.position + ev.Player.CameraTransform.forward * SpawnDistance;
@@ -112,7 +112,7 @@ namespace SCI.Custom.Weapon
             }
             catch (Exception ex)
             {
-                Log.Error($"GrenadeLauncher: Error in OnShot: {ex.Message}");
+                Log.Error($"GrenadeLauncher: Error in OnShooting: {ex.Message}");
             }
         }
         #endregion

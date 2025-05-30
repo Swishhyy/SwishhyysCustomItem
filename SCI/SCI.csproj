@@ -59,7 +59,7 @@
   <ItemGroup>
     <!-- Added Missing Dependencies -->
     <PackageReference Include="Exiled.Dev.References" Version="1.0.4" />
-    <PackageReference Include="ExMod.Exiled" Version="9.5.1" />
+    <PackageReference Include="ExMod.Exiled" Version="9.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>

@@ -17,7 +17,14 @@ namespace SCI.Config
 
         [Description("Maximum range of the railgun beam in meters")]
         public float Range { get; set; } = 50f;
+
+        [Description("Time required to charge the railgun before firing (seconds)")]
+        public float ChargeTime { get; set; } = 5f;
+
+        [Description("Whether to show charging progress to the player")]
+        public bool ShowChargeProgress { get; set; } = true;
     }
+
 
     public class GrenadeLauncherConfig
     {
