@@ -74,12 +74,14 @@ namespace SCI.Custom.Weapon
         #endregion
 
         #region Event Handlers
-        private void OnDroppingItem(DroppingItemEventArgs ev)
+        protected override void OnDroppingItem(DroppingItemEventArgs ev)
         {
             if (Check(ev.Item) && _remainingShots.ContainsKey(ev.Player))
             {
                 _remainingShots.Remove(ev.Player);
             }
+            
+            base.OnDroppingItem(ev);
         }
 
         private void OnPlayerDying(DyingEventArgs ev)
